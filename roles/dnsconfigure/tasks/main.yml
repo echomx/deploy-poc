@@ -1,0 +1,12 @@
+---
+- name: make the name resolve for all node in cluster
+  template:
+    src: domain.conf.j2
+    dest: /etc/dnsmasq.d/domain.conf
+  notify: restart dnsmasq
+
+- name: remove the previous dns server
+  shell: sed -i '/^nameserver/d' /etc/resolv.conf
+
+- name: set the dns server to current host
+  shell: echo "nameserver ansible_default_ipv4.address" >> /etc/resolv.conf  

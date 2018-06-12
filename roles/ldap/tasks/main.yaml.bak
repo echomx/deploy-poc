@@ -1,0 +1,45 @@
+---
+- hosts: test
+  tasks:
+  - name: intall openldap-clients/pip
+    yum: 
+      name: "{{item}}"
+      state: present
+    with_items:
+    - openldap-clients
+    - python-pip 
+  - name: create directory for pip configuration
+    file: 
+      path: ~/.pip/
+      state: directory
+      mode: 0755
+  - name: cp the pip configureation files 
+    copy:
+      src: pip.conf
+      dest: /root/.pip/pip.conf  
+      mode: 0644
+  - name: install docker-py to use docker load image
+    pip:
+      name: docker-py
+  - name: install docker
+    yum: 
+      name: docker 
+      state: present
+      validate_certs: no
+      update_cache: yes
+  - service: name=docker state=started enabled=yes
+  - name: copy the openldap image and related files to the target server
+    copy:
+      src: "{{item.src}}"
+      dest: "{{item.dest}}"
+      owner: root
+      group: root
+      mode: 0644
+    with_items:
+    - {src: "ldap.tar", dest: "/tmp/ldap.tar"}
+    - {src: "items.ldif", dest: "/tmp/items.ldif"}
+  - name: Load the image for ldap
+    docker_image:
+      name: openldap
+      tag: 1.2.1
+      load_path: /tmp/ldap.tar

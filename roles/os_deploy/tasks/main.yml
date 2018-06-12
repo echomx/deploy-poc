@@ -1,0 +1,3 @@
+---
+- name: execute the play-book to deploy OpenShift according to the inventory generated
+  command: ansible-playbook -i /opt/inventory /opt/openshift-ansible/ansible-playbook/playbooks/playbooks/byo/config.yml

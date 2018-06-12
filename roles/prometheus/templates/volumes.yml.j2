@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alertmanager
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: "1024Mi"
+  nfs:
+    path: /nfs/alertmanager/ 
+    server: {{ groups.nfsserver[0] }}
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: promrule 
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: "2048Mi"
+  nfs:
+    path: /nfs/prometheusrule 
+    server: {{ groups.nfsserver[0] }}
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: alertmanager 
+  namespace: kube-systems
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1024Mi 
+  volumeName: alertmanager
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: promrule
+  namespace: kube-systems
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 2048Mi 
+  volumeName: promrule

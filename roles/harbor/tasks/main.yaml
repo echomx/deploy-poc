@@ -1,0 +1,28 @@
+---
+  - name: copy the harbor installer
+    copy: 
+      src: harbor-offline-installer-dev.tgz 
+      dest: {{ store_path }}/harbor.tgz
+
+  - name: unarchive the harbor installer
+    unarchive: 
+      src: {{ store_path }}/harbor.tgz
+      dest: {{ store_path }}/
+      remote_src: yes
+
+  - name: replace the config file for harbor
+    template: 
+      src: harbor.cfg.j2 
+      dest: {{ store_path }}/harbor/
+
+
+  - name: execute the prepare command to generator the config file for harbor
+    shell: ./prepare
+    args:
+      chdir: {{ store_path }}/harbor/
+
+  - name: start the harbor
+    shell: ./install
+    args:
+      chdir: {{ store_path }}/harbor/
+

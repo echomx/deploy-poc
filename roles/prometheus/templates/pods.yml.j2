@@ -1,0 +1,253 @@
+#follows are the deploymentconfig
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: prometheus
+  namespace: kube-systems
+  labels:
+    name: prometheus-deployment
+spec:
+  replicas: 1
+  selector:
+    app: prometheus
+  template:
+    metadata:
+      namespace: kube-systems
+      labels:
+        app: prometheus
+    spec:
+      volumes:
+        - name: data
+          hostPath:
+            path: /prometheus
+        - name: config-volume
+          configMap:
+            name: prometheus-config
+        - name: rule
+          persistentVolumeClaim:
+            claimName: promrule
+      containers:
+        - name: prometheus
+          image: {{ harbor_url }}/openshift/prometheus:v1.7.1'
+          command:
+            - /bin/prometheus
+          args:
+            - '-config.file=/etc/prometheus/prometheus.yml'
+            - '-storage.local.path=/prometheus'
+            - '-storage.local.retention=168h'
+            - '-alertmanager.url=http://alertmanager:9093'
+            - '-web.external-url=http://{{ prometheus_url }}'
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '8'
+              memory: 4Gi
+            requests:
+              cpu: '1'
+              memory: 2Gi
+          volumeMounts:
+            - name: data
+              mountPath: /prometheus
+            - name: config-volume
+              mountPath: /etc/prometheus
+            - name: rule
+              mountPath: /rules
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/hostname: {{ hostvars[groups['node'][0]].hostname }}
+# choose the first node
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: alertmanager
+  namespace: kube-systems
+  labels:
+    name: alertmanager
+spec:
+  replicas: 1
+  selector:
+    app: alertmanager
+  template:
+    metadata:
+      labels:
+        app: alertmanager
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: alertmanager
+        - name: data
+          persistentVolumeClaim:
+            claimName: alertmanager
+      containers:
+        - name: alertmanager
+          image: {{ harbor_url }}/openshift/alertmanager
+          command:
+            - /bin/alertmanager
+          args:
+            - '-config.file=/etc/alertmanager/config.yml'
+            - '-storage.path=/alertmanager'
+            - '-web.external-url=http://{{ alertmanager_url }}/'
+          ports:
+            - containerPort: 9093
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '1'
+              memory: 2500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - name: data
+              mountPath: /alertmanager
+            - name: config
+              mountPath: /etc/alertmanager
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/hostname: {{ hostvars[groups['node'][0]].hostname }}
+        #choose the first node
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: grafana
+  namespace: kube-systems
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    app: grafana
+    deploymentconfig: grafana
+  template:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: IfNotPresent
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: {{ grafana_password }}
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+#follows are the services
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager
+  namespace: kube-systems
+  labels:
+    app: alertmanager
+spec:
+  ports:
+    - name: 9093-tcp
+      protocol: TCP
+      port: 9093
+      targetPort: 9093
+  selector:
+    deploymentconfig: alertmanager
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: kube-systems
+  labels:
+    app: prometheus
+spec:
+  ports:
+    - name: 9090-tcp
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+  selector:
+    deploymentconfig: prometheus
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: kube-systems
+  labels:
+    app: grafana
+spec:
+  ports:
+    - name: 3000-tcp
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  selector:
+    deploymentconfig: grafana
+  clusterIP: 172.30.106.25
+  type: ClusterIP
+
+#Follows are the routes 
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: grafana
+  namespace: kube-systems
+spec:
+  host: {{ grafana_url }}
+  to:
+    kind: Service
+    name: grafana
+  port:
+    targetPort: 3000-tcp
+  wildcardPolicy: None
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: prometheus
+  namespace: kube-systems
+spec:
+  host: {{ prometheus_url }}
+  to:
+    kind: Service
+    name: prometheus
+    weight: 100
+  port:
+    targetPort: 9090-tcp
+  wildcardPolicy: None
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: alertmanager
+  namespace: kube-systems
+spec:
+  host: {{ alertmanager_url }}
+  to:
+    kind: Service
+    name: alertmanager
+    weight: 100
+  port:
+    targetPort: 9093-tcp
+  wildcardPolicy: None
+

@@ -1,0 +1,14 @@
+---
+#- name: install basic requirements [docker]
+#  hosts: all
+#  roles:
+##    - common
+#    - ldap
+  - name: set the hostname 
+    hosts: all 
+    #gather_facts: no
+    roles:
+      #- sethostname 
+      #- expoter_install
+      #- repoconfigure
+      - docker1.13.1

@@ -1,0 +1,17 @@
+---
+- name: copy the node-exporter to /usr/sbin/
+  copy:
+    src: node_exporter
+    dest: /usr/sbin/node_exporter
+    mode: 'u+x' 
+
+- name: copy the service file 
+  copy:
+    src: node-exporter.service
+    dest: /usr/lib/systemd/system/node-exporter.service 
+
+- name: start the node service and enable start onboot
+  service: 
+    name: node-exporter
+    state: started
+    enabled: yes

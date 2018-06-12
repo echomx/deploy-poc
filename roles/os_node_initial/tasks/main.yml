@@ -1,0 +1,42 @@
+---
+- name: install the required dependencies for OpenShift node
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wget 
+    - git
+    - net-tools
+    - bind-utils
+    - iptables-services
+    - bridge-utils
+    - bash-completion
+    - kexec-tools
+    - sos 
+    - psacct
+    - nfs-utils
+- name: set hosts for all the nodes in the OpenShift cluster
+  template:
+    src: hosts
+    dest: /etc/hosts
+
+- name: create the storage for origin
+  vg: {{ os_vg }}
+  pv: {{ os_dev }}
+
+- name: create the lv for origin
+  vg: {{ os_vg }}
+  lv: {{ os_lv }}
+  size: 100%FREE
+
+- name: format the lv for origin
+  filesystem:
+    fstype: xfs
+    dev: /dev/{{ os_vg }}/{{ os_lv }}
+
+- name: mount the lv for os storage
+  mount:
+    path: /var/lib/origin/openshift.local.volumes
+    src: /dev/{{ os_vg }}/{{ os_lv }}
+    state: mounted
+  

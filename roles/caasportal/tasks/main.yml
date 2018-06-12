@@ -1,0 +1,35 @@
+---
+- name: create the directory for requied files
+  file:
+    path: /tmp/caasportal
+    state: directory
+    mode: 0755
+
+
+- name: copy the other files generated from template-pods
+    src: caasdeploy_template_pods.yml.j2
+    dest: /tmp/caasportal/caasdeploy_pods.yml
+    mode: 0644
+
+- name: copy persistend
+  template:
+    src: caasdeploy_template_persistent.yml.j2
+    dest: /tmp/caasportal/caasdeploy_persistent.yml
+    mode: 0644
+
+- name: copy sql
+  template:
+    src: hcpaas_schema.sql.j2
+    dest: /tmp/caasportal/hcpaas_schema.sql
+
+- name: copy setup.sh
+  template:
+    src: setup.sh.j2
+    dest: /tmp/prometheus/setup.sh
+    mode: 0744
+
+
+- name: excute the shell to create pv pvc dc svc route
+  shell: ./setup.sh
+  args:
+    chdir: /tmp/caasportal/

@@ -1,0 +1,3 @@
+---
+- name: set the host name
+  command: hostnamectl set-hostname {{ hostname }}

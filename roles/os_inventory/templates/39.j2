@@ -1,0 +1,7 @@
+{{ groups.masters[0] }}
+{{ harbor_url }}
+[master]
+{% for host in groups.masters %}
+{{ host }} 
+{% endfor %}
+

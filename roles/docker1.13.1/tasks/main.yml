@@ -1,0 +1,34 @@
+- name: Install docker
+  yum: 
+    name: docker 
+    state: present
+    skip_broken: yes
+
+- name: create vg for docker
+  lvg:
+    vg: "{{ docker_vg }}"
+    pvs: "{{ docker_dev }}"
+
+
+- name: Configure the docker storage
+  template: 
+    src: docker-storage-setup.j2
+    dest: /etc/sysconfig/docker-storage-setup
+
+- name: setup the storage of docker
+  command: docker-storage-setup
+
+- name: set all the vg for the docker lv
+  lvol:
+    vg: "{{ docker_vg }}"
+    lv: docker-pool
+    size: +100%FREE
+    
+- name: Configure the docker file
+  template: 
+    src: daemon.json.j2 
+    dest: /etc/docker/daemon.json
+  notify: restart docker
+
+- name: Start and enable onboot docker
+  service: name=docker state=started enabled=yes

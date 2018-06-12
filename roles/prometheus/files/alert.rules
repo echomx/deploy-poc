@@ -1,0 +1,43 @@
+ALERT CPU_USEAGE_warning
+  IF sum(node_cpu{mode="idle"}) by (instance) / sum(node_cpu) by (instance) * 100 < 25
+  FOR 1m
+  LABELS { zone = "BJ1" }
+  ANNOTATIONS {
+    summary = "Instance {{ $labels.instance }} CPU usage is over 75 %",
+    description = "{{ $labels.instance }} of job {{ $labels.job }} cpu idls is {{ $value }}.",
+  }
+
+
+ALERT MEM_warning
+  IF node_memory_MemAvailable / node_memory_MemTotal * 100 < 25
+  FOR 1m
+  LABELS { zone = "BJ1" }
+  ANNOTATIONS
+    {description="{{ $labels.instance }} of job {{ $labels.job }} memory free is {{ $value }}.",
+     summary="Instance {{ $labels.instance }} memory usage is over 75 %"}
+
+
+ALERT DISK_USAGE
+  IF 100 - 100*(node_filesystem_free{device !~'tmpfs',device!~'by-uuid',device!~'rootfs'} / node_filesystem_size{device !~'tmpfs',device!~'by-uuid',device!~'rootfs'}) > 75
+  FOR 1m
+  LABELS { zone = "BJ1" }
+  ANNOTATIONS
+    {description="{{ $labels.instance }} of job {{ $labels.job }} {{ $labels.mountpoint }} disk usage is {{ $value }} %.",
+	 summary="{{ $labels.instance }} {{ $labels.mountpoint }} disk usage is over 75%"}
+
+ALERT UP
+  IF up < 1
+  FOR 1m
+  LABELS { zone = "BJ1" }
+  ANNOTATIONS
+    {description="{{ $labels.instance }} of job {{ $labels.job }} exporter is down",
+	 summary="{{ $labels.instance }} of job {{ $labels.job }} up is down, maybe this target have some problem"}
+
+
+ALERT PROMETHEUS_SYSTEM_urgency
+  IF prometheus_local_storage_persistence_urgency_score > 0.7
+  FOR 1m
+  LABELS { PROMETHEUS_SYSTEM="yes", zone = "BJ1" }
+  ANNOTATIONS
+    {description="local storage persistence urgency score is {{ $value }}",
+	 summary="prometheus maybe go the rushed mode , care !!!"}

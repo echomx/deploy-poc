@@ -1,0 +1,47 @@
+---
+  - name: copy the system requirments
+    copy:
+      src: /opt/installers/cent{{ os_version }}.tar
+      dest: /tmp/cent{{ os_version }}.tar
+      mode: 0644
+
+  - name: unarchive the system requirements
+    unarchive:
+      src: /tmp/cent{{ os_version }}.tar
+      dest: /opt/
+      remote_src: yes
+  - name: create bak to bakup the repo files
+    file:
+      path: /etc/yum.repos.d/bak
+      state: directory
+      mode: 0755
+  
+
+  - name: set the repo for the os
+    template: 
+      src: sys.repo.j2
+      dest: /etc/yum.repos.d/sys.repo
+
+
+ # - name: remove all the repo 
+ #   shell:  ls |grep -v sys.repo
+ #   register: repos
+ #   args:
+ #     chdir: /etc/yum.repos.d/
+ # - name: remove the current repos execpt sys.repo
+ #   shell: echo repos |xargs mv {} /etc/yum.repo.d/bak/
+ #   when: repos.stdout !=""
+ # - name: install the createrepo deltarpm 
+ #   yum:
+ #     name: /opt/cent{{ os_version }}/deltarpm-3.6-3.el7.x86_64.rpm 
+ #     state: present
+
+ # - name: install the createrepo python-deltarpm
+ #   yum:
+ #     name: /opt/cent{{ os_version }}/python-deltarpm-3.6-3.el7.x86_64.rpm
+ #     state: present
+
+ # - name: install the createrepo createrepo
+ #   yum:
+ #     name: /opt/cent{{ os_version }}/createrepo-0.9.9-28.el7.noarch.rpm
+ #     state: present

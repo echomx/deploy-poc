@@ -1,0 +1,6 @@
+---
+- name: copy the docker-compose file to /usr/sbin/
+  copy:
+    src: docker-compose
+    dest: /usr/bin/docker-compose
+    mode: 0511

@@ -1,0 +1,59 @@
+---
+  - name: copy the nfs installer
+    copy: 
+      src: convert2nfs.zip
+      dest: /tmp/convert2nfs.zip
+
+  - name: unarchive the nfs installer
+    unarchive: 
+      src: /tmp/convert2nfs.zip
+      dest: /opt/
+      remote_src: yes
+  
+  - name: copy the pip install 
+    copy: 
+      src: requirements.txt
+      dest: /tmp/requirements.txt
+      mode: 0644
+  - name: create vg for nfs
+    
+  - name: install the yum requirements
+    yum: 
+      name:
+      state: 
+    with_items:
+    - nfs-utils
+    - rpcbind
+    - lvm2
+    - gcc-c++
+    - python-devel
+  
+  - name: start the nfs and rpcbind service 
+    service:
+      name: {{ item }}
+      state: started
+      enabled: yes
+    with_items:
+    - rpcbind
+    - nfs
+  
+
+  - name: install the required pip
+    pip:
+      requirements: /tmp/requirements.txt
+  
+  - name: preinstall-add privilege
+    shell:  chmod a+x bin/* 
+    args:
+      chdir: /opt/convert2nfs
+
+  - name: install the interface
+    shell:  python setup.py install
+    args:
+      chdir: /opt/convert2nfs
+
+  - name: start the convert2nfs
+    shell:  uwsgi -d /var/log/convert2nfs.log --http-socket :{{ nfs_port }} --venv /opt/nfsenv --pecan config.py
+    args:
+      chdir: /opt/convert2nfs
+

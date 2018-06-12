@@ -1,0 +1,45 @@
+#[cluster:children]
+#deployer
+#masters
+#nodes
+#harbors
+#nfs
+#ldap
+#clair-plus
+#
+# require:
+# must use the master node of the OpenShift
+[deployers]
+10.70.94.94
+
+#masters of OpenShift
+[masters]
+10.70.94.94 hostname=master1
+
+#nodes of Openshift
+[nodes]
+10.70.94.94 hostname=master1
+10.70.94.95 hostname=node1
+
+#nfs server
+[nfsserver]
+10.70.94.96
+
+#ldap server
+[ldapserver]
+10.70.94.96
+
+#harbor server
+[harbors]
+10.70.94.96 hostname=others
+#clair-plus server
+#[clair-plusserver]
+#10.70.94.195
+
+[oscluster:children]
+nodes
+
+[sethostname:children]
+oscluster
+harbors
+

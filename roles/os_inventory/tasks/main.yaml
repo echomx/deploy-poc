@@ -1,0 +1,5 @@
+---
+  - name: generate the OpenShift inventory
+    template:
+      src: inventory_39.j2
+      dest: /opt/inventory

@@ -1,0 +1,43 @@
+---
+- name: create the directory for requied files
+  file:
+    path: /tmp/prometheus/config
+    state: directory
+    mode: 0755
+
+- name: copy the config file of alertmanager
+  copy:
+    src: {{ item }}
+    dest: /tmp/prometheus/config/{{ item }}
+    mode: 0644
+  with_items:
+  - config.yml
+  - alert.rules
+
+- name: copy the other files generated from template- pods.yml
+  template:
+    src: pods.yml.j2
+    dest: /tmp/prometheus/pods.yml
+    mode: 0644
+
+- name: copy prometheus.yml
+  template:
+    src: prometheus.yml.j2
+    dest: /tmp/prometheus/config/prometheus.yml
+    mode: 0644
+
+- name: copy setup.sh
+  template:
+    src: setup.sh.j2
+    dest: /tmp/prometheus/setup.sh
+    mode: 0744
+
+- name: copy volumes.yml
+  template:
+    src: volumes.yml.j2
+    dest: /tmp/prometheus/volumes.yml
+    mode: 0644
+- name: excute the shell to create pv pvc dc svc route
+  shell: ./setup.sh
+  args:
+    chdir: /tmp/prometheus/

@@ -1,0 +1,9 @@
+- name: Install docker
+  yum: name=docker state=present
+
+- name: Configure the docker file
+  template: src=docker.j2 dest=/etc/sysconfig/docker
+  notify: restart docker
+
+- name: Start and enable onboot docker
+  service: name=docker state=started enabled=yes

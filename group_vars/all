@@ -1,0 +1,58 @@
+---
+# Variables listed here are applicable to all host groups
+#OS info
+os_version: 7.2
+# docker info
+mirror_url: https://registry.docker-cn.com
+docker_vg: docker-vg
+docker_dev: /dev/xvdb
+
+#ldap info
+ldap_org: anisble 
+ldap_domain: ansible.org
+ldap_top: org
+ldap_second: ansible
+ldap_admin_password: BiuBiuBiu 
+ldap_admin_password_encrypted: Qml1Qml1Qml1Cg==
+
+#harbor info
+harbor_url: harbor.ansible.com
+harbor_password: Biu_Biu_biu 
+store_path: /data
+
+#Openshift info
+os_entryporint: 10.70.94.90
+os_admin_password: HahahahaHa
+os_admin_password_encrypted: SGFoYWhhaGFIYQo=
+os_subdomain: subdomain.com
+os_vg: origin-vg
+os_dev: /dev/xvdc
+os_lv: origin-lv
+
+
+
+#CaaS Portal info
+caas_project: caasportal
+muddle_tag: muddle-secret:v8
+hcenter_tag: hcenter-caas:v10
+mysql_tag: mysql:5.5utf8
+muddle_ha_tag: caas-haproxy:v3 
+hcenter_ha_tag: agama-ha:v2
+redis_tag: redis:3.2
+license_key: askdlfaklsd
+hcenter_url: demo.ansible.com
+muddle_url: portal.ansible.com
+
+
+#prometheus
+alertmanager_url: alertmanager.ansible.com
+prometheus_url: prometheus.ansible.com
+grafana_url: grafana.ansible.com
+grafana_password: Hello_grafana_20180608
+
+#NFS
+nfs_port: 8080
+nfs_dev: /dev/xvdc
+nfs_vg: vg-paas
+
+
