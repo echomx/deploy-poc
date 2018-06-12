@@ -1,26 +1,37 @@
 ---
   - name: copy the nfs installer
     copy: 
-      src: convert2nfs.zip
-      dest: /tmp/convert2nfs.zip
+      src: /opt/installers/{{ item }}
+      dest: /tmp/{{ item }}
+    with_items:
+    - convert2nfs.zip
+    - nfsenv.zip
 
   - name: unarchive the nfs installer
     unarchive: 
-      src: /tmp/convert2nfs.zip
+      src: /tmp/{{ item }}
       dest: /opt/
       remote_src: yes
-  
-  - name: copy the pip install 
-    copy: 
-      src: requirements.txt
-      dest: /tmp/requirements.txt
-      mode: 0644
-  - name: create vg for nfs
+    with_items:
+    - convert2nfs.zip
+    - nfsenv.zip
+
+  #- name: copy the pip install 
+  #  copy: 
+  #    src: requirements.txt
+  #    dest: /tmp/requirements.txt
+  #    mode: 0644
+  #- name: create vg for nfs
     
+  - name: create the vg for nfs
+    lvg:
+      vg: "{{ nfs_vg }}"
+      pvs: "{{ nfs_dev }}"
+
   - name: install the yum requirements
     yum: 
-      name:
-      state: 
+      name: "{{ item }}"
+      state: present
     with_items:
     - nfs-utils
     - rpcbind
@@ -30,7 +41,7 @@
   
   - name: start the nfs and rpcbind service 
     service:
-      name: {{ item }}
+      name: "{{ item }}"
       state: started
       enabled: yes
     with_items:
@@ -38,9 +49,9 @@
     - nfs
   
 
-  - name: install the required pip
-    pip:
-      requirements: /tmp/requirements.txt
+#  - name: install the required pip
+#    pip:
+#      requirements: /tmp/requirements.txt
   
   - name: preinstall-add privilege
     shell:  chmod a+x bin/* 
