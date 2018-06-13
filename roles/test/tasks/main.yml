@@ -1,0 +1,11 @@
+- name: copy the template
+  template: 
+    src: test.j2
+    dest: /tmp/test
+- name: execute command
+  shell: netstat -tlnp|grep 100022 
+  register: result
+  ignore_errors: yes
+- name: echo the result
+  debug:
+    msg={{ result.rc }}

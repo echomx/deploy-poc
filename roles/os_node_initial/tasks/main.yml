@@ -15,28 +15,40 @@
     - sos 
     - psacct
     - nfs-utils
+
 - name: set hosts for all the nodes in the OpenShift cluster
   template:
     src: hosts
     dest: /etc/hosts
 
 - name: create the storage for origin
-  vg: {{ os_vg }}
-  pv: {{ os_dev }}
+  vg: "{{ os_vg }}"
+  pv: "{{ os_dev }}"
 
 - name: create the lv for origin
-  vg: {{ os_vg }}
-  lv: {{ os_lv }}
+  vg: "{{ os_vg }}"
+  lv: "{{ os_lv }}"
   size: 100%FREE
 
 - name: format the lv for origin
   filesystem:
     fstype: xfs
-    dev: /dev/{{ os_vg }}/{{ os_lv }}
+    dev: "/dev/{{ os_vg }}/{{ os_lv }}"
 
 - name: mount the lv for os storage
   mount:
     path: /var/lib/origin/openshift.local.volumes
-    src: /dev/{{ os_vg }}/{{ os_lv }}
+    src: "/dev/{{ os_vg }}/{{ os_lv }}"
+    fstype: xfs
     state: mounted
-  
+
+- name:  copy the rpm file of os39 to all nodes
+  copy:
+    src: /tmp/os39.zip
+    dest: /opt
+
+- name: unarchive the rpm files to the /opt/
+  unarchive:
+    src: /tmp/os39.zip
+    dest: /opt/
+    remote_src: yes

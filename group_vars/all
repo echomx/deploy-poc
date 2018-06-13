@@ -18,6 +18,7 @@ ldap_admin_password_encrypted: Qml1Qml1Qml1Cg==
 #harbor info
 harbor_url: harbor.ansible.com
 harbor_password: Biu_Biu_biu 
+harbor_dev: /dev/xvde
 store_path: /data
 
 #Openshift info

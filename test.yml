@@ -1,8 +1,11 @@
 ---
 - hosts: localhost
   connection: local
-  tasks:
-    - name: output the current host ip
-      shell: echo {{ ansible_default_ipv4.address }} > /root/ip.txt
-    - name: output all current host ip
-      shell: echo {{ ansible_all_ipv4_addresses }} > /root/allip.txt
+  roles:
+    - test
+ 
+#  tasks:
+#    - name: output the current host ip
+#      shell: echo {{ ansible_default_ipv4.address }} > /root/ip.txt
+#    - name: output all current host ip
+#      shell: echo {{ ansible_all_ipv4_addresses }} > /root/allip.txt

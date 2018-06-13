@@ -57,14 +57,19 @@ email_insecure = false
 ##The initial password of Harbor admin, only works for the first time when Harbor starts. 
 #It has no effect after the first launch of Harbor.
 #Change the admin password from UI after launching Harbor.
-harbor_admin_password = Harbor12345
+harbor_admin_password = {{ harbor_password }} 
 
 ##By default the auth mode is db_auth, i.e. the credentials are stored in a local database.
 #Set it to ldap_auth if you want to verify a user's credentials against an LDAP server.
 auth_mode = ldap_auth
 
 #The url for an ldap endpoint.
-ldap_url = ldap://{{ ldapurl }}
+{% if groups.harbors[0] == groups.ldapserver[0] %}
+ldap_url = ldap://ldapserver
+{% else %}
+ldap_url = ldap://{{ groups.ldapserver[0] }}
+{% endif %}
+
 
 #A user's DN who has the permission to search the LDAP/AD server. 
 #If your LDAP/AD server does not support anonymous search, you should configure this DN and ldap_search_pwd.

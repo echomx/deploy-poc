@@ -99,5 +99,5 @@ openshift_web_console_version=v3.9
 {{ host }} openshift_node_labels="{'region': 'master'}" openshift_schedulable=true
 {% endfor %}
 {% for host in groups.nodes %}
-{{ host }} openshift_node_labels="{'region': 'node'}" openshift_schedulable=true
+{{ host }} openshift_node_labels="{'region': 'node','region': 'infra'}" openshift_schedulable=true
 {% endfor %}

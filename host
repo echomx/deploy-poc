@@ -38,6 +38,7 @@
 
 [oscluster:children]
 nodes
+masters
 
 [sethostname:children]
 oscluster

@@ -1,28 +1,71 @@
 ---
+  - name: create vg for harbor
+    lvg:
+      vg: harbor-vg
+      pvs: "{{ harbor_dev  }}"
+
+  - name: create lv for harbor
+    lvol:
+     vg: harbor-vg
+     lv: harbor-lv
+     size: 100%FREE
+
+  - name: format the lv for harbor
+    filesystem:
+      fstype: xfs
+      dev: /dev/harbor-vg/harbor-lv
+  
+  - name: mount the lv for harbor
+    mount:
+      path: "{{ store_path }}"
+      src: /dev/harbor-vg/harbor-lv
+      fstype: xfs
+      state: mounted
+
+  - name: copy the offline clair db
+    copy:
+      src: /opt/installers/clair-db-fetched.gz
+      dest: "{{ store_path }}/"
+
   - name: copy the harbor installer
     copy: 
-      src: harbor-offline-installer-dev.tgz 
-      dest: {{ store_path }}/harbor.tgz
+      src: /opt/installers/harbor-offline-installer-stage.tgz 
+      dest: "{{ store_path }}/harbor-offline-installer-stage.tgz"
+
+  - name: unarchive the offline clair db
+    unarchive:
+      src: "{{ store_path }}/clair-db-fetched.gz"
+      dest: "{{ store_path }}/"
+      remote_src: yes
 
   - name: unarchive the harbor installer
     unarchive: 
-      src: {{ store_path }}/harbor.tgz
-      dest: {{ store_path }}/
+      src: "{{ store_path }}/harbor-offline-installer-stage.tgz"
+      dest: "{{ store_path }}/"
       remote_src: yes
 
   - name: replace the config file for harbor
     template: 
       src: harbor.cfg.j2 
-      dest: {{ store_path }}/harbor/
+      dest: "{{ store_path }}/harbor/harbor.cfg"
+      mode: 0644
 
 
   - name: execute the prepare command to generator the config file for harbor
-    shell: ./prepare
+    shell: ./prepare --with-clair
     args:
-      chdir: {{ store_path }}/harbor/
+      chdir: "{{ store_path }}/harbor/"
 
   - name: start the harbor
-    shell: ./install
+    shell: ./install.sh --with-clair
     args:
-      chdir: {{ store_path }}/harbor/
+      chdir: "{{ store_path }}/harbor/"
 
+  - name: check whether the ldapserver is running on the same server
+    shell: netstat -tnlp|grep 3899
+    register: result
+    ignore_errors: yes 
+  
+  - name: add ldapserver to harbor if they run on the save server
+    shell: docker network connect harbor_harbor ldapserver
+    when:  result.rc  == 0 

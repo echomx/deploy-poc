@@ -1,0 +1,6 @@
+{% if groups.harbors[0] == groups.ldapserver[0] %}
+ldapserver://ldapserver
+{% else %}
+ldapserver://{{ groups.ldapserver[0] }}
+{% endif %}
+{{ groups.harbors[0] }}

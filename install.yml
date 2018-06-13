@@ -1,9 +1,47 @@
 ---
-#- name: install basic requirements [docker]
+
+# Before deploy OpenShift
+
+#- name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
 #  hosts: all
 #  roles:
-##    - common
-#    - ldap
+#    - repoconfigure
+#    - docker1.13.1 
+#    - sethostname 
+#    - expoter_install
+
+
+#- name: install LDAP
+#    hosts: ldapserver
+#    roles:
+#      - ldap 
+#- name: install harbor
+
+#  - name: install ldap
+#  hosts: harbors
+#  roles:
+#    - docker-compose
+#    - harbor
+
+- name: prepare for the openshift node
+  hosts: oscluster
+  roles:
+    - os_node_initial
+
+- name: generate the inventory for deployer and deploy Openshift
+  hosts: deployer
+  roles:
+    - os_inventory
+    - os_deploy
+
+
+
+
+
+
+# After OpenShift deployed
+
+#
  # - name: set the hostname 
  #   hosts: all 
  #   #gather_facts: no
@@ -12,7 +50,12 @@
  #     #- expoter_install
  #     #- repoconfigure
  #     - docker1.13.1
-  - name: install nfs server
-    hosts: nfsserver
-    roles:
-      - nfs
+ # - name: install nfs server
+ #   hosts: nfsserver
+ #   roles:
+ #     - nfs
+- name: generate the inventory for OpenShift
+  hosts: deployers
+  roles:
+    - os_inventory
+    

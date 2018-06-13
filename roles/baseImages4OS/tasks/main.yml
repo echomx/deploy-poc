@@ -1,0 +1,15 @@
+---
+  - name: copy the base images needed during OpenShift Deployment
+    copy: 
+      src: /opt/installers/os39-base-images.zip
+      dest: /tmp/
+  
+  - name: unarchive the images to the harbor data 
+    unarchive: 
+      src: /tmp/os39-base-images.zip
+      dest: "{{ store_path }}/"
+      remote_src: yes
+  - name: copy the script used to push images from local to harbor
+
+
+  - name: execute the script to pu 

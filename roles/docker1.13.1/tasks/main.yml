@@ -2,7 +2,7 @@
   yum: 
     name: docker 
     state: present
-    skip_broken: yes
+    update_cache: yes 
 
 - name: create vg for docker
   lvg:
