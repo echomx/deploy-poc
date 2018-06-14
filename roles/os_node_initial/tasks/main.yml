@@ -1,51 +1,53 @@
 ---
-- name: install the required dependencies for OpenShift node
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - wget 
-    - git
-    - net-tools
-    - bind-utils
-    - iptables-services
-    - bridge-utils
-    - bash-completion
-    - kexec-tools
-    - sos 
-    - psacct
-    - nfs-utils
-
+#- name: install the required dependencies for OpenShift node
+#  yum:
+#    name: "{{ item }}"
+#    state: present
+#  with_items:
+#    - wget 
+#    - git
+#    - net-tools
+#    - bind-utils
+#    - iptables-services
+#    - bridge-utils
+#    - bash-completion
+#    - kexec-tools
+#    - sos 
+#    - psacct
+#    - nfs-utils
+#
 - name: set hosts for all the nodes in the OpenShift cluster
   template:
-    src: hosts
+    src: hosts.j2
     dest: /etc/hosts
-
-- name: create the storage for origin
-  vg: "{{ os_vg }}"
-  pv: "{{ os_dev }}"
-
-- name: create the lv for origin
-  vg: "{{ os_vg }}"
-  lv: "{{ os_lv }}"
-  size: 100%FREE
-
-- name: format the lv for origin
-  filesystem:
-    fstype: xfs
-    dev: "/dev/{{ os_vg }}/{{ os_lv }}"
-
-- name: mount the lv for os storage
-  mount:
-    path: /var/lib/origin/openshift.local.volumes
-    src: "/dev/{{ os_vg }}/{{ os_lv }}"
-    fstype: xfs
-    state: mounted
-
+#
+#- name: create the storage for origin
+#  lvg:
+#    vg: "{{ os_vg }}"
+#    pvs: "{{ os_dev }}"
+#
+#- name: create the lv for origin
+#  lvol:
+#    vg: "{{ os_vg }}"
+#    lv: "{{ os_lv }}"
+#    size: 100%FREE
+#
+#- name: format the lv for origin
+#  filesystem:
+#    fstype: xfs
+#    dev: "/dev/{{ os_vg }}/{{ os_lv }}"
+#
+#- name: mount the lv for os storage
+#  mount:
+#    path: /var/lib/origin/openshift.local.volumes
+#    src: "/dev/{{ os_vg }}/{{ os_lv }}"
+#    fstype: xfs
+#    state: mounted
+#
 - name:  copy the rpm file of os39 to all nodes
   copy:
-    src: /tmp/os39.zip
-    dest: /opt
+    src: /opt/installers/os39.zip
+    dest: /tmp/os39.zip
 
 - name: unarchive the rpm files to the /opt/
   unarchive:

@@ -9,4 +9,4 @@
   service: 
     name: dnsmasq
     state: started
-    enable: yes
+    enabled: yes

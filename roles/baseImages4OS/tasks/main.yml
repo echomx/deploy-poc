@@ -10,6 +10,13 @@
       dest: "{{ store_path }}/"
       remote_src: yes
   - name: copy the script used to push images from local to harbor
+    template:
+      src:  import-baseimage.sh.j2
+      dest: /tmp/import-baseimage.sh
+      mode: 0744
 
 
-  - name: execute the script to pu 
+  - name: execute the script to push the images to the harbor
+    shell: ./import-baseimage.sh 
+    args:
+      chdir: /tmp

@@ -16,6 +16,10 @@
       state: directory
       mode: 0755
   
+  - name: mv the original repo to bak
+    shell: mv *.repo bak/
+    args:
+      chdir: /etc/yum.repos.d/
 
   - name: set the repo for the os
     template: 

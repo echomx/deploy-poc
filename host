@@ -23,15 +23,15 @@
 
 #nfs server
 [nfsserver]
-10.70.94.96
+10.70.94.99
 
 #ldap server
 [ldapserver]
-10.70.94.96
+10.70.94.99
 
 #harbor server
 [harbors]
-10.70.94.96 hostname=others
+10.70.94.99 hostname=others
 #clair-plus server
 #[clair-plusserver]
 #10.70.94.195

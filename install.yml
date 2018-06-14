@@ -3,35 +3,38 @@
 # Before deploy OpenShift
 
 #- name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
-#  hosts: all
+#  hosts: harbors 
 #  roles:
 #    - repoconfigure
 #    - docker1.13.1 
 #    - sethostname 
 #    - expoter_install
-
-
+#
+#
 #- name: install LDAP
-#    hosts: ldapserver
-#    roles:
-#      - ldap 
-#- name: install harbor
-
-#  - name: install ldap
+#  hosts: ldapserver
+#  roles:
+#    - ldap 
+#
+#- name: install harbor and push the images requied during the OpenShift deployment 
 #  hosts: harbors
 #  roles:
 #    - docker-compose
 #    - harbor
+#    - dnsmasqinstall
+#    - dnsconfigure
+#    - baseImages4OS
 
-- name: prepare for the openshift node
-  hosts: oscluster
-  roles:
-    - os_node_initial
+#- name: prepare for the openshift node
+#  hosts: oscluster
+#  roles:
+#    - os_node_initial
+#
 
 - name: generate the inventory for deployer and deploy Openshift
-  hosts: deployer
+  hosts: deployers
   roles:
-    - os_inventory
+#    - os_inventory
     - os_deploy
 
 
@@ -41,21 +44,11 @@
 
 # After OpenShift deployed
 
-#
- # - name: set the hostname 
- #   hosts: all 
- #   #gather_facts: no
- #   roles:
- #     #- sethostname 
- #     #- expoter_install
- #     #- repoconfigure
- #     - docker1.13.1
- # - name: install nfs server
- #   hosts: nfsserver
- #   roles:
- #     - nfs
-- name: generate the inventory for OpenShift
-  hosts: deployers
-  roles:
-    - os_inventory
-    
+#Deploy Caasportal
+
+
+#Deploy Prometheus
+
+
+#Deploy EFK
+
