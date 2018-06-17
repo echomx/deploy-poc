@@ -1,0 +1,10 @@
+[Unit]
+Description=NFS interface service
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/startNfs.sh
+ExecStop=/usr/local/bin/stopNfs.sh
+
+[Install]
+WantedBy=multi-user.target

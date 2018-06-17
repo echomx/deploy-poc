@@ -1,0 +1,4 @@
+#!/bin/bash
+pid=`netstat -tlnp|grep {{ nfs_port }}|awk '{print $NF}'|awk -F/ '{print $1}'`
+kill -s 9 $pid
+
