@@ -34,15 +34,16 @@ os_lv: origin-lv
 
 #CaaS Portal info
 caas_project: caasportal
+hcenter_url: demo.ansible.com
+muddle_url: portal.ansible.com
 muddle_tag: muddle-secret:v8
 hcenter_tag: hcenter-caas:v10
+license_key: askdlfaklsd
+####not changed frequently########3
 mysql_tag: mysql:5.5utf8
 muddle_ha_tag: caas-haproxy:v3 
 hcenter_ha_tag: agama-ha:v2
 redis_tag: redis:3.2
-license_key: askdlfaklsd
-hcenter_url: demo.ansible.com
-muddle_url: portal.ansible.com
 
 
 #prometheus

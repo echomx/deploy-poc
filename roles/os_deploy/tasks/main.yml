@@ -8,4 +8,6 @@
 #  shell: ansible-playbook -i /opt/inventory /opt/openshift-ansible39/playbooks/prerequisites.yml > /tmp/os_requirment.log
 
 - name: execute the play-book to deploy OpenShift according to the inventory generated
-  shell: ansible-playbook -i /opt/inventory /opt/openshift-ansible39/playbooks/deploy_cluster.yml -vvv > /tmp/os_deploy.log
+  shell: ansible-playbook -i /opt/inventory /opt/openshift-ansible39/playbooks/deploy_cluster.yml   > /tmp/os_deploy.log
+- name: grant cluster privileges 
+  shell: oadm policy add-cluster-role-to-user cluster-admin admin

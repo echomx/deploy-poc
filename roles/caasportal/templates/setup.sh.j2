@@ -20,6 +20,7 @@ oc project {{ caas_project }}
 #create the secret for pulling images
 oc create secret docker-registry deploycaas -n {{ caas_project }}--docker-username=${HARBOR_USER} --docker-password={{ os_admin_password }} --docker-email="admin@example.com" --docker-server="http://{{ harbor_url }}/"
 
+oc create configmap caas-hcenter-config  --fromfile=caas.config.js
 #create the PV and PVC used in deploy
 oc create -f caasdeploy_persistent.yml
 
@@ -29,7 +30,6 @@ oc create -f caasdeploy_persistent.yml
 
 oc create -f caasdeploy_pods.yml
 
-#create nodeport for Redis, MySQL
 
 
 #modify the environment variables of muddle

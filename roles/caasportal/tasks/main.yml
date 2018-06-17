@@ -27,8 +27,12 @@
     src: setup.sh.j2
     dest: /tmp/prometheus/setup.sh
     mode: 0744
-
-
+- name: copy the configmapfile
+  file:
+    src: caas.config.js
+    dest: /tmp/prometheus/caas.config.js
+    mode: 0644
+ 
 - name: excute the shell to create pv pvc dc svc route
   shell: ./setup.sh
   args:
