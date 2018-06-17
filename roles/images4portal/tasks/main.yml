@@ -1,0 +1,22 @@
+---
+  - name: copy the base images needed during caasportal Deployment
+    copy: 
+      src: /opt/installers/portal.zip
+      dest: /tmp/
+  
+  - name: unarchive the images to the harbor data 
+    unarchive: 
+      src: /tmp/portal.zip
+      dest: "{{ store_path }}/"
+      remote_src: yes
+  - name: copy the script used to push images from local to harbor
+    template:
+      src:  import-portal.sh.j2
+      dest: /tmp/import-portal.sh
+      mode: 0754
+
+
+  - name: execute the script to push the images to the harbor
+    shell: ./import-portal.sh
+    args:
+      chdir: /tmp

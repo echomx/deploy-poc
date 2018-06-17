@@ -18,6 +18,7 @@ ldap_admin_password_encrypted: Qml1Qml1Qml1Cg==
 #harbor info
 harbor_url: harbor.ansible.com
 harbor_password: Biu_Biu_biu 
+harbor_password_encrypted: Biu_Biu_biu 
 harbor_dev: /dev/xvde
 store_path: /data
 
@@ -36,8 +37,8 @@ os_lv: origin-lv
 caas_project: caasportal
 hcenter_url: demo.ansible.com
 muddle_url: portal.ansible.com
-muddle_tag: muddle-secret:v8
-hcenter_tag: hcenter-caas:v10
+muddle_tag: muddle:hbscanv2 
+hcenter_tag: hcenter-caas:v2
 license_key: askdlfaklsd
 ####not changed frequently########3
 mysql_tag: mysql:5.5utf8

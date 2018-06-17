@@ -7,6 +7,7 @@
 
 
 - name: copy the other files generated from template-pods
+  template:
     src: caasdeploy_template_pods.yml.j2
     dest: /tmp/caasportal/caasdeploy_pods.yml
     mode: 0644
@@ -25,12 +26,12 @@
 - name: copy setup.sh
   template:
     src: setup.sh.j2
-    dest: /tmp/prometheus/setup.sh
+    dest: /tmp/caasportal/setup.sh
     mode: 0744
 - name: copy the configmapfile
-  file:
+  copy:
     src: caas.config.js
-    dest: /tmp/prometheus/caas.config.js
+    dest: /tmp/caasportal/caas.config.js
     mode: 0644
  
 - name: excute the shell to create pv pvc dc svc route

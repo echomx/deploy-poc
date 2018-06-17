@@ -16,7 +16,7 @@
 #  roles:
 #    - ldap 
 #
-#- name: install harbor and push the images requied during the OpenShift deployment 
+#- name: install harbor and push the images requied during the deployment 
 #  hosts: harbors
 #  roles:
 #    - docker-compose
@@ -24,10 +24,12 @@
 #    - dnsmasqinstall
 #    - dnsconfigure
 #    - baseImages4OS
-- name: install NFS
-  hosts: nfsserver
-  roles:
-    - nfs
+#    - baseimage4caasportal
+#    - images4portal
+#- name: install NFS
+#  hosts: nfsserver
+#  roles:
+#    - nfs
 #- name: prepare for the openshift node
 #  hosts: oscluster
 #  roles:
@@ -48,8 +50,10 @@
 # After OpenShift deployed
 
 #Deploy Caasportal
-
-
+- name: deploy the caasportal
+  hosts: deployers
+  roles: 
+    - caasportal 
 #Deploy Prometheus
 
 

@@ -14,13 +14,14 @@ curl -X GET 'http://{{ groups.nfsserver[0] }}:{{ nfs_port }}/nfs/create?volName=
 curl -X GET 'http://{{ groups.nfsserver[0] }}:{{ nfs_port }}/nfs/create?volName=caasportalmysqldata&volSize=10240'
 
 # login to Openshift
-oc login https://{{ groups.masters[0] }} --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true && oc new-project {{ caas_project }}
-oc project {{ caas_project }}
+oc login https://{{ groups.masters[0] }}:8443 --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true 
+oc project {{ caas_project }} || oc new-project {{ caas_project }} 
 
 #create the secret for pulling images
-oc create secret docker-registry deploycaas -n {{ caas_project }}--docker-username=${HARBOR_USER} --docker-password={{ os_admin_password }} --docker-email="admin@example.com" --docker-server="http://{{ harbor_url }}/"
+oc delete secret deploycaas
+oc create secret docker-registry deploycaas -n {{ caas_project }} --docker-username=admin --docker-password={{ harbor_password  }} --docker-email="admin@example.com" --docker-server="http://{{ harbor_url }}/"
 
-oc create configmap caas-hcenter-config  --fromfile=caas.config.js
+oc create configmap caas-hcenter-config  --from-file=caas.config.js
 #create the PV and PVC used in deploy
 oc create -f caasdeploy_persistent.yml
 
@@ -31,12 +32,16 @@ oc create -f caasdeploy_persistent.yml
 oc create -f caasdeploy_pods.yml
 
 
+oc expose dc caas-mysql --type=NodePort
+oc expose dc caas-redis --type=NodePort
 
+#import the sql
+mysqlpod=`oc get pods|grep mysql|awk '{print $1}'`
+oc cp hcpaas_schema.sql $mysqlpod:/tmp/
+#TODO import data and modify environment of muddle
+#oc rsh $mysqlpod 'mysql -uroot -padminpwd hcpaas < hcpaas_schema.sql'
 #modify the environment variables of muddle
 
 
 
-#create the route for muddle and hcenter 
 
-
-#import the sql

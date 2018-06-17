@@ -737,7 +737,7 @@ CREATE TABLE `work_order` (
   PRIMARY KEY (`work_order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-INSERT INTO `os_loc_info` VALUES ('4', '4', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password_encripted }}', 'htpasswd', '.{{ os_subdomain }}', 'ws://{{ muddle_url }}', '{{ groups.nfsserver[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password_encrypted }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', '{{ harbor_url }}', 'http://{{ groups.nfsserver[0] }}:{{ nfs_port }}', '{{ groups.nfsserver[0] }}', 'http://10.70.68.93:30021', 'es-test.hnadocker.cn', '172.30.9.251:5000', 'http://10.70.67.199:80', 1);
+INSERT INTO `os_loc_info` VALUES ('4', '4', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password_encrypted }}', 'htpasswd', '.{{ os_subdomain }}', 'ws://{{ muddle_url }}', '{{ groups.nfsserver[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password_encrypted }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', '{{ harbor_url }}', 'http://{{ groups.nfsserver[0] }}:{{ nfs_port }}', '{{ groups.nfsserver[0] }}', 'http://10.70.68.93:30021', 'es-test.hnadocker.cn', '172.30.9.251:5000', 'http://10.70.67.199:80', 1);
 
 DROP TABLE IF EXISTS `template`;
 CREATE TABLE `template` (
