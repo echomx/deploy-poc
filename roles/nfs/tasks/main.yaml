@@ -1,27 +1,21 @@
 ---
   - name: copy the nfs installer
     copy: 
-      src: /opt/installers/{{ item }}
-      dest: /tmp/{{ item }}
+      src: "/opt/installers/{{ item }}"
+      dest: "/tmp/{{ item }}"
     with_items:
     - convert2nfs.zip
     - nfsenv.zip
 
   - name: unarchive the nfs installer
     unarchive: 
-      src: /tmp/{{ item }}
+      src: "/tmp/{{ item }}"
       dest: /opt/
       remote_src: yes
     with_items:
     - convert2nfs.zip
     - nfsenv.zip
 
-  #- name: copy the pip install 
-  #  copy: 
-  #    src: requirements.txt
-  #    dest: /tmp/requirements.txt
-  #    mode: 0644
-  #- name: create vg for nfs
     
   - name: create the vg for nfs
     lvg:
@@ -46,25 +40,49 @@
       enabled: yes
     with_items:
     - rpcbind
-    - nfs
-  
+    - nfs 
 
-#  - name: install the required pip
-#    pip:
-#      requirements: /tmp/requirements.txt
   
   - name: preinstall-add privilege
     shell:  chmod a+x bin/* 
     args:
       chdir: /opt/convert2nfs
 
+  - name: create directory /nfs
+    file:
+      path: /nfs
+      state: directory
+      mode: 0755
+
   - name: install the interface
-    shell:  python setup.py install
+    shell: source /opt/nfsenv/bin/activate &&  python setup.py install
     args:
       chdir: /opt/convert2nfs
 
+  - name: add the start  file
+    template:
+      src: startNfs.sh.j2
+      dest: /usr/local/bin/startNfs.sh
+      mode: 0751
+
+
+  - name: add the  stop file
+    template:
+      src: stopNfs.sh.j2
+      dest: /usr/local/bin/stopNfs.sh
+      mode: 0751
+
+  - name: add the service file
+    copy:
+      src: nfsinterface.service
+      dest: /usr/lib/systemd/system/nfsinterface.service
+      mode: 0644
+  - name: reload the service
+    shell: systemctl daemon-reload
+
   - name: start the convert2nfs
-    shell:  uwsgi -d /var/log/convert2nfs.log --http-socket :{{ nfs_port }} --venv /opt/nfsenv --pecan config.py
-    args:
-      chdir: /opt/convert2nfs
+    service:
+      name: nfsinterface.service
+      state: started
+      enabled: yes
 

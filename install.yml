@@ -24,18 +24,21 @@
 #    - dnsmasqinstall
 #    - dnsconfigure
 #    - baseImages4OS
-
+- name: install NFS
+  hosts: nfsserver
+  roles:
+    - nfs
 #- name: prepare for the openshift node
 #  hosts: oscluster
 #  roles:
 #    - os_node_initial
 #
 
-- name: generate the inventory for deployer and deploy Openshift
-  hosts: deployers
-  roles:
+#- name: generate the inventory for deployer and deploy Openshift
+#  hosts: deployers
+#  roles:
 #    - os_inventory
-    - os_deploy
+#    - os_deploy
 
 
 
