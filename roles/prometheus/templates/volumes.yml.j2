@@ -33,7 +33,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: alertmanager 
-  namespace: kube-systems
+  namespace: prometheus
 spec:
   accessModes:
   - ReadWriteMany
@@ -47,7 +47,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: promrule
-  namespace: kube-systems
+  namespace: prometheus
 spec:
   accessModes:
   - ReadWriteMany

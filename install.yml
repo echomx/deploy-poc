@@ -50,12 +50,14 @@
 # After OpenShift deployed
 
 #Deploy Caasportal
-- name: deploy the caasportal
-  hosts: deployers
-  roles: 
-    - caasportal 
+#- name: deploy the caasportal
+#  hosts: deployers
+#  roles: 
+#    - caasportal 
 #Deploy Prometheus
-
-
+- name: deploy the prometheus
+  hosts: deployers
+  roles:
+    - prometheus
 #Deploy EFK
 

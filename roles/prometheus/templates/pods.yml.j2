@@ -4,7 +4,7 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   name: prometheus
-  namespace: kube-systems
+  namespace: prometheus
   labels:
     name: prometheus-deployment
 spec:
@@ -13,7 +13,7 @@ spec:
     app: prometheus
   template:
     metadata:
-      namespace: kube-systems
+      namespace: prometheus
       labels:
         app: prometheus
     spec:
@@ -68,7 +68,7 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   name: alertmanager
-  namespace: kube-systems
+  namespace: prometheus
   labels:
     name: alertmanager
 spec:
@@ -132,12 +132,19 @@ spec:
     app: grafana
     deploymentconfig: grafana
   template:
+    metadata:
       labels:
         app: grafana
+        deploymentconfig: grafana
     spec:
+      volumes:
+        - name: grafana-2
+          emptyDir: {}
+        - name: grafana-3
+          emptyDir: {}
       containers:
         - name: grafana
-          image: IfNotPresent
+          image: {{ harbor_url }}/openshfit/grafana
           ports:
             - containerPort: 3000
               protocol: TCP
@@ -145,18 +152,24 @@ spec:
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: {{ grafana_password }}
           resources: {}
+          volumeMounts:
+            - name: grafana-2
+              mountPath: /var/lib/grafana
+            - name: grafana-3
+              mountPath: /var/log/grafana
           terminationMessagePath: /dev/termination-log
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
+      securityContext: {}
 #follows are the services
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: alertmanager
-  namespace: kube-systems
+  namespace: prometheus
   labels:
     app: alertmanager
 spec:
@@ -174,7 +187,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
-  namespace: kube-systems
+  namespace: prometheus
   labels:
     app: prometheus
 spec:
@@ -191,7 +204,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: grafana
-  namespace: kube-systems
+  namespace: prometheus
   labels:
     app: grafana
 spec:
@@ -202,7 +215,6 @@ spec:
       targetPort: 3000
   selector:
     deploymentconfig: grafana
-  clusterIP: 172.30.106.25
   type: ClusterIP
 
 #Follows are the routes 
@@ -211,7 +223,7 @@ apiVersion: v1
 kind: Route
 metadata:
   name: grafana
-  namespace: kube-systems
+  namespace: prometheus
 spec:
   host: {{ grafana_url }}
   to:
@@ -225,7 +237,7 @@ apiVersion: v1
 kind: Route
 metadata:
   name: prometheus
-  namespace: kube-systems
+  namespace: prometheus
 spec:
   host: {{ prometheus_url }}
   to:
@@ -240,7 +252,7 @@ apiVersion: v1
 kind: Route
 metadata:
   name: alertmanager
-  namespace: kube-systems
+  namespace: prometheus
 spec:
   host: {{ alertmanager_url }}
   to:

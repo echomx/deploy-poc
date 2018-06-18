@@ -7,8 +7,8 @@
 
 - name: copy the config file of alertmanager
   copy:
-    src: {{ item }}
-    dest: /tmp/prometheus/config/{{ item }}
+    src: "{{ item }}"
+    dest: "/tmp/prometheus/config/{{ item }}"
     mode: 0644
   with_items:
   - config.yml
