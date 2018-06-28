@@ -122,5 +122,6 @@ scrape_configs:
   static_configs:
 {% for host in groups.all %}
     - targets: ['{{ host }}:9100']
-      labels: {{ hostname }}
+      labels: 
+        alias: {{ hostname }}
 {% endfor %}
