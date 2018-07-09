@@ -29,7 +29,7 @@ spec:
             claimName: promrule
       containers:
         - name: prometheus
-          image: {{ harbor_url }}/openshift/prometheus:v1.7.1'
+          image: {{ harbor_url }}/openshift/prometheus:v1.8.1
           command:
             - /bin/prometheus
           args:
@@ -61,7 +61,7 @@ spec:
       restartPolicy: Always
       dnsPolicy: ClusterFirst
       nodeSelector:
-        kubernetes.io/hostname: {{ hostvars[groups['node'][0]].hostname }}
+        kubernetes.io/hostname: {{ hostvars[groups.nodes[1]].hostname }}	 
 # choose the first node
 ---
 apiVersion: v1
@@ -116,14 +116,14 @@ spec:
       restartPolicy: Always
       dnsPolicy: ClusterFirst
       nodeSelector:
-        kubernetes.io/hostname: {{ hostvars[groups['node'][0]].hostname }}
+        kubernetes.io/hostname: {{ hostvars[groups.nodes[1]].hostname }}
         #choose the first node
 ---
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
   name: grafana
-  namespace: kube-systems
+  namespace: prometheus 
   labels:
     app: grafana
 spec:
@@ -144,7 +144,7 @@ spec:
           emptyDir: {}
       containers:
         - name: grafana
-          image: {{ harbor_url }}/openshfit/grafana
+          image: {{ harbor_url }}/openshift/grafana
           ports:
             - containerPort: 3000
               protocol: TCP

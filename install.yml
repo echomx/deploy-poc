@@ -39,11 +39,11 @@
  #   - docker1.13.1
 #
 
-- name: generate the inventory for deployer and deploy Openshift
-  hosts: deployers
-  roles:
-    - os_inventory
-    - os_deploy
+#- name: generate the inventory for deployer and deploy Openshift
+#  hosts: deployers
+#  roles:
+#    - os_inventory
+#    - os_deploy
 
 
 
@@ -58,9 +58,9 @@
 #  roles: 
 #    - caasportal 
 #Deploy Prometheus
-#- name: deploy the prometheus
-#  hosts: deployers
-#  roles:
-#    - prometheus
+- name: deploy the prometheus
+  hosts: deployers
+  roles:
+    - prometheus
 #Deploy EFK
 

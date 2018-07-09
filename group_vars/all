@@ -13,7 +13,6 @@ ldap_domain: ansible.org
 ldap_top: org
 ldap_second: ansible
 ldap_admin_password: BiuBiuBiu 
-ldap_admin_password_encrypted: Qml1Qml1Qml1Cg==
 
 #harbor info
 harbor_url: harbor.ansible.com
@@ -25,7 +24,6 @@ store_path: /data
 #Openshift info
 os_entryporint: 10.70.94.90
 os_admin_password: HahahahaHa
-os_admin_password_encrypted: SGFoYWhhaGFIYQo=
 os_subdomain: subdomain.com
 os_vg: origin-vg
 os_dev: /dev/xvdc

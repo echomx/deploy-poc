@@ -135,7 +135,7 @@
           - name: EGG_SERVER_ENV
             value: caas
           - name: CAAS_BACKEND
-            value: caas-muddle
+            value: caas-haproxy
           - name: CAAS_BACKEND_PORT
             value: "8080"
           - name: CLIENT_LOGO
@@ -233,10 +233,10 @@
             protocol: TCP
           resources:
             limits:
-              cpu: 500m
+              cpu: 2000m
               memory: 2Gi
             requests:
-              cpu: 120m
+              cpu: 1000m
               memory: 1Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File

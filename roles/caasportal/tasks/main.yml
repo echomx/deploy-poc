@@ -35,6 +35,4 @@
     mode: 0644
  
 - name: excute the shell to create pv pvc dc svc route
-  shell: ./setup.sh
-  args:
-    chdir: /tmp/caasportal/
+  shell: /tmp/caasportal/setup.sh
