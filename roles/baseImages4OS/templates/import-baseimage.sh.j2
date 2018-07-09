@@ -13,6 +13,18 @@ curl -X POST \
   "prevent_vulnerable_images_from_running": false,
   "automatically_scan_images_on_push": true
 }'
+curl -X POST \
+  http://{{ harbor_url }}/api/projects \
+  -H 'authorization: Basic '$auth'' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+  "project_name": "cockpit",
+  "public": 1,
+  "enable_content_trust": true,
+  "prevent_vulnerable_images_from_running": false,
+  "automatically_scan_images_on_push": true
+}'
 #import the image
 cd /{{ store_path }}/os39-base-images
 docker login {{ harbor_url }} -u admin -p {{ harbor_password }}

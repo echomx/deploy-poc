@@ -17,6 +17,4 @@
 
 
   - name: execute the script to push the images to the harbor
-    shell: ./import-baseimagecaasportal.sh
-    args:
-      chdir: /tmp
+    shell: /tmp/import-baseimagecaasportal.sh

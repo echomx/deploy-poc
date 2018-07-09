@@ -14,7 +14,7 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 #import the image
-cd /{{ store_path }}/baseimage4caasportal
+cd {{ store_path }}/baseimage4caasportal
 docker login {{ harbor_url }} -u admin -p {{ harbor_password }}
 for i in `ls *.tar`
 do

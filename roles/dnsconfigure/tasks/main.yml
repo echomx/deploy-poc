@@ -9,4 +9,4 @@
   shell: sed -i '/^nameserver/d' /etc/resolv.conf
 
 - name: set the dns server to current host
-  shell: echo "nameserver ansible_default_ipv4.address" >> /etc/resolv.conf  
+  shell: echo "nameserver {{ ansible_default_ipv4.address }}" >> /etc/resolv.conf  

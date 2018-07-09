@@ -1,0 +1,4 @@
+[local_os]
+name=local_os
+baseurl=file:///opt/os39/
+gpgcheck=0

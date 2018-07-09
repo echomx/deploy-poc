@@ -1,11 +1,18 @@
-- name: copy the template
-  template: 
-    src: test.j2
-    dest: /tmp/test
-- name: execute command
-  shell: netstat -tlnp|grep 100022 
-  register: result
-  ignore_errors: yes
-- name: echo the result
-  debug:
-    msg={{ result.rc }}
+#- name: copy the template
+#  template: 
+#    src: test.j2
+#    dest: /tmp/test
+#- name: execute command
+#  shell: netstat -tlnp|grep 100022 
+#  register: result
+#  ignore_errors: yes
+#- name: echo the result
+#  debug:
+#    msg={{ result.rc }}
+#- name: check the ip1 
+#  debug:
+#    msg={{ groups.nodes[0] }}
+#- name: check the ip2
+#  debug:
+#    msg={{ groups.nodes[1] }}
+

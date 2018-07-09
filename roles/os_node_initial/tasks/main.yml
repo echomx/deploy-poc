@@ -1,20 +1,4 @@
 ---
-- name: install the required dependencies for OpenShift node
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - wget 
-    - git
-    - net-tools
-    - bind-utils
-    - iptables-services
-    - bridge-utils
-    - bash-completion
-    - kexec-tools
-    - sos 
-    - psacct
-    - nfs-utils
 
 - name: set hosts for all the nodes in the OpenShift cluster
   template:
@@ -54,3 +38,26 @@
     src: /tmp/os39.zip
     dest: /opt/
     remote_src: yes
+
+- name: configure the OpenShift 3.9 yum source  
+  file:
+    sc: os.repo 
+    dest: /etc/yum.repos.d/os.repo
+    
+
+- name: install the required dependencies for OpenShift node
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wget 
+    - git
+    - net-tools
+    - bind-utils
+    - iptables-services
+    - bridge-utils
+    - bash-completion
+    - kexec-tools
+    - sos 
+    - psacct
+    - nfs-utils
