@@ -20,6 +20,7 @@
     shell: mv *.repo bak/
     args:
       chdir: /etc/yum.repos.d/
+    ignore_errors: yes
 
   - name: set the repo for the os
     template: 

@@ -1,9 +1,9 @@
 ---
-#- name: unarchive the openshift ansible to deployer
-#  unarchive:
-#    src: /opt/installers/openshift-ansible39.tar
-#    dest: /opt/
-#    remote_src: yes
+- name: unarchive the openshift ansible to deployer
+  unarchive:
+    src: /opt/installers/openshift-ansible39.tar
+    dest: /opt/
+    remote_src: yes
 #- name: execute the play-book to check the requirments of  OpenShift according to the inventory generated
 #  shell: ansible-playbook -i /opt/inventory /opt/openshift-ansible39/playbooks/prerequisites.yml > /tmp/os_requirment.log
 
