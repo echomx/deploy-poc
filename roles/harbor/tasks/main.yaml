@@ -61,11 +61,10 @@
     args:
       chdir: "{{ store_path }}/harbor/"
 
-  - name: check whether the ldapserver is running on the same server
-    shell: netstat -tnlp|grep 389
-    register: result
-    ignore_errors: yes 
+#  - name: check whether the ldapserver is running on the same server
+#    shell: netstat -tnlp|grep 389
+#    register: result
+#    ignore_errors: yes 
   
   - name: add ldapserver to harbor if they run on the save server
     shell: docker network connect harbor_harbor ldapserver
-    when:  result.rc  == 0 

@@ -1,3 +1,2 @@
-address=/{{ harbor_url }}/{{ groups.harbors[0] }}
+address=/harbor.{{ os_subdomain }}/{{ groups.storage[0] }}
 address=/.{{ os_subdomain }}/{{ groups.masters[0] }}
-address=/.abc.com/{{ groups.masters[0] }}

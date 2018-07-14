@@ -2,7 +2,7 @@
 #create project for os_deploy
 auth=`echo admin:{{ harbor_password }}|tr -d '\n'|base64`
 curl -X POST \
-  http://{{ harbor_url }}/api/projects \
+  http://harbor.{{ os_subdomain }}/api/projects \
   -H 'authorization: Basic '$auth'' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -14,7 +14,7 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 curl -X POST \
-  http://{{ harbor_url }}/api/projects \
+  http://harbor.{{ os_subdomain }}/api/projects \
   -H 'authorization: Basic '$auth'' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -26,16 +26,16 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 #import the image
-docker load --input {{ store_path }}/os39-base-images/kubernetes_latest.tar
-docker tag cockpit/kubernetes:latest {{ harbor_url }}/cockpit/kubernetes:latest 
-docker push {{ harbor_url }}/cockpit/kubernetes:latest
-rm -f {{ store_path }}/os39-base-images/kubernetes_latest.tar
 cd {{ store_path }}/os39-base-images
-docker login {{ harbor_url }} -u admin -p {{ harbor_password }}
+docker load --input {{ store_path }}/os39-base-images/kubernetes_latest.tar
+docker tag cockpit/kubernetes:latest harbor.{{ os_subdomain }}/cockpit/kubernetes:latest 
+docker push harbor.{{ os_subdomain }}/cockpit/kubernetes:latest
+rm -f {{ store_path }}/os39-base-images/kubernetes_latest.tar
+docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
 for i in `ls *.tar`
 do
    image=openshift/`echo ${i%.*}|tr '_' ':'`
-   targetImage="{{ harbor_url }}/$image"
+   targetImage="harbor.{{ os_subdomain }}/$image"
    docker load --input ${i}
    docker tag $image  $targetImage
    docker push $targetImage

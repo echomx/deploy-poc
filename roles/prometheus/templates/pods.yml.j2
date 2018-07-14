@@ -29,7 +29,7 @@ spec:
             claimName: promrule
       containers:
         - name: prometheus
-          image: {{ harbor_url }}/openshift/prometheus:v1.8.1
+          image: harbor.{{ os_subdomain }}/openshift/prometheus:v1.8.1
           command:
             - /bin/prometheus
           args:
@@ -37,7 +37,7 @@ spec:
             - '-storage.local.path=/prometheus'
             - '-storage.local.retention=168h'
             - '-alertmanager.url=http://alertmanager:9093'
-            - '-web.external-url=http://{{ prometheus_url }}'
+            - '-web.external-url=http://prometheus.{{ os_subdomain }}'
           ports:
             - containerPort: 9090
               protocol: TCP
@@ -61,7 +61,7 @@ spec:
       restartPolicy: Always
       dnsPolicy: ClusterFirst
       nodeSelector:
-        kubernetes.io/hostname: {{ hostvars[groups.nodes[1]].hostname }}	 
+        kubernetes.io/hostname: {{ hostvars[groups.nodes[0]].hostname }}	 
 # choose the first node
 ---
 apiVersion: v1
@@ -89,13 +89,13 @@ spec:
             claimName: alertmanager
       containers:
         - name: alertmanager
-          image: {{ harbor_url }}/openshift/alertmanager
+          image: harbor.{{ os_subdomain }}/openshift/alertmanager
           command:
             - /bin/alertmanager
           args:
             - '-config.file=/etc/alertmanager/config.yml'
             - '-storage.path=/alertmanager'
-            - '-web.external-url=http://{{ alertmanager_url }}/'
+            - '-web.external-url=http://alertmanager.{{ os_subdomain }}/'
           ports:
             - containerPort: 9093
               protocol: TCP
@@ -116,7 +116,7 @@ spec:
       restartPolicy: Always
       dnsPolicy: ClusterFirst
       nodeSelector:
-        kubernetes.io/hostname: {{ hostvars[groups.nodes[1]].hostname }}
+        kubernetes.io/hostname: {{ hostvars[groups.nodes[0]].hostname }}
         #choose the first node
 ---
 apiVersion: v1
@@ -144,7 +144,7 @@ spec:
           emptyDir: {}
       containers:
         - name: grafana
-          image: {{ harbor_url }}/openshift/grafana
+          image: harbor.{{ os_subdomain }}/openshift/grafana
           ports:
             - containerPort: 3000
               protocol: TCP
@@ -225,7 +225,7 @@ metadata:
   name: grafana
   namespace: prometheus
 spec:
-  host: {{ grafana_url }}
+  host: grafana.{{ os_subdomain }}
   to:
     kind: Service
     name: grafana
@@ -239,7 +239,7 @@ metadata:
   name: prometheus
   namespace: prometheus
 spec:
-  host: {{ prometheus_url }}
+  host: prometheus.{{ os_subdomain }}
   to:
     kind: Service
     name: prometheus
@@ -254,7 +254,7 @@ metadata:
   name: alertmanager
   namespace: prometheus
 spec:
-  host: {{ alertmanager_url }}
+  host: alertmanager.{{ os_subdomain }}
   to:
     kind: Service
     name: alertmanager

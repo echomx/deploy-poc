@@ -15,14 +15,11 @@ ldap_second: ansible
 ldap_admin_password: BiuBiuBiu 
 
 #harbor info
-harbor_url: harbor.ansible.com
 harbor_password: Biu_Biu_biu 
-harbor_password_encrypted: Biu_Biu_biu 
 harbor_dev: /dev/xvde
 store_path: /data
 
 #Openshift info
-os_entryporint: 10.70.94.90
 os_admin_password: HahahahaHa
 os_subdomain: subdomain.com
 os_vg: origin-vg
@@ -33,8 +30,6 @@ os_lv: origin-lv
 
 #CaaS Portal info
 caas_project: caasportal
-hcenter_url: demo.ansible.com
-muddle_url: portal.ansible.com
 muddle_tag: muddle:hbscanv2 
 hcenter_tag: hcenter-caas:v2
 license_key: askdlfaklsd
@@ -46,13 +41,9 @@ redis_tag: redis:3.2
 
 
 #prometheus
-alertmanager_url: alertmanager.ansible.com
-prometheus_url: prometheus.ansible.com
-grafana_url: grafana.ansible.com
 grafana_password: Hello_grafana_20180608
 
 #NFS
-nfs_port: 8080
 nfs_dev: /dev/xvdc
 nfs_vg: vg-paas
 

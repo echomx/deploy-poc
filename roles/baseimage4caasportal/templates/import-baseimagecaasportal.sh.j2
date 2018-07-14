@@ -2,7 +2,7 @@
 #create project for os_deploy
 auth=`echo admin:{{ harbor_password }}|tr -d '\n'|base64`
 curl -X POST \
-  http://{{ harbor_url }}/api/projects \
+  http://harbor.{{ os_subdomain }}/api/projects \
   -H 'authorization: Basic '$auth'' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -15,7 +15,7 @@ curl -X POST \
 }'
 #import the image
 cd {{ store_path }}/baseimage4caasportal
-docker login {{ harbor_url }} -u admin -p {{ harbor_password }}
+docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
 for i in `ls *.tar`
 do
    image=caasportal/`echo ${i%.*}|tr '_' ':'`

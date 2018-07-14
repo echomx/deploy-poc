@@ -10,7 +10,7 @@ spec:
     storage: "1024Mi"
   nfs:
     path: /nfs/alertmanager/ 
-    server: {{ groups.nfsserver[0] }}
+    server: {{ groups.storage[0] }}
   persistentVolumeReclaimPolicy: Retain
 
 ---
@@ -25,7 +25,7 @@ spec:
     storage: "2048Mi"
   nfs:
     path: /nfs/prometheusrule 
-    server: {{ groups.nfsserver[0] }}
+    server: {{ groups.storage[0] }}
   persistentVolumeReclaimPolicy: Retain
 
 ---

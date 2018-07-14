@@ -2,7 +2,7 @@
 
 #The IP address or hostname to access admin UI and registry service.
 #DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.
-hostname = {{ harbor_url }}
+hostname = harbor.{{ os_subdomain }}
 
 #The protocol for accessing the UI and token/notification service, by default it is http.
 #It can be set to https if ssl is enabled on nginx.
@@ -64,11 +64,7 @@ harbor_admin_password = {{ harbor_password }}
 auth_mode = ldap_auth
 
 #The url for an ldap endpoint.
-{% if groups.harbors[0] == groups.ldapserver[0] %}
 ldap_url = ldap://ldapserver
-{% else %}
-ldap_url = ldap://{{ groups.ldapserver[0] }}
-{% endif %}
 
 
 #A user's DN who has the permission to search the LDAP/AD server. 
@@ -163,4 +159,4 @@ registry_storage_provider_name = filesystem
 #Refer to https://docs.docker.com/registry/configuration/#storage for all available configuration.
 registry_storage_provider_config =
 # caas web portal address
-web_url = {{ muddle_url }}
+web_url = portalapi.{{ os_subdomain }} 

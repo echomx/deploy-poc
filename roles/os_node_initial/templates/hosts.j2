@@ -3,4 +3,4 @@
 {% for host in groups.all %}
 {{ host }}    {{ hostvars[host].hostname}}
 {% endfor %}
-{{ groups.harbors[0] }} {{ harbor_url }}
+{{ groups.storage[0] }} harbor.{{ os_subdomain }}
