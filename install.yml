@@ -19,7 +19,6 @@
     - dnsmasqinstall
     - dnsconfigure
     - baseImages4OS
-    - baseimage4caasportal
     - images4portal
 
 - name: prepare for the openshift node
