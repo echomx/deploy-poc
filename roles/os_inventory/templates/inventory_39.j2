@@ -32,8 +32,8 @@ openshift_image_tag=v3.9.0
 openshift_version=3.9.0
 
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname={{ groups.masters[0] }}
-openshift_master_cluster_public_hostname={{ groups.masters[0] }}
+openshift_master_cluster_hostname=os-console.{{ os_subdomain }}
+openshift_master_cluster_public_hostname=os-console.{{ os_subdomain }}
 openshift_master_default_subdomain={{ os_subdomain }}
 openshift_router_selector='region=master'
 openshift_registry_selector='region=master'

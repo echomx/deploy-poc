@@ -10,7 +10,7 @@ spec:
     storage: 10Gi
   nfs:
     path: /nfs/caasportalmysqldata
-    server: {{ groups.nfsserver[0] }}
+    server: {{ groups.storage[0] }}
   persistentVolumeReclaimPolicy: Retain
 ---
 apiVersion: v1
@@ -24,7 +24,7 @@ spec:
     storage: 4Gi
   nfs:
     path: /nfs/caasportalredisdata
-    server: {{ groups.nfsserver[0] }}
+    server: {{ groups.storage[0] }}
   persistentVolumeReclaimPolicy: Retain
 ---
 apiVersion: v1

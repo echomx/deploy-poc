@@ -12,33 +12,31 @@ ldap_org: anisble
 ldap_domain: ansible.org
 ldap_top: org
 ldap_second: ansible
-ldap_admin_password: BiuBiuBiu 
+ldap_admin_password: generalcom 
 
 #harbor info
-harbor_password: Biu_Biu_biu 
+harbor_password: Caas12345 
 harbor_dev: /dev/xvde
 store_path: /data
 
 #Openshift info
-os_admin_password: HahahahaHa
+os_admin_password: Caas54321 
 os_subdomain: subdomain.com
 os_vg: origin-vg
 os_dev: /dev/xvdc
 os_lv: origin-lv
 
-
-
 #CaaS Portal info
 caas_project: caasportal
-muddle_tag: muddle:hbscanv2 
-hcenter_tag: hcenter-caas:v2
 license_key: askdlfaklsd
-####not changed frequently########3
-mysql_tag: mysql:5.5utf8
-muddle_ha_tag: caas-haproxy:v3 
-hcenter_ha_tag: agama-ha:v2
+############
+mysql_tag: 5.5utf8
+muddle_tag: v1 
+hcenter_tag: v1 
+muddle_ha_tag: v1
+hcenter_ha_tag: v1
 redis_tag: redis:3.2
-
+omp_tag: v1
 
 #prometheus
 grafana_password: Hello_grafana_20180608

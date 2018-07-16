@@ -4,3 +4,4 @@
 {{ host }}    {{ hostvars[host].hostname}}
 {% endfor %}
 {{ groups.storage[0] }} harbor.{{ os_subdomain }}
+{{ groups.masters[0] }} os-console.{{ os_subdomain }}

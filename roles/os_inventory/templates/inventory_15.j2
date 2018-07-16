@@ -59,9 +59,9 @@ openshift_logging_kibana_ops_nodeselector={"kubernetes.io/hostname": "node1"}
 # for docker
 docker_upgrade=False
 openshift_docker_options="--log-driver=json-file --log-opt max-size=50m -l warn --ipv6=false"
-openshift_docker_insecure_registries={{ harbor_url }}
+openshift_docker_insecure_registries=harbor.{{ os_subdomain }}
 
-oreg_url={{ harbor_url }}/openshift/origin-${component}:${version}
+oreg_url=harbor.{{ os_subdomain }}/openshift/origin-${component}:${version}
 openshift_examples_modify_imagestreams=true
 # 在下载镜像之前，首先选择addition_registry下载镜像
 #openshift_docker_additional_registries=mirror.haihangyun.com

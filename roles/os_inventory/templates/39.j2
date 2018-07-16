@@ -1,5 +1,5 @@
 {{ groups.masters[0] }}
-{{ harbor_url }}
+harbor.{{ os_subdomain }}
 [master]
 {% for host in groups.masters %}
 {{ host }} 

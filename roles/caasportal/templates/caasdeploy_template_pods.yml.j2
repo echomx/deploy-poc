@@ -1,3 +1,95 @@
+  apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: caas-omp
+    name: caas-omp
+    namespace: caasportal
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: caas-omp
+    template:
+      metadata:
+        labels:
+          app: caas-omp
+          deploymentconfig: caas-omp
+        name: caas-omp
+        namespace: caasportal
+      spec:
+        containers:
+        - env:
+          - name: PATH
+            value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          - name: APPS_HOME
+            value: /AppServer
+          - name: TZ
+            value: Asia/Shanghai
+          - name: JAVA_HOME
+            value: /usr/lib/jvm/java-8-openjdk-amd64
+          - name: CA_CERTIFICATES_JAVA_VERSION
+            value: "20140324"
+          - name: JAVA_OPTS
+            value: -Xmx2048m -Xms2048m
+          - name: JAVA_VERSION
+            value: 8u111
+          - name: LANG
+            value: C.UTF-8
+          - name: spring_datasource_druid_bmp_url
+            value: >-
+                jdbc:mysql://caas-mysql:3306/hcpaas_bmp?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+          - name: spring_datasource_druid_portal_url
+            value: >-
+                jdbc:mysql://caas-mysql:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+          - name: spring_redis_host
+            value: caas-redis
+          - name: spring_redis_port
+            value: '6379'
+          - name: spirit_caasUrl
+            value: http://caas-haproxy:8888
+          - name: JAVA_DEBIAN_VERSION
+            value: 8u111-b14-2~bpo8+1
+          image: harbor.{{ os_subdomain }}/caasportal/omp:{{ omp_tag }}
+          imagePullPolicy: Always
+          name: caas-omp
+          ports:
+          - containerPort: 8081
+            hostPort: 8081
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 4000m
+              memory: 4Gi
+            requests:
+              cpu: 2000m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        imagePullSecrets:
+          - name: deploycaas
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: caas-omp
+    name: caas-omp
+    namespace: caasportal
+  spec:
+    ports:
+    - name: 8081-tcp
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      deploymentconfig: caas-omp
+    sessionAffinity: None
+    type: ClusterIP
 ---
   apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
@@ -28,7 +120,7 @@
             value: caas-haproxy
           - name: WEB_PORT
             value: "8888"
-          image: {{ harbor_url }}/{{ caas_project }}/{{ hcenter_ha_tag }}
+          image: harbor.{{ os_subdomain }}/caasportal/agamaha:{{ hcenter_ha_tag }}
           imagePullPolicy: Always
           name: caas-agamaha
           ports:
@@ -73,18 +165,22 @@
         containers:
         - env:
           - name: WEB_SERVER
-            value: 192.168.210.194
+            value: caas-muddle 
           - name: WEB_PORT
             value: "8080"
           - name: NFS_URL
-            value: {{ groups.nfsserver[0] }}
+            value: {{ groups.storage[0] }} 
           - name: NFS_PORT
             value: "8080"
           - name: OS_BJ_URL
-            value: {{ groups.masters[0] }} 
+            value: os-console.{{ os_subdomain }} 
           - name: LANG
             value: C.UTF-8
-          image: {{ harbor_url }}/{{ caas_project }}/{{ muddle_ha_tag }}
+          - name: OMP_SERVER
+            value: caas-omp
+          - name: OMP_PORT
+            value: "8081"
+          image: harbor.{{ os_subdomain }}/caasportal/haproxy:{{ muddle_ha_tag }}
           imagePullPolicy: Always
           name: caas-haproxy
           ports:
@@ -92,10 +188,10 @@
             protocol: TCP
           resources:
             limits:
-              cpu: 500m
+              cpu: 2000m  
               memory: 2Gi
             requests:
-              cpu: 120m
+              cpu: 1000m
               memory: 1Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
@@ -137,10 +233,10 @@
           - name: CAAS_BACKEND
             value: caas-haproxy
           - name: CAAS_BACKEND_PORT
-            value: "8080"
-          - name: CLIENT_LOGO
+            value: "8888"
+          - name: LOGO
             value: eking
-          image: {{ harbor_url }}/{{ caas_project }}/{{ hcenter_tag }}
+          image: harbor.{{ os_subdomain }}/caasportal/hcenter:{{ hcenter_tag }}
           imagePullPolicy: Always
           name: caas-hcenter
           ports:
@@ -148,16 +244,13 @@
             protocol: TCP
           resources:
             limits:
-              cpu: 500m
+              cpu: 1000m
               memory: 2Gi
             requests:
-              cpu: 120m
+              cpu: 300m
               memory: 1Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          volumeMounts:
-          - mountPath: /opt/hcenter/storage/config/
-            name: caas-hcenter-config
         dnsPolicy: ClusterFirst
         imagePullSecrets:
           - name: deploycaas
@@ -165,11 +258,7 @@
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-        volumes:
-        - configMap:
-            defaultMode: 420
-            name: caas-hcenter-config
-          name: caas-hcenter-config
+
 ---
   apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
@@ -209,22 +298,22 @@
           - name: LANG
             value: C.UTF-8
           - name: DB_URL
-            value: jdbc:mysql://caasportal-caas-mysql.caas.ccoop.cn:31689/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+            value: jdbc:mysql://caas-mysql:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
           - name: REDIS_URL
-            value: caasportal-caas-redis.caas.ccoop.cn
+            value: caas-redis.caasportal.svc.cluster.local 
           - name: REDIS_PORT
-            value: "30384"
+            value: "6379"
           - name: vol_create_sleep
             value: "5000"
           - name: openshift_terminal_url
-            value: ws://{{ muddle_url }}
+            value: ws://portalapi.{{ os_subdomain }}
           - name: hb_info
-            value: {{ harbor_password_encrypted }}
+            value: YWRtaW46Q2FhczEyMzQ1  
           - name: lic_data
-            value: {{ license_key }} 
+            value: kkkkkkkk 
           - name: JAVA_DEBIAN_VERSION
             value: 8u111-b14-2~bpo8+1
-          image: {{ harbor_url }}/{{ caas_project }}/{{ muddle_tag }}
+          image: harbor.{{ os_subdomain }}/caasportal/muddle:{{ muddle_tag }}
           imagePullPolicy: Always
           name: caas-muddle
           ports:
@@ -248,6 +337,56 @@
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
+
+---
+  apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: caas-redis
+    name: caas-redis
+    namespace: caasportal
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: caas-redis
+    template:
+      metadata:
+        labels:
+          app: caas-redis
+          deploymentconfig: caas-redis
+        name: caas-redis
+        namespace: caasportal
+      spec:
+        containers:
+        - image: harbor.{{ os_subdomain }}/caasportal/redis:{{ redis_tag }}
+          imagePullPolicy: Always
+          name: caas-redis
+          ports:
+          - containerPort: 6379
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 125m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: caasportalredisdata
+        dnsPolicy: ClusterFirst
+        imagePullSecrets:
+          - name: deploycaas
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: caasportalredisdata
+          persistentVolumeClaim:
+            claimName: caasportalredisdata
 ---
   apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
@@ -278,7 +417,7 @@
             value: adminpwd
           - name: MYSQL_DATABASE
             value: hcpaas
-          image: {{ harbor_url }}/{{ caas_project }}/{{ mysql_tag }}
+          image: harbor.{{ os_subdomain }}/{{ caas_project }}/mysql:{{ mysql_tag }}
           imagePullPolicy: Always
           name: caas-mysql
           ports:
@@ -308,54 +447,23 @@
           persistentVolumeClaim:
             claimName: caasportalmysqldata
 ---
-  apiVersion: apps.openshift.io/v1
-  kind: DeploymentConfig
+  apiVersion: v1
+  kind: Service
   metadata:
     labels:
-      app: caas-redis
-    name: caas-redis
+      app: caas-mysql
+    name: caas-mysql
     namespace: caasportal
   spec:
-    replicas: 1
+    externalTrafficPolicy: Cluster
+    ports:
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
     selector:
-      deploymentconfig: caas-redis
-    template:
-      metadata:
-        labels:
-          app: caas-redis
-          deploymentconfig: caas-redis
-        name: caas-redis
-        namespace: caasportal
-      spec:
-        containers:
-        - image: {{ harbor_url }}/{{ caas_project }}/{{ redis_tag }}
-          imagePullPolicy: Always
-          name: caas-redis
-          ports:
-          - containerPort: 6379
-            protocol: TCP
-          resources:
-            limits:
-              cpu: "1"
-              memory: 2Gi
-            requests:
-              cpu: 125m
-              memory: 2Gi
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-          volumeMounts:
-          - mountPath: /data
-            name: caasportalredisdata
-        dnsPolicy: ClusterFirst
-        imagePullSecrets:
-          - name: deploycaas
-        restartPolicy: Always
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-        volumes:
-        - name: caasportalredisdata
-          persistentVolumeClaim:
-            claimName: caasportalredisdata
+      deploymentconfig: caas-mysql
+    sessionAffinity: None
+    type: ClusterIP 
 ---
   apiVersion: v1
   kind: Service
@@ -432,37 +540,20 @@
   kind: Service
   metadata:
     labels:
-      app: caas-mysql
-    name: caas-mysql
-    namespace: caasportal
-  spec:
-    externalTrafficPolicy: Cluster
-    ports:
-      port: 3306
-      protocol: TCP
-      targetPort: 3306
-    selector:
-      deploymentconfig: caas-mysql
-    sessionAffinity: None
-    type: NodePort
----
-  apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
       app: caas-redis
     name: caas-redis
     namespace: caasportal
   spec:
     externalTrafficPolicy: Cluster
     ports:
+    - name: 6379-tcp
       port: 6379
       protocol: TCP
       targetPort: 6379
     selector:
       deploymentconfig: caas-redis
     sessionAffinity: None
-    type: NodePort
+    type: ClusterIP 
 ---
   apiVersion: route.openshift.io/v1
   kind: Route
@@ -472,7 +563,7 @@
     name: caas-agamaha
     namespace: caasportal
   spec:
-    host: {{ hcenter_url }}
+    host: portal.{{ os_subdomain }}
     port:
       targetPort: 8888-tcp
     to:
@@ -489,7 +580,7 @@
     name: caas-haproxy
     namespace: caasportal
   spec:
-    host: {{ muddle_url }}
+    host: portalapi.{{ os_subdomain }}
     port:
       targetPort: 8888-tcp
     to:

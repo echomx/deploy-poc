@@ -3,7 +3,7 @@
     "{{ mirror_url }}"
   ],
   "insecure-registries" : [
-     "{{ harbor_url }}",
-     "{{ harbor_url }}:80"
+     "harbor.{{ os_subdomain }}",
+     "harbor.{{ os_subdomain }}:80"
   ]
 }

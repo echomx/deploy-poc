@@ -10,30 +10,23 @@
 
 
 #create NFS lv
-curl -X GET 'http://{{ groups.nfsserver[0] }}:{{ nfs_port }}/nfs/create?volName=caasportalredisdata&volSize=4096'
-curl -X GET 'http://{{ groups.nfsserver[0] }}:{{ nfs_port }}/nfs/create?volName=caasportalmysqldata&volSize=10240'
+curl -X GET 'http://{{ groups.storage[0] }}:{{ nfs_port }}/nfs/create?volName=caasportalredisdata&volSize=4096'
+curl -X GET 'http://{{ groups.storage[0] }}:{{ nfs_port }}/nfs/create?volName=caasportalmysqldata&volSize=10240'
 
 # login to Openshift
-oc login https://{{ groups.masters[0] }}:8443 --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true 
+oc login --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true 
 oc project {{ caas_project }} || oc new-project {{ caas_project }} 
 
 #create the secret for pulling images
-oc delete secret deploycaas
-oc create secret docker-registry deploycaas -n {{ caas_project }} --docker-username=admin --docker-password={{ harbor_password  }} --docker-email="admin@example.com" --docker-server="http://{{ harbor_url }}/"
+oc get secret deploycaas || oc create secret docker-registry deploycaas -n {{ caas_project }} --docker-username=admin --docker-password={{ harbor_password  }} --docker-email="admin@example.com" --docker-server="http://harbor.{{ os_subdomain }}/"
 
-oc create configmap caas-hcenter-config  --from-file=caas.config.js
 #create the PV and PVC used in deploy
 oc create -f caasdeploy_persistent.yml
 
-
-
 #create the related pods,svc and routes
-
 oc create -f caasdeploy_pods.yml
 
 
-oc expose dc caas-mysql --type=NodePort
-oc expose dc caas-redis --type=NodePort
 
 #import the sql
 mysqlpod=`oc get pods|grep mysql|awk '{print $1}'`

@@ -2,7 +2,7 @@
 #create project for os_deploy
 auth=`echo admin:{{ harbor_password }}|tr -d '\n'|base64`
 curl -X POST \
-  http://{{ harbor_url }}/api/projects \
+  http://harbor.{{ os_subdomain }}/api/projects \
   -H 'authorization: Basic '$auth'' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -14,14 +14,12 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 #import the image
-cd /{{ store_path }}/portal
-docker login {{ harbor_url }} -u admin -p {{ harbor_password }}
-for i in `ls *.tar`
+docker load --input /tmp/caasportal_images_v1.tar.gz
+docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
+for i in `docker images|awk '{print $1":"$2}'|grep ^caasportal`
 do
-   image=caasportal/`echo ${i%.*}|tr '_' ':'`
-   targetImage="{{ harbor_url }}/$image"
-   docker load --input ${i}
-   docker tag $image  $targetImage
+   targetImage="harbor.{{ os_subdomain }}/$image"
+   docker tag $i  $targetImage
    docker push $targetImage
-   docker rmi $image $targetImage
+   docker rmi $i 
 done
