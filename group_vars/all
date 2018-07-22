@@ -1,12 +1,15 @@
 ---
 # Variables listed here are applicable to all host groups
-#OS info
+#CentOS info
 os_version: 7.2
+
+#####public#####
 # docker info
 mirror_url: https://registry.docker-cn.com
 docker_vg: docker-vg
 docker_dev: /dev/xvdb
 
+#####storage#####
 #ldap info
 ldap_org: anisble 
 ldap_domain: ansible.org
@@ -16,33 +19,41 @@ ldap_admin_password: generalcom
 
 #harbor info
 harbor_password: Caas12345 
-harbor_dev: /dev/xvde
+harbor_dev: /dev/xvdc1
 store_path: /data
+
+#NFS
+nfs_dev: /dev/xvdc2
+nfs_vg: vg-paas
+
+####Openshift and above apps#####
 
 #Openshift info
 os_admin_password: Caas54321 
-os_subdomain: subdomain.com
+os_subdomain: xiaohehe.com 
 os_vg: origin-vg
-os_dev: /dev/xvdc
+os_dev: /dev/xvdc1
 os_lv: origin-lv
+
+#Openshift data partition info
+data_dev: /dev/xvdc2
+data_vg: data-vg
+data_lv: data-lv
+mount_path: /caas_data
 
 #CaaS Portal info
 caas_project: caasportal
 license_key: askdlfaklsd
-############
+# image tag
 mysql_tag: 5.5utf8
 muddle_tag: v1 
 hcenter_tag: v1 
 muddle_ha_tag: v1
 hcenter_ha_tag: v1
-redis_tag: redis:3.2
+redis_tag: 3.2
 omp_tag: v1
 
 #prometheus
 grafana_password: Hello_grafana_20180608
-
-#NFS
-nfs_dev: /dev/xvdc
-nfs_vg: vg-paas
 
 

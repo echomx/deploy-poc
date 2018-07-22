@@ -26,18 +26,17 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 #import the image
-cd {{ store_path }}/os39-base-images
-docker load --input {{ store_path }}/os39-base-images/kubernetes_latest.tar
-docker tag cockpit/kubernetes:latest harbor.{{ os_subdomain }}/cockpit/kubernetes:latest 
-docker push harbor.{{ os_subdomain }}/cockpit/kubernetes:latest
-rm -f {{ store_path }}/os39-base-images/kubernetes_latest.tar
+docker load --input /opt/installers/os39-base-images.tar.gz
 docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
-for i in `ls *.tar`
+for i in `docker images |awk '{print $1":"$2}'|grep ^openshift`
 do
-   image=openshift/`echo ${i%.*}|tr '_' ':'`
-   targetImage="harbor.{{ os_subdomain }}/$image"
-   docker load --input ${i}
-   docker tag $image  $targetImage
+   targetImage="harbor.{{ os_subdomain }}/$i"
+   docker tag $i $targetImage
    docker push $targetImage
-   docker rmi $image $targetImage
+done
+for i in `docker images |awk '{print $1":"$2}'|grep ^cockpit`
+do 
+   targetImage="harbor.{{ os_subdomain }}/$i"
+   docker tag $i $targetImage
+   docker push $targetImage
 done

@@ -18,21 +18,12 @@
     dest: /tmp/caasportal/caasdeploy_persistent.yml
     mode: 0644
 
-- name: copy sql
-  template:
-    src: hcpaas_schema.sql.j2
-    dest: /tmp/caasportal/hcpaas_schema.sql
 
 - name: copy setup.sh
   template:
     src: setup.sh.j2
     dest: /tmp/caasportal/setup.sh
     mode: 0744
-- name: copy the configmapfile
-  copy:
-    src: caas.config.js
-    dest: /tmp/caasportal/caas.config.js
-    mode: 0644
  
 - name: excute the shell to create pv pvc dc svc route
   shell: /tmp/caasportal/setup.sh

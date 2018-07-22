@@ -1,8 +1,8 @@
 ---
-  - name: copy the base images needed during caasportal Deployment
-    copy: 
-      src: /opt/installers/caasportal_images_v1.tar.gz
-      dest: /tmp/
+#  - name: copy the base images needed during caasportal Deployment
+#    copy: 
+#      src: /opt/installers/caasportal_images_v1.tar.gz
+#      dest: /tmp/
   
   - name: copy the script used to push images from local to harbor
     template:

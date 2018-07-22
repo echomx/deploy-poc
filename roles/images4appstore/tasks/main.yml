@@ -1,0 +1,15 @@
+---
+#  - name: copy the base images needed during caasportal Deployment
+#    copy: 
+#      src: /opt/installers/caasportal_images_v1.tar.gz
+#      dest: /tmp/
+  
+  - name: copy the script used to push images from local to harbor
+    template:
+      src: import-appstore.sh.j2 
+      dest: /tmp/import-appstore.sh
+      mode: 0754
+
+
+  - name: execute the script to push the images to the harbor
+    shell: /tmp/import-appstore.sh

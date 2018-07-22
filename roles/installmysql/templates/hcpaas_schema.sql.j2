@@ -1,20 +1,24 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : testnew
+ Source Server         : caas-bizjet
  Source Server Version : 50560
- Source Host           : userb-demo-caas-mysql.test.bizjetcloud.com
- Source Database       : hcpaas_new
+ Source Host           : caas-mysql.test.bizjetcloud.com
+ Source Database       : init_hcpaas
 
  Target Server Version : 50560
  File Encoding         : utf-8
 
- Date: 05/21/2018 11:58:00 AM
+ Date: 07/18/2018 18:03:25 PM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
+
+DROP DATABASE IF EXISTS `hcpaas`;
+CREATE DATABASE `hcpaas`;
+USE `hcpaas`;
 -- ----------------------------
 --  Table structure for `app_config_map`
 -- ----------------------------
@@ -28,7 +32,7 @@ CREATE TABLE `app_config_map` (
   `mount_path` varchar(50) DEFAULT NULL COMMENT '挂载路径',
   `is_deleted` tinyint(1) DEFAULT NULL COMMENT '0或1表示是否删除',
   PRIMARY KEY (`app_config_map_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `application`
@@ -43,7 +47,7 @@ CREATE TABLE `application` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`super_app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=361 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `apps`
@@ -65,9 +69,9 @@ CREATE TABLE `apps` (
   `app_loc` int(8) DEFAULT NULL,
   `customer_id` varchar(50) DEFAULT NULL COMMENT '客户ID',
   PRIMARY KEY (`app_id`),
-  KEY `FK_Relationship_5` (`user_id`) USING BTREE,
+  KEY `FK_Relationship_5` (`user_id`),
   CONSTRAINT `apps_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6973 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `charge`
@@ -86,7 +90,7 @@ CREATE TABLE `charge` (
   `iaas_project_id` varchar(1000) DEFAULT NULL,
   `charge_flag` int(8) DEFAULT NULL,
   PRIMARY KEY (`charge_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `code_account`
@@ -106,9 +110,9 @@ CREATE TABLE `code_account` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`code_account_id`),
-  KEY `FK_Relationship_2` (`user_id`) USING BTREE,
+  KEY `FK_Relationship_2` (`user_id`),
   CONSTRAINT `code_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `code_inspection`
@@ -134,7 +138,7 @@ CREATE TABLE `code_inspection` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`insp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `collect_images`
@@ -152,9 +156,9 @@ CREATE TABLE `collect_images` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `image_status` varchar(20) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`collect_image_id`),
-  KEY `FK_Relationship_9` (`user_id`) USING BTREE,
+  KEY `FK_Relationship_9` (`user_id`),
   CONSTRAINT `collect_images_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `config_file`
@@ -164,12 +168,12 @@ CREATE TABLE `config_file` (
   `config_file_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置文件ID',
   `config_group_id` int(11) DEFAULT NULL COMMENT '配置组ID',
   `filename` varchar(50) DEFAULT NULL COMMENT '文件名',
-  `content` varchar(2000) DEFAULT NULL COMMENT '文件内容',
+  `content` mediumtext COMMENT '文件内容',
   `is_deleted` tinyint(1) DEFAULT NULL COMMENT '0或1表示是否删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`config_file_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `config_group`
@@ -183,7 +187,7 @@ CREATE TABLE `config_group` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `config_group_location` int(4) DEFAULT NULL COMMENT '配置组所在的区域',
   PRIMARY KEY (`config_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `containers`
@@ -202,9 +206,9 @@ CREATE TABLE `containers` (
   `os_img_uuid` varchar(100) DEFAULT NULL COMMENT 'openshift镜像ID',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`container_id`),
-  KEY `FK_Relationship_8` (`service_id`) USING BTREE,
+  KEY `FK_Relationship_8` (`service_id`),
   CONSTRAINT `containers_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12935 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `cost_rule`
@@ -216,7 +220,7 @@ CREATE TABLE `cost_rule` (
   `size` int(50) DEFAULT NULL,
   `cost` decimal(5,4) DEFAULT NULL,
   PRIMARY KEY (`rule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `customer`
@@ -312,9 +316,9 @@ CREATE TABLE `images` (
   `scan_status` varchar(10) DEFAULT 'NOSCAN' COMMENT '安全扫描状态',
   `scan_time` datetime DEFAULT NULL COMMENT '扫描日期',
   PRIMARY KEY (`image_id`),
-  KEY `FK_Relationship_11` (`project_id`) USING BTREE,
+  KEY `FK_Relationship_11` (`project_id`),
   CONSTRAINT `images_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8783 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `messages`
@@ -323,10 +327,10 @@ DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
   `message_title` varchar(50) DEFAULT NULL,
-  `content` varchar(200) DEFAULT NULL,
+  `content` varchar(1000) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `os_loc_info`
@@ -362,7 +366,6 @@ CREATE TABLE `os_loc_info` (
   `default_use` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`os_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
 
 
 -- ----------------------------
@@ -412,11 +415,11 @@ CREATE TABLE `projects` (
   `package_path` varchar(200) DEFAULT NULL COMMENT '安装包路径',
   `auto_scan` tinyint(1) DEFAULT NULL COMMENT '是否自动安全扫描',
   PRIMARY KEY (`project_id`),
-  KEY `FK_Relationship_10` (`user_id`) USING BTREE,
-  KEY `FK_Relationship_3` (`code_account_id`) USING BTREE,
+  KEY `FK_Relationship_10` (`user_id`),
+  KEY `FK_Relationship_3` (`code_account_id`),
   CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`code_account_id`) REFERENCES `code_account` (`code_account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2716 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `quotas_config`
@@ -461,7 +464,7 @@ CREATE TABLE `reply` (
   `replier_name` varchar(20) DEFAULT NULL,
   `replier_role` int(4) DEFAULT NULL,
   PRIMARY KEY (`reply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `resource_warning`
@@ -472,11 +475,11 @@ CREATE TABLE `resource_warning` (
   `app_id` int(11) DEFAULT NULL COMMENT '服务ID',
   `user_id` int(11) DEFAULT NULL COMMENT '用户ID',
   `app_name` varchar(50) DEFAULT NULL COMMENT '服务名称',
-  `cpu` decimal(5,2) DEFAULT NULL COMMENT 'cpu预警',
-  `mem` decimal(5,2) DEFAULT NULL COMMENT '内存预警',
-  `net_send` decimal(5,2) DEFAULT NULL,
-  `net_receive` decimal(5,2) DEFAULT NULL COMMENT '带宽预警',
-  `vol` decimal(5,2) DEFAULT NULL COMMENT '存储预警',
+  `cpu` decimal(12,2) DEFAULT NULL COMMENT 'cpu预警',
+  `mem` decimal(12,2) DEFAULT NULL COMMENT '内存预警',
+  `net_send` decimal(12,2) DEFAULT NULL,
+  `net_receive` decimal(12,2) DEFAULT NULL COMMENT '带宽预警',
+  `vol` decimal(12,2) DEFAULT NULL COMMENT '存储预警',
   `contacts` varchar(5000) DEFAULT NULL COMMENT '联系人json',
   `warning_interval` int(11) DEFAULT NULL COMMENT '间隔时间',
   `warning_type` int(1) DEFAULT NULL COMMENT '1: 手机和邮箱 2: 仅手机 3: 仅邮箱',
@@ -485,7 +488,7 @@ CREATE TABLE `resource_warning` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `app_loc` int(8) DEFAULT NULL COMMENT 'app地域',
   PRIMARY KEY (`warning_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=279 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `rest_user`
@@ -497,7 +500,7 @@ CREATE TABLE `rest_user` (
   `create_time` datetime DEFAULT NULL,
   `modified_time` datetime DEFAULT NULL,
   PRIMARY KEY (`rest_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `roles`
@@ -526,7 +529,7 @@ CREATE TABLE `sales` (
   `size` int(50) DEFAULT NULL,
   `sale` decimal(3,2) DEFAULT NULL,
   PRIMARY KEY (`sale_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `services`
@@ -555,9 +558,9 @@ CREATE TABLE `services` (
   `image_namespace` varchar(100) DEFAULT NULL,
   `auto_deploy_flag` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`service_id`),
-  KEY `FK_Relationship_7` (`app_id`) USING BTREE,
+  KEY `FK_Relationship_7` (`app_id`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `apps` (`app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6925 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `super_apps`
@@ -571,7 +574,7 @@ CREATE TABLE `super_apps` (
   `app_loc` int(8) DEFAULT NULL,
   `super_app_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`application_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4767 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `sys_logs`
@@ -593,6 +596,12 @@ CREATE TABLE `sys_logs` (
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=89066 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
+-- ----------------------------
+--  Records of `sys_logs`
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_logs` VALUES ('89058', '1', '登录', 'login', '764', '2018-05-18 18:00:39', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89059', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89060', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89061', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89062', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89063', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89064', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89065', '1', '登录', 'login', '764', '2018-05-21 09:15:33', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `temp_quota`
@@ -632,6 +641,7 @@ CREATE TABLE `template` (
   `app_type` varchar(50) DEFAULT NULL,
   `count` int(20) DEFAULT NULL,
   `roll_url` varchar(500) DEFAULT NULL,
+  `pic_url_small` varchar(500) DEFAULT NULL,
   `pic_url` varchar(500) DEFAULT NULL,
   `temp_cpu` varchar(10) DEFAULT NULL,
   `temp_mem` varchar(10) DEFAULT NULL,
@@ -639,7 +649,9 @@ CREATE TABLE `template` (
   `temp_pod` varchar(10) DEFAULT NULL,
   `size_type` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`template_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=907 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=905 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+
 
 -- ----------------------------
 --  Table structure for `user_loc_map`
@@ -654,7 +666,6 @@ CREATE TABLE `user_loc_map` (
   `harbor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_loc_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2636 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
 
 
 -- ----------------------------
@@ -678,9 +689,10 @@ CREATE TABLE `users` (
   `hna_account_id` varchar(64) DEFAULT NULL COMMENT '一账通用户ID',
   `harbor_id` int(11) DEFAULT NULL COMMENT 'harbor',
   PRIMARY KEY (`user_id`),
-  KEY `FK_Relationship_1` (`role_id`) USING BTREE,
+  KEY `FK_Relationship_1` (`role_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=765 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
+
 
 
 -- ----------------------------
@@ -694,7 +706,7 @@ CREATE TABLE `vol_app` (
   `vol_mount` varchar(500) DEFAULT NULL,
   `app_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`vol_app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=781 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `volumes`
@@ -716,7 +728,7 @@ CREATE TABLE `volumes` (
   `vol_loc` int(8) DEFAULT NULL COMMENT '地区',
   `customer_id` varchar(50) DEFAULT NULL COMMENT '客户ID',
   PRIMARY KEY (`vol_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1666 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `work_order`
@@ -735,9 +747,9 @@ CREATE TABLE `work_order` (
   `answer_flag` int(4) DEFAULT NULL,
   `handler_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`work_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-INSERT INTO `os_loc_info` VALUES ('4', '4', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password|b64encode }}', 'htpasswd', '.{{ os_subdomain }}', 'ws://portalapi.{{ os_subdomain }}', '{{ groups.storage[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password|b64encode }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', 'harbor.{{ os_subdomain }}', 'http://{{ groups.storage[0] }}:{{ nfs_port }}', '{{ groups.storage[0] }}', 'http://prometheus.{{ os_subdomain }}', 'https://es.{{ os_subdomain }}', '172.30.9.251:5000', 'http://harbor.{{ os_subdomain }}', 1);
+INSERT INTO `os_loc_info` VALUES ('4', '4', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password|b64encode }}', 'htpasswd', '.{{ os_subdomain }}', 'ws://portalapi.{{ os_subdomain }}', '{{ groups.storage[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password|b64encode }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', 'harbor.{{ os_subdomain }}', 'http://{{ groups.storage[0] }}:8080', '{{ groups.storage[0] }}', 'http://prometheus.{{ os_subdomain }}', 'https://es.{{ os_subdomain }}', '172.30.9.251:5000', 'http://harbor.{{ os_subdomain }}', 1);
 
 DROP TABLE IF EXISTS `template`;
 CREATE TABLE `template` (
@@ -832,4 +844,3 @@ INSERT INTO `template` VALUES (253, 'wordpress', 'services:\n  mysql:\n    image
 
 
 SET FOREIGN_KEY_CHECKS = 1;
-

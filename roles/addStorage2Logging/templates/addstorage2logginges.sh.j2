@@ -1,0 +1,30 @@
+#!/bin/bash
+# create folder for logging-es and change owner:group to 1000:1000
+ssh {{ groups.nodes[0] }} mkdir -p /caas_data/logging-es
+ssh {{ groups.nodes[0] }} chown 1000:1000 /caas_data/logging-es -R
+
+#grant privileged scc to sa 
+oc login -username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true
+oc adm policy add-scc-to-user privileged \
+system:serviceaccount:logging:aggregated-logging-elasticsearch
+
+oc project logging
+#scale the pods of es component to 0 and change its scc to privileged
+for dc in $(oc get deploymentconfig --selector component=es -o name); do
+    oc scale $dc --replicas=0
+    oc patch $dc \
+       -p '{"spec":{"template":{"spec":{"containers":[{"name":"elasticsearch","securityContext":{"privileged": true}}]}}}}'
+  done
+for i in `oc get dc --no-headers|grep ^logging-es|awk '{print $1}'|cut -c12-`
+do
+oc patch dc/logging-es-$i \
+   -p '{"spec":{"template":{"spec":{"nodeSelector":{"kubernetes.io/hostname":"{{ hostvars[groups.nodes[0]].hostname }}"}}}}}'
+done
+
+for dc in $(oc get deploymentconfig --selector component=es -o name); do
+    oc set volume $dc \
+          --add --overwrite --name=elasticsearch-storage \
+          --type=hostPath --path=/caas_data/logging-es
+    oc rollout latest $dc
+    oc scale $dc --replicas=1
+  done

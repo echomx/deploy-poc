@@ -27,16 +27,16 @@ CREATE TABLE `hcpaas_bmp`.`system_module` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 set character set utf8;
-insert  into `hcpaas_bmp`.`system_module`(`module_id`,`module_pid`,`module_name`,`module_url`,`module_order`,`module_type`,`module_desc`,`has_deleted`) values 
+insert  into `system_module`(`module_id`,`module_pid`,`module_name`,`module_url`,`module_order`,`module_type`,`module_desc`,`has_deleted`) values 
 (1,NULL,'CMP菜单','/wapi/,/base/,/omapi/auth/getLoginUser',1,1,NULL,0),
-(2,NULL,'项目管理','/omapi/business/bizMgr,/omapi/business/appConfigs,/omapi/business/application,/omapi/business/apps,/omapi/business/projects,/omapi/business/containers,/omapi/business/images,/omapi/business/monitor,/omapi/business/warns,/omapi/business/syslogs,/omapi/business/template,/omapi/business/volumes',1,2,NULL,0),
+(2,NULL,'项目管理','/omapi/business/bizMgr,/omapi/business/appConfigs,/omapi/business/images,/omapi/business/application,/omapi/business/apps,/omapi/business/projects,/omapi/business/containers,/omapi/business/images,/omapi/business/monitor,/omapi/business/warns,/omapi/business/syslogs,/omapi/business/template,/omapi/business/volumes',1,2,NULL,0),
 (3,NULL,'用户查询','/omapi/sysmgr/user/query_page,/omapi/sysmgr/user/query_all_page,/omapi/sysmgr/user/query_by_id,/omapi/sysmgr/user/query_by_account,/omapi/sysmgr/user/copyPwd',1,2,NULL,0),
 (4,NULL,'用户编辑','/omapi/auth/register,/omapi/sysmgr/user/update_user,/omapi/sysmgr/user/delete_user,/omapi/sysmgr/user/lock_user,/omapi/sysmgr/user/release_lock_user,/omapi/sysmgr/user/modify_password',1,2,NULL,0),
 (5,NULL,'BMP通用','/omapi/auth/getLoginUser,/omapi/sysmgr/user/modify_password',1,2,NULL,0),
 (6,NULL,'项目查询','/omapi/business/projectsBmp/query_page,/omapi/business/projectsBmp/query_by_id,/omapi/business/projectsItems/query_page,/omapi/business/projectsItems/query,/omapi/business/projectsItems/query_by_id',1,2,NULL,0),
 (7,NULL,'项目编辑','/omapi/business/projectsBmp/save,/omapi/business/projectsBmp/delete,/omapi/business/projectsItems/save,/omapi/business/projectsItems/delete',1,2,NULL,0),
-(9,NULL,'消息管理','/omapi/business/messages',1,2,NULL,0);
-
+(9,NULL,'消息管理','/omapi/business/messages',1,2,NULL,0),
+(10,NULL,'应用商店管理','/omapi/business/appShop,/omapi/business/images/',1,2,NULL,0);
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`system_permission`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `hcpaas_bmp`.`t_messages`;
 CREATE TABLE `hcpaas_bmp`.`t_messages` (
   `message_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `message_title` varchar(50) DEFAULT NULL,
-  `content` varchar(200) DEFAULT NULL,
+  `content` varchar(1000) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `creator` bigint(20) DEFAULT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE `hcpaas_bmp`.`t_projects` (
   `used_mem` varchar(50) DEFAULT '0',
   `used_vol` varchar(50) DEFAULT '0',
   PRIMARY KEY (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`t_projects_items`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -204,7 +204,7 @@ CREATE TABLE `hcpaas_bmp`.`t_user` (
   `update_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `salt` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 set character set utf8;
 insert  into `hcpaas_bmp`.`t_user`(`id`,`account`,`name`,`password`,`post`,`department`,`phone`,`email`,`status`,`remark`,`manager_type`,`ldap_user`,`last_pwd_update_date`,`owner`,`update_user`,`update_date`,`salt`) values 
@@ -225,7 +225,7 @@ CREATE TABLE `hcpaas_bmp`.`t_user_quotas` (
   `used_mem` varchar(50) DEFAULT '0',
   `used_vol` varchar(50) DEFAULT '0',
   PRIMARY KEY (`quotas_id`)
-) ENGINE=MEMORY AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`relation_module_permission`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -252,7 +252,8 @@ insert  into `hcpaas_bmp`.`relation_module_permission`(`module_id`,`permission_i
 (4,3),
 (5,3),
 (6,3),
-(9,3);
+(9,3),
+(10,3);
 
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`relation_role_permission`;

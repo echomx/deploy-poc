@@ -3,8 +3,10 @@
   template:
     src: domain.conf.j2
     dest: /etc/dnsmasq.d/domain.conf
-  notify: restart dnsmasq
-
+- name: restart the dns to make the configuraiton take effect
+  systemd:
+    name: dnsmasq
+    state: restarted
 - name: remove the previous dns server
   shell: sed -i '/^nameserver/d' /etc/resolv.conf
 

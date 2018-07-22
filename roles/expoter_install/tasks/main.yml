@@ -4,14 +4,18 @@
     src: node_exporter
     dest: /usr/sbin/node_exporter
     mode: 'u+x' 
-
-- name: copy the service file 
-  copy:
-    src: node-exporter.service
-    dest: /usr/lib/systemd/system/node-exporter.service 
-
-- name: start the node service and enable start onboot
-  service: 
-    name: node-exporter
-    state: started
-    enabled: yes
+- name: start the node-exporter
+  shell: /usr/bin/nohup /usr/sbin/node_exporter &
+# start node-exporter faled on some servers, debug it later
+#- name: copy the service file 
+#  copy:
+#    src: node-exporter.service
+#    dest: /usr/lib/systemd/system/node-exporter.service 
+#
+#- name: start the node service and enable start onboot
+#  systemd: 
+#    name: node-exporter
+#    state: started
+#    enabled: yes
+#- name: open port 9100 for node_exporter
+#  shell: iptables -I INPUT -p tcp --dport 9100 -j ACCEPT

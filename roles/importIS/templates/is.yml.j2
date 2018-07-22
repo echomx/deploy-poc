@@ -1,0 +1,268 @@
+apiVersion: v1
+items:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: 2018-07-17T08:06:14Z
+    creationTimestamp: 2018-07-17T08:05:14Z
+    generation: 5
+    name: httpd
+    namespace: openshift
+    resourceVersion: "1085334"
+    selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/httpd
+    uid: 2276b9de-8998-11e8-883b-1e006c00004b
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        tags: builder,httpd
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/httpd:2.4
+      generation: 4
+      importPolicy:
+        insecure: true
+      name: "2.4"
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: docker-registry.default.svc:5000/openshift/httpd
+    tags:
+    - items:
+      - created: 2018-07-17T08:06:14Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/httpd@sha256:b3aec590b6ea6ac22fe8b9e152ba831c704668b8259f1b945ca3a1b57ef1117e
+        generation: 4
+        image: sha256:b3aec590b6ea6ac22fe8b9e152ba831c704668b8259f1b945ca3a1b57ef1117e
+      tag: "2.4"
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: 2018-07-17T11:04:11Z
+    creationTimestamp: 2018-07-17T11:01:16Z
+    generation: 7
+    name: mysql
+    namespace: openshift
+    resourceVersion: "1108289"
+    selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/mysql
+    uid: ba06b268-89b0-11e8-883b-1e006c00004b
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/mysql:5.5
+      generation: 5
+      importPolicy:
+        insecure: true
+      name: "5.5"
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: docker-registry.default.svc:5000/openshift/mysql
+    tags:
+    - items:
+      - created: 2018-07-17T11:03:52Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/mysql@sha256:910407309652bdf64702d2ec6661afdf8e5ba587e2b69169515a10b43383d6a7
+        generation: 5
+        image: sha256:910407309652bdf64702d2ec6661afdf8e5ba587e2b69169515a10b43383d6a7
+      tag: "5.5"
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: 2018-07-17T08:46:11Z
+    creationTimestamp: 2018-07-17T08:41:48Z
+    generation: 7
+    name: php
+    namespace: openshift
+    resourceVersion: "1090143"
+    selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/php
+    uid: 3e656bd8-899d-11e8-883b-1e006c00004b
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        tags: builder,php
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/php:5.5
+      generation: 6
+      importPolicy:
+        insecure: true
+      name: "5.5"
+      referencePolicy:
+        type: Source
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/php:7.1
+      generation: 5
+      importPolicy:
+        insecure: true
+      name: "7.1"
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: docker-registry.default.svc:5000/openshift/php
+    tags:
+    - items:
+      - created: 2018-07-17T08:46:11Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/php@sha256:3fe944eef8bd9e70578129b7a22e7d9355ed435fd6254cffb82d66d6e1b6bad4
+        generation: 6
+        image: sha256:3fe944eef8bd9e70578129b7a22e7d9355ed435fd6254cffb82d66d6e1b6bad4
+      tag: "5.5"
+    - items:
+      - created: 2018-07-17T08:45:58Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/php@sha256:5760af79361b5fb5a690edaf51dbfca61e95aac4423f9a3ac3426ea36cfe4330
+        generation: 5
+        image: sha256:5760af79361b5fb5a690edaf51dbfca61e95aac4423f9a3ac3426ea36cfe4330
+      tag: "7.1"
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: 2018-07-17T08:47:21Z
+    creationTimestamp: 2018-07-17T08:42:25Z
+    generation: 7
+    name: python
+    namespace: openshift
+    resourceVersion: "1090207"
+    selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/python
+    uid: 54545262-899d-11e8-883b-1e006c00004b
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        tags: builder,python
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/python:2.7
+      generation: 5
+      importPolicy:
+        insecure: true
+      name: "2.7"
+      referencePolicy:
+        type: Source
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/python:3.5
+      generation: 6
+      importPolicy:
+        insecure: true
+      name: "3.5"
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: docker-registry.default.svc:5000/openshift/python
+    tags:
+    - items:
+      - created: 2018-07-17T08:46:52Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/python@sha256:940db7536048426d20fd311b6968a44ae28fd59356a7d56c5a961c2a027b7835
+        generation: 5
+        image: sha256:940db7536048426d20fd311b6968a44ae28fd59356a7d56c5a961c2a027b7835
+      tag: "2.7"
+    - items:
+      - created: 2018-07-17T08:47:21Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/python@sha256:1ce291fc5494e80070cacce4bab9512ce4fe92e24a9a61acb1146265739a483d
+        generation: 6
+        image: sha256:1ce291fc5494e80070cacce4bab9512ce4fe92e24a9a61acb1146265739a483d
+      tag: "3.5"
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: 2018-07-17T11:04:45Z
+    creationTimestamp: 2018-07-17T11:01:16Z
+    generation: 3
+    name: rabbitmq
+    namespace: openshift
+    resourceVersion: "1107640"
+    selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/rabbitmq
+    uid: ba4f38b2-89b0-11e8-883b-1e006c00004b
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/rabbitmq:3.6.6-management
+      generation: 3
+      importPolicy:
+        insecure: true
+      name: 3.6.6-management
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: docker-registry.default.svc:5000/openshift/rabbitmq
+    tags:
+    - items:
+      - created: 2018-07-17T11:04:45Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/rabbitmq@sha256:a035e7938268f230a7bac577028384b30b467a31bdade63cd1232c035812f9e9
+        generation: 3
+        image: sha256:a035e7938268f230a7bac577028384b30b467a31bdade63cd1232c035812f9e9
+      tag: 3.6.6-management
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: 2018-07-17T11:05:34Z
+    creationTimestamp: 2018-07-17T11:01:15Z
+    generation: 6
+    name: tomcat
+    namespace: openshift
+    resourceVersion: "1107746"
+    selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/tomcat
+    uid: b97aabef-89b0-11e8-883b-1e006c00004b
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/tomcat:8.0
+      generation: 5
+      importPolicy:
+        insecure: true
+      name: "8.0"
+      referencePolicy:
+        type: Source
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: harbor.{{ os_subdomain }}/openshift/tomcat:9.0
+      generation: 6
+      importPolicy:
+        insecure: true
+      name: "9.0"
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: docker-registry.default.svc:5000/openshift/tomcat
+    tags:
+    - items:
+      - created: 2018-07-17T11:05:24Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/tomcat@sha256:b81a04eb90f01ba8d755d8d0d34e95961f259579d173b0b76dea1beb711e2cfb
+        generation: 5
+        image: sha256:b81a04eb90f01ba8d755d8d0d34e95961f259579d173b0b76dea1beb711e2cfb
+      tag: "8.0"
+    - items:
+      - created: 2018-07-17T11:05:34Z
+        dockerImageReference: harbor.{{ os_subdomain }}/openshift/tomcat@sha256:cfd29df19bdbdd0a4264fd557faff44e79454c80e832fc7f1ffffd605b97eeb9
+        generation: 6
+        image: sha256:cfd29df19bdbdd0a4264fd557faff44e79454c80e832fc7f1ffffd605b97eeb9
+      tag: "9.0"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+

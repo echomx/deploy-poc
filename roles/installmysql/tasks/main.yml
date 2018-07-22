@@ -11,7 +11,7 @@
 - name: config mysql data dir
   shell: mysql_install_db --user=mysql --datadir=/data/mysql_data/
 - name: add iptable for mysql
-  shell: iptables -I INPUT -p tcp --dport 3306 -j ACCEPT  && service iptables save
+  shell: iptables -I INPUT -p tcp --dport 3306 -j ACCEPT  
 - name: copy mysql conf 
   copy: src=my01.cnf  dest=/etc/my.cnf
 - name: start mysql
@@ -41,6 +41,6 @@
     \"
     "
 - name: copy user clean script 
-  template: src=user_clear.sh dest=/data/mysql_data/ mode=0755
+  copy: src=user_clear.sh dest=/data/mysql_data/ mode=0755
 - name: clear useless user 
   shell: /data/mysql_data/user_clear.sh

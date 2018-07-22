@@ -14,11 +14,11 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 #import the image
-docker load --input /tmp/caasportal_images_v1.tar.gz
+docker load --input /opt/installers/caasportal_images_v1.tar.gz 
 docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
 for i in `docker images|awk '{print $1":"$2}'|grep ^caasportal`
 do
-   targetImage="harbor.{{ os_subdomain }}/$image"
+   targetImage="harbor.{{ os_subdomain }}/$i"
    docker tag $i  $targetImage
    docker push $targetImage
    docker rmi $i 

@@ -1,0 +1,3 @@
+---
+- name: open port on iptables| 8080 for muddle on nodes
+  shell: iptables -nL|grep 8080 || iptables -I INPUT -p tcp --dport 8080 -j ACCEPT

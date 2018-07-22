@@ -1,5 +1,5 @@
 #!/bin/bash
 #!/bin/bash
-source /opt/nfsenv/bin/activate && cd /opt/convert2nfs &&  uwsgi -d /var/log/convert2nfs.log --http-socket :{{ nfs_port }} --venv /opt/nfsenv --pecan config.py 
+source /opt/nfsenv/bin/activate && cd /opt/convert2nfs &&  uwsgi -d /var/log/convert2nfs.log --http-socket :8080 --venv /opt/nfsenv --pecan config.py 
 
 

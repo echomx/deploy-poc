@@ -20,5 +20,5 @@
   tasks:
     - name: test
       debug:
-        msg: "{{ hostvars[groups.nodes[1]].hostname }}"
+        msg: "{{ hostvars[groups.nodes[0]].hostname }}"
 

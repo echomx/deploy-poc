@@ -1,6 +1,6 @@
 #create NFS lv
-curl -X GET 'http://{{ groups.storage[0] }}:{{ nfs_port }}/nfs/create?volName=prometheusrule&volSize=2048'
-curl -X GET 'http://{{ groups.storage[0] }}:{{ nfs_port }}/nfs/create?volName=alertmanager&volSize=1024'
+curl -X GET 'http://{{ groups.storage[0] }}:8080/nfs/create?volName=prometheusrule&volSize=2048'
+curl -X GET 'http://{{ groups.storage[0] }}:8080/nfs/create?volName=alertmanager&volSize=1024'
 
 # login to Openshift
 oc login  --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true 

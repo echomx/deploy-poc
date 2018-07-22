@@ -1,15 +1,4 @@
 ---
-  - name: copy the system requirments
-    copy:
-      src: /opt/installers/cent{{ os_version }}.tar
-      dest: /tmp/cent{{ os_version }}.tar
-      mode: 0644
-
-  - name: unarchive the system requirements
-    unarchive:
-      src: /tmp/cent{{ os_version }}.tar
-      dest: /opt/
-      remote_src: yes
   - name: create bak to bakup the repo files
     file:
       path: /etc/yum.repos.d/bak
@@ -26,7 +15,15 @@
     template: 
       src: sys.repo.j2
       dest: /etc/yum.repos.d/sys.repo
-
+  - name: disable the firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+#  - name: set the repo for the os
+#    template: 
+#      src: os.repo.j2
+#      dest: /etc/yum.repos.d/os.repo
 
  # - name: remove all the repo 
  #   shell:  ls |grep -v sys.repo

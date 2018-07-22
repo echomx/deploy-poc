@@ -1,0 +1,15 @@
+---
+  - name: copy imagestreams yaml file to host
+    template:
+      src:  is.yml.j2
+      dest: /tmp/is.yml
+      mode: 0644
+
+  - name: copy importis.sh to host
+    template:
+      src:  importis.sh.j2
+      dest: /tmp/Importis.sh
+      mode: 0744
+
+  - name: execute the script to import is
+    shell: /tmp/Importis.sh

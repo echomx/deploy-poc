@@ -1,33 +1,19 @@
 ---
-  - name: intall openldap-clients
-    yum: 
-      name: "{{item}}"
-      state: present
-    with_items:
-    - openldap-clients
-  - name: copy the ldap image file 
-    copy: src=ldap.tar dest=/tmp/ldap.tar
-  - name: copy the ou's ldif file
-    template: src=ou.ldif.j2 dest=/tmp/ou.ldif
-  - name: copy the user's ldif file
-    template: src=user.ldif.j2 dest=/tmp/user.ldif
-  - name: load the image 
-    command: docker load --input ldap.tar
-    args:
-      chdir: /tmp/
-  - name: run the image
-    command: docker run -p 389:389  --env LDAP_ORGANISATION={{ ldap_org }} --env LDAP_DOMAIN={{ ldap_domain }} --env LDAP_ADMIN_PASSWORD={{ ldap_admin_password }} -v /ldap/config:/etc/ldap/slapd.d -v /ldap/data/:/var/lib/ldap  -v /etc/localtime:/etc/localtime:ro --name ldapserver --detach osixia/openldap:1.2.1
-  - name: Wait 300 seconds for port 389 to becomoe open on the host, don't start checking for 10 seconds
-    wait_for:
-      port: 389
-      delay: 10
-  - name: create ou-> users 
-    command: ldapadd -x -h 127.0.0.1 -p 389 -D cn=admin,dc={{ ldap_second }},dc={{ ldap_top }} -w {{ ldap_admin_password }} -f ou.ldif
-    args:
-      chdir: /tmp/
-  - name: create user->admin under ou users
-    command: ldapadd -x -h 127.0.0.1 -p 389 -D cn=admin,dc={{ ldap_second }},dc={{ ldap_top }} -w {{ ldap_admin_password }} -f user.ldif
-    args:
-      chdir: /tmp/
-  - name: check whether the ldap service is normal
-    command: ldapsearch -x -h 127.0.0.1 -p 389 -b dc={{ ldap_second }},dc={{ ldap_top }} -D cn=admin,dc={{ ldap_second }},dc={{ ldap_top }} -w {{ ldap_admin_password }}
+#- name: unarchive the system requirements
+#  unarchive:
+#    src: /opt/installers/cent{{ os_version }}.tar 
+#    dest: /opt/
+#- name: unarchive the OpenShift repos
+#  unarchive:
+#    src: /opt/installers/os39.tar
+#    dest: /opt/
+- name: create yum repo | system
+  shell:  nohup python -m SimpleHTTPServer 38888 &
+  args:
+    chdir: "/opt/cent{{ os_version }}"
+#- name: create yum repo | Opeshift
+#  shell: netstat -tlnp|grep 38888 || cd /opt/os39 && python -m SimpleHTTPServer 38889 &
+- name: open port on iptables| 38888 
+  shell: iptables -nL|grep 38888 || iptables -I INPUT -p tcp --dport 38888 -j ACCEPT
+#- name: open port on iptables| 38889 
+#  shell: iptables -nL|grep 38889 || iptables -I INPUT -p tcp --dport 38889 -j ACCEPT

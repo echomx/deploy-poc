@@ -37,10 +37,10 @@
             value: C.UTF-8
           - name: spring_datasource_druid_bmp_url
             value: >-
-                jdbc:mysql://caas-mysql:3306/hcpaas_bmp?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+                jdbc:mysql://{{ groups.storage[0] }}:3306/hcpaas_bmp?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
           - name: spring_datasource_druid_portal_url
             value: >-
-                jdbc:mysql://caas-mysql:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+                jdbc:mysql://{{ groups.storage[0] }}:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
           - name: spring_redis_host
             value: caas-redis
           - name: spring_redis_port
@@ -298,7 +298,7 @@
           - name: LANG
             value: C.UTF-8
           - name: DB_URL
-            value: jdbc:mysql://caas-mysql:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+            value: jdbc:mysql://{{ groups.storage[0] }}:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
           - name: REDIS_URL
             value: caas-redis.caasportal.svc.cluster.local 
           - name: REDIS_PORT
@@ -388,83 +388,6 @@
           persistentVolumeClaim:
             claimName: caasportalredisdata
 ---
-  apiVersion: apps.openshift.io/v1
-  kind: DeploymentConfig
-  metadata:
-    labels:
-      app: caas-mysql
-    name: caas-mysql
-    namespace: caasportal
-  spec:
-    replicas: 1
-    selector:
-      deploymentconfig: caas-mysql
-    template:
-      metadata:
-        labels:
-          app: caas-mysql
-          deploymentconfig: caas-mysql
-        name: caas-mysql
-        namespace: caasportal
-      spec:
-        containers:
-        - env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: adminpwd
-          - name: MYSQL_USER
-            value: caasportal
-          - name: MYSQL_PASSWORD
-            value: adminpwd
-          - name: MYSQL_DATABASE
-            value: hcpaas
-          image: harbor.{{ os_subdomain }}/{{ caas_project }}/mysql:{{ mysql_tag }}
-          imagePullPolicy: Always
-          name: caas-mysql
-          ports:
-          - containerPort: 3306
-            protocol: TCP
-          resources:
-            limits:
-              cpu: "1"
-              memory: 4Gi
-            requests:
-              cpu: 500m
-              memory: 2Gi
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-          volumeMounts:
-          - mountPath: /var/lib/mysql/
-            name: caasportalmysqldata
-        dnsPolicy: ClusterFirst
-        imagePullSecrets:
-          - name: deploycaas
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-        volumes:
-        - name: caasportalmysqldata
-          persistentVolumeClaim:
-            claimName: caasportalmysqldata
----
-  apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      app: caas-mysql
-    name: caas-mysql
-    namespace: caasportal
-  spec:
-    externalTrafficPolicy: Cluster
-    ports:
-      port: 3306
-      protocol: TCP
-      targetPort: 3306
-    selector:
-      deploymentconfig: caas-mysql
-    sessionAffinity: None
-    type: ClusterIP 
----
   apiVersion: v1
   kind: Service
   metadata:
@@ -544,7 +467,6 @@
     name: caas-redis
     namespace: caasportal
   spec:
-    externalTrafficPolicy: Cluster
     ports:
     - name: 6379-tcp
       port: 6379

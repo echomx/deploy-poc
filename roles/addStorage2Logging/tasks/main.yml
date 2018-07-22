@@ -1,0 +1,15 @@
+---
+#  - name: copy the base images needed during caasportal Deployment
+#    copy: 
+#      src: /opt/installers/caasportal_images_v1.tar.gz
+#      dest: /tmp/
+  
+  - name: copy the script used to add storage to logging-es
+    template:
+      src: addstorage2logginges.sh.j2 
+      dest: /tmp/addstorage2logginges.sh
+      mode: 0754
+
+
+  - name: execute the script to add the storage
+    shell: /tmp/addstorage2logginges.sh

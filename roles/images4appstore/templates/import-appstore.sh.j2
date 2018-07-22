@@ -1,0 +1,25 @@
+#!/bin/bash
+#create project for os_deploy
+auth=`echo admin:{{ harbor_password }}|tr -d '\n'|base64`
+curl -X POST \
+  http://harbor.{{ os_subdomain }}/api/projects \
+  -H 'authorization: Basic '$auth'' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+  "project_name": "appstore",
+  "public": 1,
+  "enable_content_trust": true,
+  "prevent_vulnerable_images_from_running": false,
+  "automatically_scan_images_on_push": true
+}'
+#import the image
+docker load --input /opt/installers/appstore_images-wordpress-only.tar.gz
+docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
+for i in `docker images|awk '{print $1":"$2}'|grep ^appstore`
+do
+   targetImage="harbor.{{ os_subdomain }}/$i"
+   docker tag $i  $targetImage
+   docker push $targetImage
+   docker rmi $i 
+done
