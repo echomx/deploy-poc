@@ -9,13 +9,13 @@
 #      shell: echo {{ ansible_default_ipv4.address }} > /root/ip.txt
 #    - name: output all current host ip
 #      shell: echo {{ ansible_all_ipv4_addresses }} > /root/allip.txt
-#- hosts: "{{ groups.nodes[0] }}"
-#  tasks:
-#    - name: test
-#      debug:
-#        msg: "{{ groups.nodes[0] }}"
-#    - name: test2
-#      shell: echo {{ groups.nodes[0] }} >> /tmp/test
+- hosts: "{{ groups.nodes[0] }}"
+  tasks:
+    - name: test
+      debug:
+        msg: "{{ groups.nodes[0] }}"
+    - name: test2
+      shell: echo {{ groups.nodes[0] }} >> /tmp/test
 - hosts: localhost 
   tasks:
     - name: test
