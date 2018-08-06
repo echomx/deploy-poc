@@ -26,6 +26,14 @@
   hosts: masters,nodes 
   roles:
     - os_node_initial
+    
+- hosts: "{{ groups.masters[0] }}"
+  tasks:
+  - name: install java for deployer
+    yum:
+      name: java
+      state: present
+    
 
 - name: generate the inventory for deployer and deploy Openshift
   hosts: "{{ groups.masters[0] }}"
@@ -44,3 +52,4 @@
   hosts: nodes
   roles:
     - setiptables-os
+    - dnsconfigure

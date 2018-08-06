@@ -71,3 +71,6 @@
     - iptables
     - python-ipaddress
     - unzip
+    - pyparted
+    - pyton-devel
+    - yum-utils
