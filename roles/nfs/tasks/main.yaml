@@ -1,4 +1,16 @@
 ---
+  - name: install the yum requirements
+    yum: 
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - nfs-utils
+    - rpcbind
+    - lvm2
+    - gcc-c++
+    - python-devel
+    - unzip
+    
   - name: copy the nfs installer
     copy: 
       src: "/opt/installers/{{ item }}"
@@ -22,16 +34,6 @@
       vg: "{{ nfs_vg }}"
       pvs: "{{ nfs_dev }}"
 
-  - name: install the yum requirements
-    yum: 
-      name: "{{ item }}"
-      state: present
-    with_items:
-    - nfs-utils
-    - rpcbind
-    - lvm2
-    - gcc-c++
-    - python-devel
 
   - name: set the port for nfs
     shell: echo 'MOUNTD_PORT=20048' >> /etc/sysconfig/nfs && echo  'STATD_PORT=20050' >> /etc/sysconfig/nfs && echo 'options lockd nlm_tcpport=20049' >> /etc/modprobe.d/lockd.conf && echo 'options lockd nlm_udpport=20049' >> /etc/modprobe.d/lockd.conf 
