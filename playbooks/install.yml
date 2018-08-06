@@ -1,5 +1,6 @@
 ---
-
+# this playbook is used to deploy all caas platform for POC
+# NOTICE: images for appstore, platform and s2i not imported in this playbook
 # Before deploy OpenShift
 
 - name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
