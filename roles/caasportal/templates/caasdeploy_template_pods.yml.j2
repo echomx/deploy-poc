@@ -298,7 +298,7 @@
           - name: LANG
             value: C.UTF-8
           - name: DB_URL
-            value: jdbc:mysql://{{ groups.storage[0] }}:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+            value: jdbc:mysql://{{ groups.storage[0] }}:3306/hcpaas?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
           - name: REDIS_URL
             value: caas-redis.caasportal.svc.cluster.local 
           - name: REDIS_PORT
