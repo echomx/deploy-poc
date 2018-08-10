@@ -11,7 +11,7 @@
 
 #create NFS lv
 curl -X GET 'http://{{ groups.storage[0] }}:8080/nfs/create?volName=caasportalredisdata&volSize=4096'
-
+curl -X GET 'http://{{ groups.storage[0] }}:8080/nfs/create?volName=hcenter-images&volSize=1024'
 # login to Openshift
 oc login --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true 
 oc project {{ caas_project }} || oc new-project {{ caas_project }} 

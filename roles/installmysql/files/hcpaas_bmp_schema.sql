@@ -36,6 +36,7 @@ insert  into `system_module`(`module_id`,`module_pid`,`module_name`,`module_url`
 (6,NULL,'项目查询','/omapi/business/projectsBmp/query_page,/omapi/business/projectsBmp/query_by_id,/omapi/business/projectsItems/query_page,/omapi/business/projectsItems/query,/omapi/business/projectsItems/query_by_id',1,2,NULL,0),
 (7,NULL,'项目编辑','/omapi/business/projectsBmp/save,/omapi/business/projectsBmp/delete,/omapi/business/projectsItems/save,/omapi/business/projectsItems/delete',1,2,NULL,0),
 (9,NULL,'消息管理','/omapi/business/messages',1,2,NULL,0),
+(11,NULL,'集群管理CM,SM','/omapi/business/routes,/omapi/business/resourceReport,/omapi/business/apps/query,/omapi/business/apps/findOne ',1,2,NULL,0),
 (10,NULL,'应用商店管理','/omapi/business/appShop,/omapi/business/images/',1,2,NULL,0);
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`system_permission`;
@@ -253,6 +254,7 @@ insert  into `hcpaas_bmp`.`relation_module_permission`(`module_id`,`permission_i
 (5,3),
 (6,3),
 (9,3),
+(11,3),
 (10,3);
 
 
@@ -359,3 +361,12 @@ CREATE TABLE `hcpaas_bmp`.`relation_usergroup_role` (
   CONSTRAINT `FK_usergroup_to_role` FOREIGN KEY (`role_id`) REFERENCES `system_role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+insert  into `system_module`(`module_id`,`module_pid`,`module_name`,`module_url`,`module_order`,`module_type`,`module_desc`,`has_deleted`) values 
+(10,NULL,'平台管理','/omapi/business/appShop,/omapi/business/images/,/omapi/business/s2iEnvs/',1,2,NULL,0);
+
+
+insert  into `hcpaas_bmp`.`relation_module_permission`(`module_id`,`permission_id`) values 
+(10,3);
+
+
+ALTER TABLE `t_messages` CHANGE COLUMN `content` `content` varchar(1000) DEFAULT NULL after `message_title`;

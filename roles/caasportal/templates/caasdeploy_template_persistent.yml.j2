@@ -25,3 +25,31 @@ spec:
     requests:
       storage: 4Gi
   volumeName: caasportalredisdata
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hcenter-images
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: "1024Mi"
+  nfs:
+    path: /nfs/hcenter-images/ 
+    server: {{ groups.storage[0] }}
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hcenter-images
+  namespace: caasportal
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1024Mi 
+  volumeName: hcenter-images
+

@@ -65,6 +65,9 @@
               memory: 2Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /caas-image
+            name: hcenter-images
         dnsPolicy: ClusterFirst
         imagePullSecrets:
           - name: deploycaas
@@ -72,6 +75,10 @@
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
+        volumes:
+        - name: hcenter-images
+          persistentVolumeClaim:
+            claimName: hcenter-images
 ---
   apiVersion: v1
   kind: Service
