@@ -72,5 +72,5 @@
     - python-ipaddress
     - unzip
     - pyparted
-    - pyton-devel
+    - python-devel
     - yum-utils

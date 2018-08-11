@@ -361,12 +361,8 @@ CREATE TABLE `hcpaas_bmp`.`relation_usergroup_role` (
   CONSTRAINT `FK_usergroup_to_role` FOREIGN KEY (`role_id`) REFERENCES `system_role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert  into `system_module`(`module_id`,`module_pid`,`module_name`,`module_url`,`module_order`,`module_type`,`module_desc`,`has_deleted`) values 
-(10,NULL,'平台管理','/omapi/business/appShop,/omapi/business/images/,/omapi/business/s2iEnvs/',1,2,NULL,0);
 
 
-insert  into `hcpaas_bmp`.`relation_module_permission`(`module_id`,`permission_id`) values 
-(10,3);
 
 
 ALTER TABLE `t_messages` CHANGE COLUMN `content` `content` varchar(1000) DEFAULT NULL after `message_title`;

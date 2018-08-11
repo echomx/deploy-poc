@@ -64,7 +64,7 @@
     args:
       chdir: /opt/convert2nfs
   - name: start the interface
-    shell: source /opt/nfsenv/bin/activate && /opt/convert2nfs && uwsgi -d /var/log/convert2nfs.log --http-socket :8080 --venv /opt/nfsenv --pecan config.py
+    shell: source /opt/nfsenv/bin/activate && cd /opt/convert2nfs && uwsgi -d /var/log/convert2nfs.log --http-socket :8080 --venv /opt/nfsenv --pecan config.py
   - name: Wait 300 seconds for port 8080 to becomoe open on the host, don't start checking for 10 seconds
     wait_for:
       port: 8080
