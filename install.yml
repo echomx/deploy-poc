@@ -1,0 +1,55 @@
+#---
+
+# Before deploy OpenShift
+
+#- name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
+#  hosts: all 
+#  roles:
+#    - repoconfigure
+#    - docker1.13.1 
+#    - sethostname 
+#    - expoter_install
+
+
+- name: install LDAP NFS harbor on storage server
+  hosts: storage 
+  roles:
+#    - nfs
+#    - ldap 
+#    - docker-compose
+#    - harbor
+#    - dnsmasqinstall
+#    - dnsconfigure
+    - installmysql
+
+- name: prepare for the openshift node
+  hosts: masters,nodes 
+  roles:
+    - os_node_initial
+
+- hosts: "{{ groups.masters[0] }}"
+  tasks:
+  - name: install java for deployer
+    yum:
+      name: java
+      state: present
+
+
+- name: generate the inventory for deployer and deploy Openshift
+  hosts: "{{ groups.masters[0] }}"
+  roles:
+    - baseImages4OS
+    - images4portal
+    - os_inventory
+    - os_deploy
+    - dnsconfigure
+    - caasportal
+    - prometheus
+    - addStorage2Logging
+
+
+- name: set the iptables for nodes
+  hosts: nodes
+  roles:
+    - setiptables-os
+    - dnsconfigure
