@@ -2,24 +2,24 @@
 
 # Before deploy OpenShift
 
-#- name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
-#  hosts: all 
-#  roles:
-#    - repoconfigure
-#    - docker1.13.1 
-#    - sethostname 
-#    - expoter_install
+- name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
+  hosts: all 
+  roles:
+    - repoconfigure
+    - docker1.13.1 
+    - sethostname 
+    - expoter_install
 
 
 - name: install LDAP NFS harbor on storage server
   hosts: storage 
   roles:
-#    - nfs
-#    - ldap 
-#    - docker-compose
-#    - harbor
-#    - dnsmasqinstall
-#    - dnsconfigure
+    - nfs
+    - ldap 
+    - docker-compose
+    - harbor
+    - dnsmasqinstall
+    - dnsconfigure
     - installmysql
 
 - name: prepare for the openshift node
