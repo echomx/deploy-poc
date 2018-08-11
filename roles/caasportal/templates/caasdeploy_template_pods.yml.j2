@@ -241,8 +241,6 @@
             value: caas-haproxy
           - name: CAAS_BACKEND_PORT
             value: "8888"
-          - name: LOGO
-            value: eking
           image: harbor.{{ os_subdomain }}/caasportal/hcenter:{{ hcenter_tag }}
           imagePullPolicy: Always
           name: caas-hcenter

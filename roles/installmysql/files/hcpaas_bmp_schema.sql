@@ -28,16 +28,16 @@ CREATE TABLE `hcpaas_bmp`.`system_module` (
 
 set character set utf8;
 insert  into `system_module`(`module_id`,`module_pid`,`module_name`,`module_url`,`module_order`,`module_type`,`module_desc`,`has_deleted`) values 
-(1,NULL,'CMP菜单','/wapi/,/base/,/omapi/auth/getLoginUser',1,1,NULL,0),
-(2,NULL,'项目管理','/omapi/business/bizMgr,/omapi/business/appConfigs,/omapi/business/images,/omapi/business/application,/omapi/business/apps,/omapi/business/projects,/omapi/business/containers,/omapi/business/images,/omapi/business/monitor,/omapi/business/warns,/omapi/business/syslogs,/omapi/business/template,/omapi/business/volumes',1,2,NULL,0),
+(1,NULL,'CMP菜单','/wapi/,/base/,/omapi/auth/getLoginUser,/omapi/sysmgr/user/modify_password',1,1,NULL,0),
+(2,NULL,'项目管理','/omapi/business/bizMgr,/omapi/business/appConfigs,/omapi/business/application,/omapi/business/apps,/omapi/business/projects,/omapi/business/containers,/omapi/business/images,/omapi/business/monitor,/omapi/business/warns,/omapi/business/syslogs,/omapi/business/template,/omapi/business/volumes',1,2,NULL,0),
 (3,NULL,'用户查询','/omapi/sysmgr/user/query_page,/omapi/sysmgr/user/query_all_page,/omapi/sysmgr/user/query_by_id,/omapi/sysmgr/user/query_by_account,/omapi/sysmgr/user/copyPwd',1,2,NULL,0),
 (4,NULL,'用户编辑','/omapi/auth/register,/omapi/sysmgr/user/update_user,/omapi/sysmgr/user/delete_user,/omapi/sysmgr/user/lock_user,/omapi/sysmgr/user/release_lock_user,/omapi/sysmgr/user/modify_password',1,2,NULL,0),
 (5,NULL,'BMP通用','/omapi/auth/getLoginUser,/omapi/sysmgr/user/modify_password',1,2,NULL,0),
-(6,NULL,'项目查询','/omapi/business/projectsBmp/query_page,/omapi/business/projectsBmp/query_by_id,/omapi/business/projectsItems/query_page,/omapi/business/projectsItems/query,/omapi/business/projectsItems/query_by_id',1,2,NULL,0),
+(6,NULL,'项目查询','/omapi/business/projectsBmp/query_page,/omapi/business/projectsBmp/query_by_id,/omapi/business/projectsItems/query_page,/omapi/business/projectsItems/query,/omapi/business/projectsItems/query_by_id,/omapi/business/projectsBmp/updateCreator',1,2,NULL,0),
 (7,NULL,'项目编辑','/omapi/business/projectsBmp/save,/omapi/business/projectsBmp/delete,/omapi/business/projectsItems/save,/omapi/business/projectsItems/delete',1,2,NULL,0),
 (9,NULL,'消息管理','/omapi/business/messages',1,2,NULL,0),
 (11,NULL,'集群管理CM,SM','/omapi/business/routes,/omapi/business/resourceReport,/omapi/business/apps/query,/omapi/business/apps/findOne ',1,2,NULL,0),
-(10,NULL,'应用商店管理','/omapi/business/appShop,/omapi/business/images/',1,2,NULL,0);
+(10,NULL,'平台管理','/omapi/business/appShop,/omapi/business/images/,/omapi/business/s2iEnvs/',1,2,NULL,0);
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`system_permission`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -209,7 +209,7 @@ CREATE TABLE `hcpaas_bmp`.`t_user` (
 
 set character set utf8;
 insert  into `hcpaas_bmp`.`t_user`(`id`,`account`,`name`,`password`,`post`,`department`,`phone`,`email`,`status`,`remark`,`manager_type`,`ldap_user`,`last_pwd_update_date`,`owner`,`update_user`,`update_date`,`salt`) values 
-(1,'superadmin','superadmin','$2a$10$cUkq9CFkd2jJHmXq.3CYxOV7sdIFeMMFGkUG1tVM.HoxgpJLkxm3e','other','baifen',NULL,NULL,'NORMAL','超级管理员','SM',0,'2018-06-29 15:11:34',NULL,NULL,'2018-06-29 15:11:34','F8H95u3MQmaqnILaCrTfxg==');
+(1,'superadmin','superadmin','$2a$10$ODYav241xDsE2MkSMGl1xObjZTrP/fgqhNzI/MSJmSmNAZpsrfZey','other','baifen',NULL,NULL,'NORMAL','超级管理员','SM',0,'2018-06-29 15:11:34',NULL,NULL,'2018-06-29 15:11:34','F8H95u3MQmaqnILaCrTfxg==');
 
 
 DROP TABLE IF EXISTS `hcpaas_bmp`.`t_user_quotas`;
@@ -255,6 +255,7 @@ insert  into `hcpaas_bmp`.`relation_module_permission`(`module_id`,`permission_i
 (6,3),
 (9,3),
 (11,3),
+(11,2),
 (10,3);
 
 
