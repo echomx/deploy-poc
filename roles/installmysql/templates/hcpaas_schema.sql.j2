@@ -865,7 +865,7 @@ CREATE TABLE `s2i_envs` (
 BEGIN;
 INSERT INTO `s2i_envs` VALUES ('1', 'java', 'JAR_PATH', 'target'), ('2', 'tomcat', 'WAR_PATH', 'target'), ('3', 'tomcat', 'USE_CONTEXT', 'true'), ('4', 'tomcat', 'CONTEXT_PATH', ''), ('5', 'tomcat', 'SOURCE_PATH', ''), ('6', 'java', 'SOURCE_PATH', '');
 COMMIT;
-ALTER TABLE `template` MODIFY COLUMN `pic_url_small`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `roll_url`;
-update template t set t.pic_url_small=t.pic_url
+ALTER TABLE `template` ADD COLUMN `pic_url_small`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `roll_url`;
+update template t set t.pic_url_small=t.pic_url;
 SET FOREIGN_KEY_CHECKS = 1;
 
