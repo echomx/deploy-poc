@@ -2,7 +2,7 @@
 #create project for os_deploy
 auth=`echo admin:{{ harbor_password }}|tr -d '\n'|base64`
 curl -X POST \
-  http://harbor.{{ os_subdomain }}/api/projects \
+  http://{{ harbor_url | default('harbor.' + os_subdomain) }}/api/projects \
   -H 'authorization: Basic '$auth'' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -14,7 +14,7 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 curl -X POST \
-  http://harbor.{{ os_subdomain }}/api/projects \
+  http://{{ harbor_url | default('harbor.' + os_subdomain) }}/api/projects \
   -H 'authorization: Basic '$auth'' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -27,16 +27,16 @@ curl -X POST \
 }'
 #import the image
 docker load --input /opt/installers/os39-base-images.tar.gz
-docker login harbor.{{ os_subdomain }} -u admin -p {{ harbor_password }}
+docker login {{ harbor_url | default('harbor.' + os_subdomain) }} -u admin -p {{ harbor_password }}
 for i in `docker images |awk '{print $1":"$2}'|grep ^openshift`
 do
-   targetImage="harbor.{{ os_subdomain }}/$i"
+   targetImage="{{ harbor_url | default('harbor.' + os_subdomain) }}/$i"
    docker tag $i $targetImage
    docker push $targetImage
 done
 for i in `docker images |awk '{print $1":"$2}'|grep ^cockpit`
 do 
-   targetImage="harbor.{{ os_subdomain }}/$i"
+   targetImage="{{ harbor_url | default('harbor.' + os_subdomain) }}/$i"
    docker tag $i $targetImage
    docker push $targetImage
 done

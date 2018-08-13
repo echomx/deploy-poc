@@ -18,7 +18,7 @@ oc project {{ caas_project }} || oc new-project {{ caas_project }}
 oc patch scc privileged -p '{"priority": 22}'
 oc adm policy add-scc-to-user privileged system:serviceaccount:caasportal:default
 #create the secret for pulling images
-oc get secret deploycaas || oc create secret docker-registry deploycaas -n {{ caas_project }} --docker-username=admin --docker-password={{ harbor_password  }} --docker-email="admin@example.com" --docker-server="http://harbor.{{ os_subdomain }}/"
+oc get secret deploycaas || oc create secret docker-registry deploycaas -n {{ caas_project }} --docker-username=admin --docker-password={{ harbor_password  }} --docker-email="admin@example.com" --docker-server="http://{{ harbor_url | default('harbor.' + os_subdomain) }}/"
 cd /tmp/caasportal/
 #create the PV and PVC used in deploy
 oc create -f caasdeploy_persistent.yml

@@ -49,7 +49,7 @@
             value: http://caas-haproxy:8888
           - name: JAVA_DEBIAN_VERSION
             value: 8u111-b14-2~bpo8+1
-          image: harbor.{{ os_subdomain }}/caasportal/omp:{{ omp_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/omp:{{ omp_tag }}
           imagePullPolicy: Always
           name: caas-omp
           ports:
@@ -127,7 +127,7 @@
             value: caas-haproxy
           - name: WEB_PORT
             value: "8888"
-          image: harbor.{{ os_subdomain }}/caasportal/agamaha:{{ hcenter_ha_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/agamaha:{{ hcenter_ha_tag }}
           imagePullPolicy: Always
           name: caas-agamaha
           ports:
@@ -180,14 +180,14 @@
           - name: NFS_PORT
             value: "8080"
           - name: OS_BJ_URL
-            value: os-console.{{ os_subdomain }} 
+            value: {{ webconsole_url| default('os-console.' + os_subdomain) }} 
           - name: LANG
             value: C.UTF-8
           - name: OMP_SERVER
             value: caas-omp
           - name: OMP_PORT
             value: "8081"
-          image: harbor.{{ os_subdomain }}/caasportal/haproxy:{{ muddle_ha_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/haproxy:{{ muddle_ha_tag }}
           imagePullPolicy: Always
           name: caas-haproxy
           ports:
@@ -241,7 +241,7 @@
             value: caas-haproxy
           - name: CAAS_BACKEND_PORT
             value: "8888"
-          image: harbor.{{ os_subdomain }}/caasportal/hcenter:{{ hcenter_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/hcenter:{{ hcenter_tag }}
           imagePullPolicy: Always
           name: caas-hcenter
           ports:
@@ -311,14 +311,14 @@
           - name: vol_create_sleep
             value: "5000"
           - name: openshift_terminal_url
-            value: ws://portalapi.{{ os_subdomain }}
+            value: ws://{{ portalapi_url | default('portalapi.' + os_subdomain) }}
           - name: hb_info
             value: YWRtaW46Q2FhczEyMzQ1  
           - name: lic_data
             value: kkkkkkkk 
           - name: JAVA_DEBIAN_VERSION
             value: 8u111-b14-2~bpo8+1
-          image: harbor.{{ os_subdomain }}/caasportal/muddle:{{ muddle_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/muddle:{{ muddle_tag }}
           imagePullPolicy: Always
           name: caas-muddle
           ports:
@@ -364,7 +364,7 @@
         namespace: caasportal
       spec:
         containers:
-        - image: harbor.{{ os_subdomain }}/caasportal/redis:{{ redis_tag }}
+        - image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/redis:{{ redis_tag }}
           imagePullPolicy: Always
           name: caas-redis
           ports:
@@ -490,7 +490,7 @@
     name: caas-agamaha
     namespace: caasportal
   spec:
-    host: portal.{{ os_subdomain }}
+    host: {{ portal_url | default('portal.' + os_subdomain) }}
     port:
       targetPort: 8888-tcp
     to:
@@ -507,7 +507,7 @@
     name: caas-haproxy
     namespace: caasportal
   spec:
-    host: portalapi.{{ os_subdomain }}
+    host: {{ portalapi_url | default('portalapi.' + os_subdomain) }}
     port:
       targetPort: 8888-tcp
     to:

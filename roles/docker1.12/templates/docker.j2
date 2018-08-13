@@ -43,5 +43,5 @@ fi
 #DOCKERDBINARY=/usr/bin/dockerd-latest
 #DOCKER_CONTAINERD_BINARY=/usr/bin/docker-containerd-latest
 #DOCKER_CONTAINERD_SHIM_BINARY=/usr/bin/docker-containerd-shim-latest
-ADD_REGISTRY='--add-registry harbor.{{ os_subdomain }}'
-INSECURE_REGISTRY='--insecure-registry harbor.{{ os_subdomain }}'
+ADD_REGISTRY='--add-registry {{ harbor_url | default('harbor.' + os_subdomain) }}'
+INSECURE_REGISTRY='--insecure-registry {{ harbor_url | default('harbor.' + os_subdomain) }}'

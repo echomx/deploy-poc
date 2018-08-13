@@ -3,5 +3,5 @@
 {% for host in groups.all %}
 {{ host }}    {{ hostvars[host].hostname}}
 {% endfor %}
-{{ groups.storage[0] }} harbor.{{ os_subdomain }}
-{{ groups.masters[0] }} os-console.{{ os_subdomain }}
+{{ groups.storage[0] }} {{ harbor_url | default('harbor.' + os_subdomain) }}
+{{ groups.masters[0] }} {{ webconsole_url| default('os-console.' + os_subdomain) }}

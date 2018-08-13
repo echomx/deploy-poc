@@ -32,8 +32,8 @@ openshift_image_tag=v3.9.0
 openshift_version=3.9.0
 
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=os-console.{{ os_subdomain }}
-openshift_master_cluster_public_hostname=os-console.{{ os_subdomain }}
+openshift_master_cluster_hostname={{ webconsole_url| default('os-console.' + os_subdomain) }}
+openshift_master_cluster_public_hostname={{ webconsole_url| default('os-console.' + os_subdomain) }}
 openshift_master_default_subdomain={{ os_subdomain }}
 openshift_router_selector='region=master'
 openshift_registry_selector='region=master'
@@ -44,21 +44,21 @@ openshift_master_console_port=8443
 
 # logging configuration
 openshift_logging_image_version=v3.9
-openshift_logging_image_prefix=harbor.{{ os_subdomain }}/openshift/origin-
+openshift_logging_image_prefix={{ harbor_url | default('harbor.' + os_subdomain) }}/openshift/origin-
 openshift_logging_use_ops=true
-openshift_logging_master_public_url=https://os-console.{{ os_subdomain }}:8443
+openshift_logging_master_public_url=https://{{ webconsole_url| default('os-console.' + os_subdomain) }}:8443
 openshift_logging_install_logging=true
 openshift_logging_es_allow_external=true
 openshift_logging_curator_default_days=4
 # for docker
 docker_upgrade=False
 openshift_docker_options="--log-driver=json-file --log-opt max-size=50m -l warn --ipv6=false"
-openshift_docker_insecure_registries=harbor.{{ os_subdomain }}
+openshift_docker_insecure_registries={{ harbor_url | default('harbor.' + os_subdomain) }}
 
-oreg_url=harbor.{{ os_subdomain }}/openshift/origin-${component}:${version}
+oreg_url={{ harbor_url | default('harbor.' + os_subdomain) }}/openshift/origin-${component}:${version}
 #openshift_examples_modify_imagestreams=true
 # 在下载镜像之前，首先选择addition_registry下载镜像
-openshift_docker_additional_registries=harbor.{{ os_subdomain }} 
+openshift_docker_additional_registries={{ harbor_url | default('harbor.' + os_subdomain) }} 
 
 # 系统中主机ip的掩码为9位，系统支持的最大主机数为2^9=512
 osm_host_subnet_length=9
@@ -77,7 +77,7 @@ etcd_ca_default_days=1825
 #do not install service_catalog
 openshift_enable_service_catalog=false
 #for webconsole
-openshift_web_console_prefix=harbor.{{ os_subdomain }}/openshift/
+openshift_web_console_prefix={{ harbor_url | default('harbor.' + os_subdomain) }}/openshift/
 openshift_web_console_image_name=origin-web-console
 openshift_web_console_version=v3.9
 [masters]

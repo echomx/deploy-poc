@@ -29,7 +29,7 @@ spec:
             claimName: promrule
       containers:
         - name: prometheus
-          image: harbor.{{ os_subdomain }}/openshift/prometheus:v1.8.1
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/openshift/prometheus:v1.8.1
           command:
             - /bin/prometheus
           args:
@@ -89,7 +89,7 @@ spec:
             claimName: alertmanager
       containers:
         - name: alertmanager
-          image: harbor.{{ os_subdomain }}/openshift/alertmanager
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/openshift/alertmanager
           command:
             - /bin/alertmanager
           args:
@@ -144,7 +144,7 @@ spec:
           emptyDir: {}
       containers:
         - name: grafana
-          image: harbor.{{ os_subdomain }}/openshift/grafana
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/openshift/grafana
           ports:
             - containerPort: 3000
               protocol: TCP

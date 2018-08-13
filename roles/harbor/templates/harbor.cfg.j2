@@ -2,7 +2,7 @@
 
 #The IP address or hostname to access admin UI and registry service.
 #DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.
-hostname = harbor.{{ os_subdomain }}
+hostname = {{ harbor_url | default('harbor.' + os_subdomain) }}
 
 #The protocol for accessing the UI and token/notification service, by default it is http.
 #It can be set to https if ssl is enabled on nginx.
@@ -159,4 +159,4 @@ registry_storage_provider_name = filesystem
 #Refer to https://docs.docker.com/registry/configuration/#storage for all available configuration.
 registry_storage_provider_config =
 # caas web portal address
-web_url = portalapi.{{ os_subdomain }} 
+web_url = {{ portalapi_url | default('portalapi.' + os_subdomain) }} 

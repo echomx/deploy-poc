@@ -9,6 +9,12 @@ mirror_url: https://registry.docker-cn.com
 docker_vg: docker-vg
 docker_dev: /dev/xvdb
 
+#####Domain Name#####
+harbor_url: 
+portal_url:
+portalapi_url: 
+webconsole_url:
+
 #####storage#####
 #ldap info
 ldap_org: anisble 

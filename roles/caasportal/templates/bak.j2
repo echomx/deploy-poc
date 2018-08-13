@@ -28,7 +28,7 @@
             value: caas-haproxy
           - name: WEB_PORT
             value: "8888"
-          image: harbor.{{ os_subdomain }}/{{ caas_project }}/{{ hcenter_ha_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/{{ caas_project }}/{{ hcenter_ha_tag }}
           imagePullPolicy: Always
           name: caas-agamaha
           ports:
@@ -84,7 +84,7 @@
             value: {{ groups.masters[0] }} 
           - name: LANG
             value: C.UTF-8
-          image: harbor.{{ os_subdomain }}/{{ caas_project }}/{{ muddle_ha_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/{{ caas_project }}/{{ muddle_ha_tag }}
           imagePullPolicy: Always
           name: caas-haproxy
           ports:
@@ -140,7 +140,7 @@
             value: "8080"
           - name: CLIENT_LOGO
             value: eking
-          image: harbor.{{ os_subdomain }}/{{ caas_project }}/{{ hcenter_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/{{ caas_project }}/{{ hcenter_tag }}
           imagePullPolicy: Always
           name: caas-hcenter
           ports:
@@ -224,7 +224,7 @@
             value: {{ license_key }} 
           - name: JAVA_DEBIAN_VERSION
             value: 8u111-b14-2~bpo8+1
-          image: harbor.{{ os_subdomain }}/{{ caas_project }}/{{ muddle_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/{{ caas_project }}/{{ muddle_tag }}
           imagePullPolicy: Always
           name: caas-muddle
           ports:
@@ -278,7 +278,7 @@
             value: adminpwd
           - name: MYSQL_DATABASE
             value: hcpaas
-          image: harbor.{{ os_subdomain }}/{{ caas_project }}/{{ mysql_tag }}
+          image: {{ harbor_url | default('harbor.' + os_subdomain) }}/{{ caas_project }}/{{ mysql_tag }}
           imagePullPolicy: Always
           name: caas-mysql
           ports:
@@ -328,7 +328,7 @@
         namespace: caasportal
       spec:
         containers:
-        - image: harbor.{{ os_subdomain }}/{{ caas_project }}/{{ redis_tag }}
+        - image: {{ harbor_url | default('harbor.' + os_subdomain) }}/{{ caas_project }}/{{ redis_tag }}
           imagePullPolicy: Always
           name: caas-redis
           ports:
