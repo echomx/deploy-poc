@@ -7,3 +7,6 @@
 
 [storage]
 10.70.94.14 hostname=storage
+
+[storage02]
+10.70.94.15 hostname=storage02

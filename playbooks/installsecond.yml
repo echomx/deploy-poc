@@ -1,0 +1,40 @@
+---
+# this playbook is used to deploy another Openshift Cluster with NFS
+
+# Before deploy OpenShift
+
+- name: configure the basic of the host-repo set, install docker, set hostname, install node-exporter 
+  hosts: masters,nodes 
+  roles:
+    - repoconfigure
+    - docker1.13.1 
+    - sethostname 
+#    - expoter_install
+
+
+- name: install LDAP NFS harbor on storage server
+  hosts: storage02
+  roles:
+    - nfs
+
+- name: prepare for the openshift node
+  hosts: masters,nodes 
+  roles:
+    - os_node_initial
+    
+
+    
+
+- name: generate the inventory for deployer and deploy Openshift
+  hosts: "{{ groups.masters[0] }}"
+  roles:
+    - os_inventory
+    - os_deploy
+    - dnsconfigure
+
+
+- name: set the iptables for nodes
+  hosts: nodes
+  roles:
+    - setiptables-os
+    - dnsconfigure

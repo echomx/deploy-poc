@@ -1,2 +1,5 @@
 address=/{{ harbor_url | default('harbor.' + os_subdomain) }}/{{ groups.storage[0] }}
+address=/{{ portal_url | default('portal.' + os_subdomain) }}/{{ groups.masters[0] }}
+address=/{{ portalapi_url | default('portalapi.' + os_subdomain) }}/{{ groups.masters[0] }}
+address=/{{ webconsole_url | default('os-console.' + os_subdomain) }}/{{ groups.masters[0] }}
 address=/.{{ os_subdomain }}/{{ groups.masters[0] }}
