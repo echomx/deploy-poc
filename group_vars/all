@@ -7,13 +7,13 @@ os_version: 7.2
 # docker info
 mirror_url: https://registry.docker-cn.com
 docker_vg: docker-vg
-docker_dev: /dev/xvdb
+docker_dev: /dev/sdb1
 
 #####Domain Name#####
-harbor_url: 
-portal_url:
-portalapi_url: 
-webconsole_url:
+harbor_url: harbor.geely.com 
+portal_url: portal.geely.com
+portalapi_url: portalapi.geely.com
+webconsole_url: os-console.demo1.geely.com
 
 #####storage#####
 #ldap info
@@ -25,24 +25,24 @@ ldap_admin_password: generalcom
 
 #harbor info
 harbor_password: Caas12345 
-harbor_dev: /dev/xvdc1
+harbor_dev: /dev/sdb2
 store_path: /data
 
 #NFS
-nfs_dev: /dev/xvdc2
+nfs_dev: /dev/sdb3
 nfs_vg: vg-paas
 
 ####Openshift and above apps#####
 
 #Openshift info
 os_admin_password: Caas54321 
-os_subdomain: xiaohehe.com 
+os_subdomain: demo1.geely.com
 os_vg: origin-vg
-os_dev: /dev/xvdc1
+os_dev: /dev/sdb2
 os_lv: origin-lv
 
 #Openshift data partition info
-data_dev: /dev/xvdc2
+data_dev: /dev/sdb3
 data_vg: data-vg
 data_lv: data-lv
 mount_path: /caas_data
@@ -52,12 +52,12 @@ caas_project: caasportal
 license_key: askdlfaklsd
 # image tag
 mysql_tag: 5.5utf8
-muddle_tag: v1 
-hcenter_tag: v1 
-muddle_ha_tag: v1
-hcenter_ha_tag: v1
+muddle_tag: v3.22 
+hcenter_tag: v3.17
+muddle_ha_tag: v2.2
+hcenter_ha_tag: v2
 redis_tag: 3.2
-omp_tag: v1
+omp_tag: v3.18
 
 #prometheus
 grafana_password: Hello_grafana_20180608

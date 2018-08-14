@@ -1,12 +1,9 @@
 [masters]
-10.70.94.11 hostname=master1
+10.70.39.202 hostname=master-01-01
 
 [nodes]
-10.70.94.12 hostname=node1
-10.70.94.13 hostname=node2
+10.70.39.203 hostname=node-01-01
+10.70.39.204 hostname=node-01-02
 
 [storage]
-10.70.94.14 hostname=storage
-
-[storage02]
-10.70.94.15 hostname=storage02
+10.70.39.205 hostname=storage
