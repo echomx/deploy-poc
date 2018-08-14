@@ -14,7 +14,7 @@ curl -X POST \
   "automatically_scan_images_on_push": true
 }'
 #import the image
-docker load --input /opt/installers/appstore_images-wordpress-only.tar.gz
+docker load --input /opt/installers/appstore_images_gitlab-wordpress.tar.gz
 docker login {{ harbor_url | default('harbor.' + os_subdomain) }}-u admin -p {{ harbor_password }}
 for i in `docker images|awk '{print $1":"$2}'|grep ^appstore`
 do
