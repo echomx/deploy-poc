@@ -33,13 +33,13 @@
     vg: "{{ data_vg }}"
     pvs: "{{ data_dev }}"
 
-- name: create the lv for origin
+- name: create the lv for data
   lvol:
     vg: "{{ data_vg }}"
     lv: "{{ data_lv }}"
     size: 100%FREE
 
-- name: format the lv for origin
+- name: format the lv for data
   filesystem:
     fstype: xfs
     dev: "/dev/{{ data_vg }}/{{ data_lv }}"
