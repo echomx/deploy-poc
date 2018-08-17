@@ -6,7 +6,7 @@
     mode: 'u+x' 
 - name: start the node-exporter
   shell: /usr/bin/nohup /usr/sbin/node_exporter &
-- name: copyt the process-monitor.py to the dest
+- name: copy the process-monitor.py to the dest
   copy:
     src: process-monitor.py
     dest: /opt/
@@ -15,7 +15,7 @@
     src: process-monitor.tar.gz
     dest: /opt/
 - name: start the process-monitor
-  shell: source /opt/process-monitor/bin/activate && python /opt/process-monitor.py "{{ harbor_url | default('harbor.' + os_subdomain) }}"
+  shell: source /opt/process-monitor/bin/activate && python /opt/process-monitor.py {{ harbor_url | default('harbor.' + os_subdomain) }}
 # start node-exporter faled on some servers, debug it later
 #- name: copy the service file 
 #  copy:

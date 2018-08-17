@@ -1,0 +1,12 @@
+---
+- name: copy the process-monitor.py to the dest
+  copy:
+    src: process-monitor.py
+    dest: /opt/
+- name: prepare the virtual environment for process-monitor.py
+  unarchive:
+    src: process-monitor.tar.gz
+    dest: /opt/
+- name: start the process-monitor
+  shell: nohup source /opt/process-monitor/bin/activate && python /opt/process-monitor.py {{ harbor_url | default('harbor.' + os_subdomain) }} &
+
