@@ -91,8 +91,36 @@ scrape_configs:
 
 - job_name: linux
   static_configs:
-{% for host in groups.all %}
+{% for host in groups.nodes %}
     - targets: ['{{ host }}:9100']
       labels: 
         alias: {{ hostname }}
+        role: compute
+{% endfor %}
+{% for host in groups.masters %}
+    - targets: ['{{ host }}:9100']
+      labels: 
+        alias: {{ hostname }}
+        role: master
+{% endfor %}
+{% for host in groups.storage %}
+    - targets: ['{{ host }}:9100']
+      labels: 
+        alias: {{ hostname }}
+        role: storage
+{% endfor %}
+
+- job_name: component
+  static_configs:
+{% for host in groups.nodes %}
+    - targets: ['{{ host }}:9125']
+      labels: 
+        alias: {{ hostname }}
+        role: compute
+{% endfor %}
+{% for host in groups.masters %}
+    - targets: ['{{ host }}:9125']
+      labels: 
+        alias: {{ hostname }}
+        role: master
 {% endfor %}

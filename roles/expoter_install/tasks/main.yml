@@ -6,6 +6,16 @@
     mode: 'u+x' 
 - name: start the node-exporter
   shell: /usr/bin/nohup /usr/sbin/node_exporter &
+- name: copyt the process-monitor.py to the dest
+  copy:
+    src: process-monitor.py
+    dest: /opt/
+- name: prepare the virtual environment for process-monitor.py
+  unarchive:
+    src: process-monitor.tar.gz
+    dest: /opt/
+- name: start the process-monitor
+  shell: source /opt/process-monitor/bin/activate && python /opt/process-monitor.py 
 # start node-exporter faled on some servers, debug it later
 #- name: copy the service file 
 #  copy:
