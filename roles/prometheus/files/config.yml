@@ -43,6 +43,10 @@ route:
     match:
       platform: k8s
 
+  - receiver: 'omp'
+    match:
+      output: 'omp_alert_event'
+
   # All the above attributes are inherited by all child routes and can
   # overwritten on each.
 
@@ -63,12 +67,16 @@ inhibit_rules:
 
 
 receivers:
-#TODO
+
 - name: 'cloud'
   email_configs:
   - to: '${RECEIVER_EMAIL_ADDRESS}'
 
-#TODO 
+
 - name: 'webhook'
   webhook_configs:
-  - url: 'http://${CAAS_IP}/wapi/warning/alert'
+  - url: 'http://${CAAS_ADDRESS}/wapi/warning/alert'
+
+- name: 'omp'
+  webhook_configs:
+    - url: 'http://${CAAS_ADDRESS}/omapi/business/clusterWarning/alert'
