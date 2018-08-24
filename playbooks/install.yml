@@ -10,6 +10,7 @@
     - docker1.13.1 
     - sethostname 
     - expoter_install
+    - process-monitor
 
 
 - name: install LDAP NFS harbor on storage server
