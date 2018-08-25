@@ -8,5 +8,5 @@
     src: process-monitor.tar.gz
     dest: /opt/
 - name: start the process-monitor
-  shell: nohup source /opt/process-monitor/bin/activate && python /opt/process-monitor.py {{ harbor_url | default('harbor.' + os_subdomain) }} &
+  shell: source /opt/process-monitor/bin/activate && nohup python /opt/process-monitor.py {{ harbor_url | default('harbor.' + os_subdomain) }} &
 

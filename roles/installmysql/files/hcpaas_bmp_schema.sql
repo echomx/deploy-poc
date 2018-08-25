@@ -13,7 +13,12 @@ File Encoding         : 65001
 Date: 2018-08-25 11:07:22
 */
 
+
 SET FOREIGN_KEY_CHECKS=0;
+set character set utf8;
+DROP DATABASE IF EXISTS `hcpaas_bmp`;
+CREATE DATABASE `hcpaas_bmp`;
+USE `hcpaas_bmp`;
 
 -- ----------------------------
 -- Table structure for relation_module_permission

@@ -175,9 +175,9 @@
             value: caas-muddle 
           - name: WEB_PORT
             value: "8080"
-          - name: NFS_URL
+          - name: NFS_REGION1_URL
             value: {{ groups.storage[0] }} 
-          - name: NFS_PORT
+          - name: NFS_REGION1_PORT
             value: "8080"
           - name: OS_BJ_URL
             value: {{ webconsole_url| default('os-console.' + os_subdomain) }} 

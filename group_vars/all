@@ -10,10 +10,10 @@ docker_vg: docker-vg
 docker_dev: /dev/sdb1
 
 #####Domain Name#####
-harbor_url: harbor.geely.com 
-portal_url: portal.geely.com
-portalapi_url: portalapi.geely.com
-webconsole_url: os-console.demo1.geely.com
+harbor_url: harbor.abcd.com 
+portal_url: portal.abcd.com
+portalapi_url: portalapi.abcd.com
+webconsole_url: os-console.demo1.abcd.com
 
 #####storage#####
 #ldap info
@@ -36,7 +36,7 @@ nfs_vg: vg-paas
 
 #Openshift info
 os_admin_password: Caas54321 
-os_subdomain: demo1.geely.com
+os_subdomain: demo1.abcd.com
 os_vg: origin-vg
 os_dev: /dev/sdb2
 os_lv: origin-lv
