@@ -1,26 +1,22 @@
 /*
- Navicat MySQL Data Transfer
+Navicat MySQL Data Transfer
 
- Source Server         : caas-bizjet
- Source Server Version : 50560
- Source Host           : caas-mysql.test.bizjetcloud.com
- Source Database       : init_hcpaas
+Source Server         : 10.70.39.214
+Source Server Version : 50560
+Source Host           : 10.70.39.214:3306
+Source Database       : hcpaas
 
- Target Server Version : 50560
- File Encoding         : utf-8
+Target Server Type    : MYSQL
+Target Server Version : 50560
+File Encoding         : 65001
 
- Date: 07/18/2018 18:03:25 PM
+Date: 2018-08-25 11:07:04
 */
 
-SET NAMES utf8;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
-
-DROP DATABASE IF EXISTS `hcpaas`;
-CREATE DATABASE `hcpaas`;
-USE `hcpaas`;
 -- ----------------------------
---  Table structure for `app_config_map`
+-- Table structure for app_config_map
 -- ----------------------------
 DROP TABLE IF EXISTS `app_config_map`;
 CREATE TABLE `app_config_map` (
@@ -35,7 +31,7 @@ CREATE TABLE `app_config_map` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `application`
+-- Table structure for application
 -- ----------------------------
 DROP TABLE IF EXISTS `application`;
 CREATE TABLE `application` (
@@ -47,10 +43,10 @@ CREATE TABLE `application` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`super_app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `apps`
+-- Table structure for apps
 -- ----------------------------
 DROP TABLE IF EXISTS `apps`;
 CREATE TABLE `apps` (
@@ -71,10 +67,10 @@ CREATE TABLE `apps` (
   PRIMARY KEY (`app_id`),
   KEY `FK_Relationship_5` (`user_id`),
   CONSTRAINT `apps_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `charge`
+-- Table structure for charge
 -- ----------------------------
 DROP TABLE IF EXISTS `charge`;
 CREATE TABLE `charge` (
@@ -93,7 +89,7 @@ CREATE TABLE `charge` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `code_account`
+-- Table structure for code_account
 -- ----------------------------
 DROP TABLE IF EXISTS `code_account`;
 CREATE TABLE `code_account` (
@@ -112,10 +108,10 @@ CREATE TABLE `code_account` (
   PRIMARY KEY (`code_account_id`),
   KEY `FK_Relationship_2` (`user_id`),
   CONSTRAINT `code_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `code_inspection`
+-- Table structure for code_inspection
 -- ----------------------------
 DROP TABLE IF EXISTS `code_inspection`;
 CREATE TABLE `code_inspection` (
@@ -141,7 +137,7 @@ CREATE TABLE `code_inspection` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `collect_images`
+-- Table structure for collect_images
 -- ----------------------------
 DROP TABLE IF EXISTS `collect_images`;
 CREATE TABLE `collect_images` (
@@ -158,10 +154,10 @@ CREATE TABLE `collect_images` (
   PRIMARY KEY (`collect_image_id`),
   KEY `FK_Relationship_9` (`user_id`),
   CONSTRAINT `collect_images_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `config_file`
+-- Table structure for config_file
 -- ----------------------------
 DROP TABLE IF EXISTS `config_file`;
 CREATE TABLE `config_file` (
@@ -173,10 +169,10 @@ CREATE TABLE `config_file` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modified_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`config_file_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `config_group`
+-- Table structure for config_group
 -- ----------------------------
 DROP TABLE IF EXISTS `config_group`;
 CREATE TABLE `config_group` (
@@ -187,10 +183,10 @@ CREATE TABLE `config_group` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `config_group_location` int(4) DEFAULT NULL COMMENT '配置组所在的区域',
   PRIMARY KEY (`config_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `containers`
+-- Table structure for containers
 -- ----------------------------
 DROP TABLE IF EXISTS `containers`;
 CREATE TABLE `containers` (
@@ -208,10 +204,10 @@ CREATE TABLE `containers` (
   PRIMARY KEY (`container_id`),
   KEY `FK_Relationship_8` (`service_id`),
   CONSTRAINT `containers_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `cost_rule`
+-- Table structure for cost_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `cost_rule`;
 CREATE TABLE `cost_rule` (
@@ -223,7 +219,7 @@ CREATE TABLE `cost_rule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `customer`
+-- Table structure for customer
 -- ----------------------------
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
@@ -254,7 +250,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `envs`
+-- Table structure for envs
 -- ----------------------------
 DROP TABLE IF EXISTS `envs`;
 CREATE TABLE `envs` (
@@ -268,14 +264,7 @@ CREATE TABLE `envs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Records of `envs`
--- ----------------------------
-BEGIN;
-INSERT INTO `envs` VALUES ('1', 'mysql', '5.5', 'MYSQL_ROOT_PASSWORD', '2016-08-16 10:13:06', '2016-08-16 10:13:10'), ('2', 'mysql', '5.6', 'MYSQL_ROOT_PASSWORD', '2016-08-16 11:14:10', '2016-08-16 11:14:13'), ('3', 'mysql', 'latest', 'MYSQL_ROOT_PASSWORD', '2016-08-16 11:15:08', '2016-08-16 11:15:11'), ('4', 'mongodb', '2.4', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:16:10', '2016-08-16 11:16:14'), ('5', 'mongodb', '2.6', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:16:37', '2016-08-16 11:16:39'), ('6', 'mongodb', '3.2', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:16:55', '2016-08-16 11:16:59'), ('7', 'mongodb', 'latest', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:17:15', '2016-08-16 11:17:18'), ('8', 'mariadb', '10.1', 'MYSQL_ROOT_PASSWORD', '2016-08-22 15:45:16', '2016-08-22 15:45:19'), ('9', 'mariadb', 'latest', 'MYSQL_ROOT_PASSWORD', '2016-08-22 15:45:42', '2016-08-22 15:45:45'), ('10', 'postgresql', '9.2', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:20:23', '2016-08-22 16:20:28'), ('11', 'postgresql', '9.4', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:21:19', '2016-08-22 16:21:22'), ('12', 'postgresql', '9.5', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:21:37', '2016-08-22 16:21:41'), ('13', 'postgresql', 'latest', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:21:56', '2016-08-22 16:21:59'), ('14', 'mysql', '5.7', 'MYSQL_ROOT_PASSWORD', '2017-05-24 10:50:09', '2017-05-24 10:50:12');
-COMMIT;
-
--- ----------------------------
---  Table structure for `events`
+-- Table structure for events
 -- ----------------------------
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
@@ -297,7 +286,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `images`
+-- Table structure for images
 -- ----------------------------
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -318,10 +307,10 @@ CREATE TABLE `images` (
   PRIMARY KEY (`image_id`),
   KEY `FK_Relationship_11` (`project_id`),
   CONSTRAINT `images_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `messages`
+-- Table structure for messages
 -- ----------------------------
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
@@ -330,24 +319,24 @@ CREATE TABLE `messages` (
   `content` varchar(1000) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `os_loc_info`
+-- Table structure for os_loc_info
 -- ----------------------------
 DROP TABLE IF EXISTS `os_loc_info`;
 CREATE TABLE `os_loc_info` (
-  `os_id` int(8) NOT NULL,
+  `os_id` int(8) NOT NULL AUTO_INCREMENT,
   `location` int(8) DEFAULT NULL,
-  `location_name_en` varchar(100) DEFAULT NULL,
-  `location_name` varchar(50) DEFAULT NULL,
+  `location_name_en` varchar(100) DEFAULT NULL COMMENT '集群英文名',
+  `location_name` varchar(50) DEFAULT NULL COMMENT '集群名称',
   `pub_flag` int(8) DEFAULT NULL,
-  `os_url` varchar(100) DEFAULT NULL,
-  `os_username` varchar(100) DEFAULT NULL,
-  `os_userpwd` varchar(100) DEFAULT NULL,
+  `os_url` varchar(100) DEFAULT NULL COMMENT 'OS集群地址',
+  `os_username` varchar(100) DEFAULT NULL COMMENT 'OS管理用户',
+  `os_userpwd` varchar(100) DEFAULT NULL COMMENT 'OS管理用户密码',
   `os_identity_provider` varchar(100) DEFAULT NULL,
-  `os_domain` varchar(100) DEFAULT NULL,
-  `os_terminal_url` varchar(100) DEFAULT NULL,
+  `os_domain` varchar(100) DEFAULT NULL COMMENT '域名',
+  `os_terminal_url` varchar(100) DEFAULT NULL COMMENT '控制台ws地址',
   `ldap_url` varchar(100) DEFAULT NULL,
   `ldap_port` int(10) DEFAULT NULL,
   `ldap_username` varchar(100) DEFAULT NULL,
@@ -357,19 +346,26 @@ CREATE TABLE `os_loc_info` (
   `ldap_sn` varchar(50) DEFAULT NULL,
   `ldap_objectClass` varchar(50) DEFAULT NULL,
   `harbor_url` varchar(100) DEFAULT NULL,
-  `nfs_base_url` varchar(100) DEFAULT NULL,
-  `nfs_ip` varchar(50) DEFAULT NULL,
-  `monitor_url` varchar(50) DEFAULT NULL,
+  `harbor_docker_url` varchar(100) DEFAULT NULL COMMENT 'harbor监听地址',
+  `nfs_base_url` varchar(100) DEFAULT NULL COMMENT 'nfs地址',
+  `nfs_ip` varchar(50) DEFAULT NULL COMMENT 'nfs IP',
+  `monitor_url` varchar(50) DEFAULT NULL COMMENT '监控地址',
   `log_url` varchar(50) DEFAULT NULL COMMENT '容器日志url',
   `image_ip` varchar(100) DEFAULT NULL,
-  `image_security_url` varchar(100) DEFAULT NULL,
+  `image_security_url` varchar(100) DEFAULT NULL COMMENT '镜像扫描地址',
+  `cpu_proportion` int(8) DEFAULT NULL COMMENT '超配因子',
+  `mem_proportion` varchar(10) DEFAULT NULL COMMENT '冗余比例',
   `default_use` tinyint(1) DEFAULT NULL,
+  `is_lock` tinyint(1) DEFAULT NULL,
+  `node_max_pod` int(11) DEFAULT NULL COMMENT '节点最大pod数',
+  `pod_net_transmit_limit` decimal(10,2) DEFAULT NULL COMMENT 'pod网络限制上行',
+  `pod_vol_limit` decimal(10,2) DEFAULT NULL COMMENT '磁盘限制',
+  `pod_net_receive_limit` decimal(10,2) DEFAULT NULL COMMENT 'pod网络限制下行',
   PRIMARY KEY (`os_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `os_users_pool`
+-- Table structure for os_users_pool
 -- ----------------------------
 DROP TABLE IF EXISTS `os_users_pool`;
 CREATE TABLE `os_users_pool` (
@@ -382,7 +378,7 @@ CREATE TABLE `os_users_pool` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `projects`
+-- Table structure for projects
 -- ----------------------------
 DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
@@ -414,15 +410,17 @@ CREATE TABLE `projects` (
   `source_package_name` varchar(50) DEFAULT NULL COMMENT '安装包源文件名',
   `package_path` varchar(200) DEFAULT NULL COMMENT '安装包路径',
   `auto_scan` tinyint(1) DEFAULT NULL COMMENT '是否自动安全扫描',
+  `platform_type` int(1) DEFAULT '0' COMMENT '1：平台镜像 2：builder镜像',
+  `is_pushed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`project_id`),
   KEY `FK_Relationship_10` (`user_id`),
   KEY `FK_Relationship_3` (`code_account_id`),
   CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`code_account_id`) REFERENCES `code_account` (`code_account_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `quotas_config`
+-- Table structure for quotas_config
 -- ----------------------------
 DROP TABLE IF EXISTS `quotas_config`;
 CREATE TABLE `quotas_config` (
@@ -441,17 +439,10 @@ CREATE TABLE `quotas_config` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`quota_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=761 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=799 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Records of `quotas_config`
--- ----------------------------
-BEGIN;
-INSERT INTO `quotas_config` VALUES ('760', '764', '100', '102400', '102400', '200', '30', '30', null, null, null, null, '2018-05-18 18:00:30', '2018-05-18 18:00:30');
-COMMIT;
-
--- ----------------------------
---  Table structure for `reply`
+-- Table structure for reply
 -- ----------------------------
 DROP TABLE IF EXISTS `reply`;
 CREATE TABLE `reply` (
@@ -467,7 +458,7 @@ CREATE TABLE `reply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `resource_warning`
+-- Table structure for resource_warning
 -- ----------------------------
 DROP TABLE IF EXISTS `resource_warning`;
 CREATE TABLE `resource_warning` (
@@ -488,10 +479,10 @@ CREATE TABLE `resource_warning` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `app_loc` int(8) DEFAULT NULL COMMENT 'app地域',
   PRIMARY KEY (`warning_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `rest_user`
+-- Table structure for rest_user
 -- ----------------------------
 DROP TABLE IF EXISTS `rest_user`;
 CREATE TABLE `rest_user` (
@@ -503,7 +494,7 @@ CREATE TABLE `rest_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `roles`
+-- Table structure for roles
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -513,14 +504,19 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户角色表';
 
 -- ----------------------------
---  Records of `roles`
+-- Table structure for s2i_envs
 -- ----------------------------
-BEGIN;
-INSERT INTO `roles` VALUES ('1', 'admin');
-COMMIT;
+DROP TABLE IF EXISTS `s2i_envs`;
+CREATE TABLE `s2i_envs` (
+  `s2i_env_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `builder_name` varchar(50) DEFAULT NULL,
+  `env_key` varchar(50) DEFAULT NULL,
+  `env_value` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`s2i_env_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `sales`
+-- Table structure for sales
 -- ----------------------------
 DROP TABLE IF EXISTS `sales`;
 CREATE TABLE `sales` (
@@ -532,7 +528,7 @@ CREATE TABLE `sales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `services`
+-- Table structure for services
 -- ----------------------------
 DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
@@ -551,7 +547,8 @@ CREATE TABLE `services` (
   `mem` varchar(50) DEFAULT NULL COMMENT 'mem',
   `net` varchar(50) DEFAULT NULL COMMENT 'net',
   `disk` varchar(50) DEFAULT NULL COMMENT 'disk',
-  `auto_test_addr` varchar(200) DEFAULT NULL,
+  `session_flag` tinyint(1) DEFAULT NULL,
+  `lb_type` varchar(200) DEFAULT NULL,
   `service_url` varchar(200) DEFAULT NULL COMMENT '服务访问地址',
   `hub_type` varchar(50) DEFAULT NULL,
   `image_name` varchar(200) DEFAULT NULL,
@@ -560,10 +557,10 @@ CREATE TABLE `services` (
   PRIMARY KEY (`service_id`),
   KEY `FK_Relationship_7` (`app_id`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `apps` (`app_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `super_apps`
+-- Table structure for super_apps
 -- ----------------------------
 DROP TABLE IF EXISTS `super_apps`;
 CREATE TABLE `super_apps` (
@@ -574,10 +571,10 @@ CREATE TABLE `super_apps` (
   `app_loc` int(8) DEFAULT NULL,
   `super_app_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`application_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `sys_logs`
+-- Table structure for sys_logs
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_logs`;
 CREATE TABLE `sys_logs` (
@@ -594,17 +591,10 @@ CREATE TABLE `sys_logs` (
   `oper_title_en` varchar(100) DEFAULT NULL,
   `log_loc` int(8) DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89066 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=89417 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Records of `sys_logs`
--- ----------------------------
-BEGIN;
-INSERT INTO `sys_logs` VALUES ('89058', '1', '登录', 'login', '764', '2018-05-18 18:00:39', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89059', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89060', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89061', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89062', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89063', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89064', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89065', '1', '登录', 'login', '764', '2018-05-21 09:15:33', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null);
-COMMIT;
-
--- ----------------------------
---  Table structure for `temp_quota`
+-- Table structure for temp_quota
 -- ----------------------------
 DROP TABLE IF EXISTS `temp_quota`;
 CREATE TABLE `temp_quota` (
@@ -615,14 +605,7 @@ CREATE TABLE `temp_quota` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Records of `temp_quota`
--- ----------------------------
-BEGIN;
-INSERT INTO `temp_quota` VALUES ('1', '1', '1'), ('2', '1', '2'), ('3', '2', '2'), ('4', '2', '4'), ('5', '4', '4'), ('6', '4', '8'), ('7', '8', '8'), ('8', '8', '16'), ('9', '16', '16'), ('10', '16', '32'), ('11', '32', '32'), ('12', '32', '64');
-COMMIT;
-
--- ----------------------------
---  Table structure for `template`
+-- Table structure for template
 -- ----------------------------
 DROP TABLE IF EXISTS `template`;
 CREATE TABLE `template` (
@@ -649,12 +632,10 @@ CREATE TABLE `template` (
   `temp_pod` varchar(10) DEFAULT NULL,
   `size_type` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`template_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=905 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=913 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `user_loc_map`
+-- Table structure for user_loc_map
 -- ----------------------------
 DROP TABLE IF EXISTS `user_loc_map`;
 CREATE TABLE `user_loc_map` (
@@ -665,11 +646,10 @@ CREATE TABLE `user_loc_map` (
   `image_namespace` varchar(100) DEFAULT NULL,
   `harbor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_loc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2636 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
+) ENGINE=InnoDB AUTO_INCREMENT=2685 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `users`
+-- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -691,12 +671,10 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   KEY `FK_Relationship_1` (`role_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=765 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=803 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
 
 -- ----------------------------
---  Table structure for `vol_app`
+-- Table structure for vol_app
 -- ----------------------------
 DROP TABLE IF EXISTS `vol_app`;
 CREATE TABLE `vol_app` (
@@ -706,10 +684,10 @@ CREATE TABLE `vol_app` (
   `vol_mount` varchar(500) DEFAULT NULL,
   `app_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`vol_app_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `volumes`
+-- Table structure for volumes
 -- ----------------------------
 DROP TABLE IF EXISTS `volumes`;
 CREATE TABLE `volumes` (
@@ -728,10 +706,10 @@ CREATE TABLE `volumes` (
   `vol_loc` int(8) DEFAULT NULL COMMENT '地区',
   `customer_id` varchar(50) DEFAULT NULL COMMENT '客户ID',
   PRIMARY KEY (`vol_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
---  Table structure for `work_order`
+-- Table structure for work_order
 -- ----------------------------
 DROP TABLE IF EXISTS `work_order`;
 CREATE TABLE `work_order` (
@@ -749,34 +727,53 @@ CREATE TABLE `work_order` (
   PRIMARY KEY (`work_order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-INSERT INTO `os_loc_info` VALUES ('4', '4', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password|b64encode }}', 'Region1', '.{{ os_subdomain }}', 'ws://{{ portalapi_url | default('portalapi.' + os_subdomain) }}', '{{ groups.storage[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password|b64encode }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', '{{ harbor_url | default('harbor.' + os_subdomain) }}', 'http://{{ groups.storage[0] }}:8080', '{{ groups.storage[0] }}', 'http://prometheus.{{ os_subdomain }}', 'https://es.{{ os_subdomain }}', '172.30.9.251:5000', 'http://{{ harbor_url | default('harbor.' + os_subdomain) }}', 1);
-INSERT INTO `os_loc_info` VALUES ('5', '5', 'South data center', '南方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password|b64encode }}', 'Region2', '.{{ os_subdomain }}', 'ws://{{ portalapi_url | default('portalapi.' + os_subdomain) }}', '{{ groups.storage[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password|b64encode }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', '{{ harbor_url | default('harbor.' + os_subdomain) }}', 'http://{{ groups.storage[0] }}:8080', '{{ groups.storage[0] }}', 'http://prometheus.{{ os_subdomain }}', 'https://es.{{ os_subdomain }}', '172.30.9.251:5000', 'http://{{ harbor_url | default('harbor.' + os_subdomain) }}', 0);
 
-DROP TABLE IF EXISTS `template`;
-CREATE TABLE `template` (
-  `template_id` int(8) NOT NULL AUTO_INCREMENT,
-  `template_name` varchar(50) DEFAULT NULL,
-  `data_yaml` varchar(5000) DEFAULT NULL,
-  `data_json` varchar(5000) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `update_time` datetime DEFAULT NULL,
-  `user_id` int(8) DEFAULT NULL,
-  `description_en` text,
-  `description` varchar(5000) DEFAULT NULL,
-  `namespace` varchar(100) DEFAULT NULL,
-  `image_name` varchar(2000) DEFAULT NULL,
-  `temp_type` varchar(10) DEFAULT NULL,
-  `app_type` varchar(50) DEFAULT NULL,
-  `count` int(20) DEFAULT NULL,
-  `roll_url` varchar(500) DEFAULT NULL,
-  `pic_url` varchar(500) DEFAULT NULL,
-  `temp_cpu` varchar(10) DEFAULT NULL,
-  `temp_mem` varchar(10) DEFAULT NULL,
-  `temp_vol` varchar(10) DEFAULT NULL,
-  `temp_pod` varchar(10) DEFAULT NULL,
-  `size_type` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`template_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=900 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+--  Records of `envs`
+-- ----------------------------
+BEGIN;
+INSERT INTO `envs` VALUES ('1', 'mysql', '5.5', 'MYSQL_ROOT_PASSWORD', '2016-08-16 10:13:06', '2016-08-16 10:13:10'), ('2', 'mysql', '5.6', 'MYSQL_ROOT_PASSWORD', '2016-08-16 11:14:10', '2016-08-16 11:14:13'), ('3', 'mysql', 'latest', 'MYSQL_ROOT_PASSWORD', '2016-08-16 11:15:08', '2016-08-16 11:15:11'), ('4', 'mongodb', '2.4', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:16:10', '2016-08-16 11:16:14'), ('5', 'mongodb', '2.6', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:16:37', '2016-08-16 11:16:39'), ('6', 'mongodb', '3.2', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:16:55', '2016-08-16 11:16:59'), ('7', 'mongodb', 'latest', 'MONGODB_USER,MONGODB_PASSWORD,MONGODB_DATABASE,MONGODB_ADMIN_PASSWORD', '2016-08-16 11:17:15', '2016-08-16 11:17:18'), ('8', 'mariadb', '10.1', 'MYSQL_ROOT_PASSWORD', '2016-08-22 15:45:16', '2016-08-22 15:45:19'), ('9', 'mariadb', 'latest', 'MYSQL_ROOT_PASSWORD', '2016-08-22 15:45:42', '2016-08-22 15:45:45'), ('10', 'postgresql', '9.2', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:20:23', '2016-08-22 16:20:28'), ('11', 'postgresql', '9.4', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:21:19', '2016-08-22 16:21:22'), ('12', 'postgresql', '9.5', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:21:37', '2016-08-22 16:21:41'), ('13', 'postgresql', 'latest', 'POSTGRESQL_ADMIN_PASSWORD', '2016-08-22 16:21:56', '2016-08-22 16:21:59'), ('14', 'mysql', '5.7', 'MYSQL_ROOT_PASSWORD', '2017-05-24 10:50:09', '2017-05-24 10:50:12');
+COMMIT;
+
+
+-- ----------------------------
+--  Records of `quotas_config`
+-- ----------------------------
+BEGIN;
+INSERT INTO `quotas_config` VALUES ('760', '764', '100', '102400', '102400', '200', '30', '30', null, null, null, null, '2018-05-18 18:00:30', '2018-05-18 18:00:30');
+COMMIT;
+
+
+-- ----------------------------
+--  Records of `roles`
+-- ----------------------------
+BEGIN;
+INSERT INTO `roles` VALUES ('1', 'admin');
+COMMIT;
+
+-- ----------------------------
+--  Records of `sys_logs`
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_logs` VALUES ('89058', '1', '登录', 'login', '764', '2018-05-18 18:00:39', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89059', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89060', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89061', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89062', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89063', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89064', '1', '登录', 'login', '764', '2018-05-21 09:15:31', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null), ('89065', '1', '登录', 'login', '764', '2018-05-21 09:15:33', null, 'ID:764,用户名:test 登录成功', 'ID:764,username:test login successful', null, null, null);
+COMMIT;
+
+
+-- ----------------------------
+--  Records of `temp_quota`
+-- ----------------------------
+BEGIN;
+INSERT INTO `temp_quota` VALUES ('1', '1', '1'), ('2', '1', '2'), ('3', '2', '2'), ('4', '2', '4'), ('5', '4', '4'), ('6', '4', '8'), ('7', '8', '8'), ('8', '8', '16'), ('9', '16', '16'), ('10', '16', '32'), ('11', '32', '32'), ('12', '32', '64');
+COMMIT;
+
+
+
+
+
+
+
+
 INSERT INTO `template` VALUES (553, 'drupal', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6_ib\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 2\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  drupal:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/drupal:8.2.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 2\n    environment:\n      MARIADB_HOST: ${name}-mysql\n      MARIADB_PASSWORD: pwd123456', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/hcpaas/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 250m\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  drupal:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/hcpaas/drupal:8.2.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 250m\n    environment:\n      MARIADB_HOST: ${name}-mysql\n      MARIADB_PASSWORD: pwd123456', '2017-3-22 15:58:10', '2017-10-24 10:44:24', 682, 'Introduction：<br>\r\n&nbsp&nbsp&nbsp&nbsp Drupal is a general open-source content-management system. It is powerful, easy to expand, easy to integrate through REST, JSON, SOAP and a variety of formats, with up to 1500 plugins to expand and customize various types of application site.<br><br>\r\nConfiguration Information：<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application username. Default value: user<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application password. Default value: bitnami<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application e-mail. Default value: user@exmple.com<br>', '简介：<br>\r\n&nbsp&nbsp&nbsp&nbsp Drupal是市场上通用的开源内容管理系统。Drupal 具有高性能且对许多服务时可扩展，可以通过REST、 JSON、SOAP等其他格式集成，拥有多达1500种插件去扩展和定制应用程序的各种类型的站点。<br><br>\r\n配置信息：<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用用户名。默认值: user<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用程序密码。默认值: bitnami<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用电子邮箱。 默认值: user@example.com<br>', 'hcpaas', '{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6_ib,{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/drupal:8.2.7', 'appshop', 'enterprise', 15, 'Drupal1.png,Drupal2.png', 'drupal.png', '4', '8192', '1024', '2', 'medium');
 INSERT INTO `template` VALUES (554, 'drupal', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6_ib\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 8192Mi\n    cpu_shares: 4\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  drupal:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/drupal:8.2.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 8192Mi\n    cpu_shares: 4\n    environment:\n      MARIADB_HOST: ${name}-mysql\n      MARIADB_PASSWORD: pwd123456', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/hcpaas/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 8192Mi\n    cpu_shares: 450m\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  drupal:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/hcpaas/drupal:8.2.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 8192Mi\n    cpu_shares: 450m\n    environment:\n      MARIADB_HOST: ${name}-mysql\n      MARIADB_PASSWORD: pwd123456', '2017-3-22 15:58:10', '2017-10-24 10:44:24', 682, 'Introduction：<br>\r\n&nbsp&nbsp&nbsp&nbsp Drupal is a general open-source content-management system. It is powerful, easy to expand, easy to integrate through REST, JSON, SOAP and a variety of formats, with up to 1500 plugins to expand and customize various types of application site.<br><br>\r\nConfiguration Information：<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application username. Default value: user<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application password. Default value: bitnami<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application e-mail. Default value: user@exmple.com<br>', '简介：<br>\r\n&nbsp&nbsp&nbsp&nbsp Drupal是市场上通用的开源内容管理系统。Drupal 具有高性能且对许多服务时可扩展，可以通过REST、 JSON、SOAP等其他格式集成，拥有多达1500种插件去扩展和定制应用程序的各种类型的站点。<br><br>\r\n配置信息：<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用用户名。默认值: user<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用程序密码。默认值: bitnami<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用电子邮箱。 默认值: user@example.com<br>', 'hcpaas', '{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6_ib,{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/drupal:8.2.7', 'appshop', 'enterprise', 15, 'Drupal1.png,Drupal2.png', 'drupal.png', '8', '16384', '1024', '2', 'large');
 INSERT INTO `template` VALUES (128, 'drupal', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 1\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  drupal:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/drupal:8.2.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 1\n    environment:\n      MARIADB_HOST: ${name}-mysql\n      MARIADB_PASSWORD: pwd123456', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/hcpaas/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 150m\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  drupal:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/hcpaas/drupal:8.2.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 150m\n    environment:\n      MARIADB_HOST: ${name}-mysql\n      MARIADB_PASSWORD: pwd123456', '2017-3-22 15:58:10', '2017-10-24 10:44:24', 682, 'Introduction：<br>\r\n&nbsp&nbsp&nbsp&nbsp Drupal is a general open-source content-management system. It is powerful, easy to expand, easy to integrate through REST, JSON, SOAP and a variety of formats, with up to 1500 plugins to expand and customize various types of application site.<br><br>\r\nConfiguration Information：<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application username. Default value: user<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application password. Default value: bitnami<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal application e-mail. Default value: user@exmple.com<br>', '简介：<br>\r\n&nbsp&nbsp&nbsp&nbsp Drupal是市场上通用的开源内容管理系统。Drupal 具有高性能且对许多服务时可扩展，可以通过REST、 JSON、SOAP等其他格式集成，拥有多达1500种插件去扩展和定制应用程序的各种类型的站点。<br><br>\r\n配置信息：<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用用户名。默认值: user<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用程序密码。默认值: bitnami<br>\r\n	&nbsp&nbsp&nbsp&nbsp Drupal 的应用电子邮箱。 默认值: user@example.com<br>', 'hcpaas', '{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6,{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/drupal:8.2.7', 'appshop', 'enterprise', 17, 'Drupal1.png,Drupal2.png', 'drupal.png', '2', '4096', '1024', '2', 'small');
@@ -842,22 +839,7 @@ INSERT INTO `template` VALUES (259, 'wordpress', 'services:\n  mysql:\n    image
 INSERT INTO `template` VALUES (9, 'wordpress', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 1\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n      MYSQL_USER: wordpress\n      MYSQL_PASSWORD: pwd123456\n      MYSQL_DATABASE: wordpress\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024      \n  wordpress:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/wordpress:4.7.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 1\n    environment:\n      WORDPRESS_DB_HOST: ${name}-mysql\n      WORDPRESS_DB_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data2\n        mountPath: /var/www/html\n        volSize: 1024', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 1\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n      MYSQL_USER: wordpress\n      MYSQL_PASSWORD: pwd123456\n      MYSQL_DATABASE: wordpress\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024      \n  wordpress:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/wordpress:4.7.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 2048Mi\n    cpu_shares: 1\n    environment:\n      WORDPRESS_DB_HOST: ${name}-mysql\n      WORDPRESS_DB_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data2\n        mountPath: /var/www/html\n        volSize: 1024', '2017-3-23 20:13:20', '2017-12-21 23:29:05', 682, 'Introduction：<br>\r\n&nbsp&nbsp&nbsp&nbsp WordPress is one of the most popular open source blogging tool and a content management system (CMS). It is powerful, easy to expand, easy to integrate through REST, JSON, SOAP and a variety of formats, with up to 1500 plugins to expand and customize various types of application site.<br><br>', '简介：<br>\r\n&nbsp&nbsp&nbsp&nbsp WordPress是市场上最通用的开源内容管理系统之一。它功能强大，易于扩展，易于通过REST，JSON，SOAP以及多种格式集成，拥有多达1500种插件去扩展和定制应用程序的各种类型的站点。<br><br>', 'hcpaas', '{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6,{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/wordpress:4.7.7', 'appshop', 'enterprise', 75, 'wordpress.png,wordpress2.png', 'wordpress.png', '2', '4096', '2048', '2', 'small');
 INSERT INTO `template` VALUES (253, 'wordpress', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6_ib\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 2\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n      MYSQL_USER: wordpress\n      MYSQL_PASSWORD: pwd123456\n      MYSQL_DATABASE: wordpress\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  wordpress:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/wordpress:4.7.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 2\n    environment:\n      WORDPRESS_DB_HOST: ${name}-mysql\n      WORDPRESS_DB_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data2\n        mountPath: /var/www/html\n        volSize: 1024', 'services:\n  mysql:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6\n    ports:\n      - port: 3306\n        protocol: TCP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 2\n    environment:\n      MYSQL_ROOT_PASSWORD: pwd123456\n      MYSQL_USER: wordpress\n      MYSQL_PASSWORD: pwd123456\n      MYSQL_DATABASE: wordpress\n    volumeMounts:\n      - name: data1\n        mountPath: /var/lib/mysql/data\n        volSize: 1024\n  wordpress:\n    image: {{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/wordpress:4.7.7\n    ports:\n      - port: 80\n        protocol: HTTP\n    replicas: 1\n    mem_limit: 4096Mi\n    cpu_shares: 2\n    environment:\n      WORDPRESS_DB_HOST: ${name}-mysql\n      WORDPRESS_DB_PASSWORD: pwd123456\n    volumeMounts:\n      - name: data2\n        mountPath: /var/www/html\n        volSize: 1024', '2017-6-27 13:36:00', '2017-12-21 23:28:54', 682, 'Introduction：<br>\r\n&nbsp&nbsp&nbsp&nbsp WordPress is one of the most popular open source blogging tool and a content management system (CMS). It is powerful, easy to expand, easy to integrate through REST, JSON, SOAP and a variety of formats, with up to 1500 plugins to expand and customize various types of application site.<br><br>', '简介：<br>\r\n&nbsp&nbsp&nbsp&nbsp WordPress是市场上最通用的开源内容管理系统之一。它功能强大，易于扩展，易于通过REST，JSON，SOAP以及多种格式集成，拥有多达1500种插件去扩展和定制应用程序的各种类型的站点。<br><br>', 'hcpaas', '{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/mysql:5.6_ib,{{ harbor_url | default('harbor.' + os_subdomain) }}/appstore/wordpress:4.7.7', 'appshop', 'enterprise', 17, 'wordpress.png,wordpress2.png', 'wordpress.png', '4', '8192', '2048', '2', 'medium');
 
-ALTER TABLE `resource_warning` MODIFY COLUMN `cpu`  decimal(12,2) NULL DEFAULT NULL COMMENT 'cpu预警' AFTER `app_name`;
-ALTER TABLE `resource_warning` MODIFY COLUMN `mem`  decimal(12,2) NULL DEFAULT NULL COMMENT '内存预警' AFTER `cpu`;
-ALTER TABLE `resource_warning` MODIFY COLUMN `net_send`  decimal(12,2) NULL DEFAULT NULL AFTER `mem`;
-ALTER TABLE `resource_warning` MODIFY COLUMN `net_receive`  decimal(12,2) NULL DEFAULT NULL COMMENT '带宽预警' AFTER `net_send`;
-ALTER TABLE `resource_warning` MODIFY COLUMN `vol`  decimal(12,2) NULL DEFAULT NULL COMMENT '存储预警' AFTER `net_receive`;
--- ----------------------------
---  Table structure for `s2i_envs`
--- ----------------------------
-DROP TABLE IF EXISTS `s2i_envs`;
-CREATE TABLE `s2i_envs` (
-  `s2i_env_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `builder_name` varchar(50) DEFAULT NULL,
-  `env_key` varchar(50) DEFAULT NULL,
-  `env_value` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`s2i_env_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
 
 -- ----------------------------
 --  Records of `s2i_envs`
@@ -869,3 +851,7 @@ ALTER TABLE `template` ADD COLUMN `pic_url_small`  varchar(500) CHARACTER SET ut
 update template t set t.pic_url_small=t.pic_url;
 SET FOREIGN_KEY_CHECKS = 1;
 
+
+
+
+INSERT INTO `os_loc_info` VALUES ('1', '1', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password|b64encode }}', 'Region1', '.{{ os_subdomain }}', 'ws://{{ portalapi_url | default('portalapi.' + os_subdomain) }}', '{{ groups.storage[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password|b64encode }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', '{{ harbor_url | default('harbor.' + os_subdomain) }}','tcp://{{ harbor_url | default('harbor.' + os_subdomain) }}:4789','http://{{ groups.storage[0] }}:8080', '{{ groups.storage[0] }}', 'http://prometheus.{{ os_subdomain }}', 'https://es.{{ os_subdomain }}', NULL, 'http://{{ harbor_url | default('harbor.' + os_subdomain) }}', 1,1,1,NULL,NULL,NULL,NULL,NULL);

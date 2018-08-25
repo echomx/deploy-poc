@@ -52,12 +52,12 @@ caas_project: caasportal
 license_key: askdlfaklsd
 # image tag
 mysql_tag: 5.5utf8
-muddle_tag: v3.22 
-hcenter_tag: v3.17
-muddle_ha_tag: v2.2
-hcenter_ha_tag: v2
+muddle_tag: v3.68 
+hcenter_tag: v3.24
+muddle_ha_tag: v2.5
+hcenter_ha_tag: v3.3
 redis_tag: 3.2
-omp_tag: v3.18
+omp_tag: v3.37
 
 #prometheus
 grafana_password: Hello_grafana_20180608

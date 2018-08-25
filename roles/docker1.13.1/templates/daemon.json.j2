@@ -5,5 +5,9 @@
   "insecure-registries" : [
      "{{ harbor_url | default('harbor.' + os_subdomain) }}",
      "{{ harbor_url | default('harbor.' + os_subdomain) }}:80"
+  ],
+  "hosts": [
+     "unix:///var/run/docker.sock", "0.0.0.0:4789"
   ]
+
 }
