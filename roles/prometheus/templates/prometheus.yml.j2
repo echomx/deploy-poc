@@ -94,19 +94,19 @@ scrape_configs:
 {% for host in groups.nodes %}
     - targets: ['{{ host }}:9100']
       labels: 
-        alias: {{ hostvars[host]['ansible_hostname'] }}
+        alias: {{ hostvars[host]['hostname'] }}
         role: compute
 {% endfor %}
 {% for host in groups.masters %}
     - targets: ['{{ host }}:9100']
       labels: 
-        alias: {{ hostvars[host]['ansible_hostname'] }}
+        alias: {{ hostvars[host]['hostname'] }}
         role: master
 {% endfor %}
 {% for host in groups.storage %}
     - targets: ['{{ host }}:9100']
       labels: 
-        alias: {{ hostvars[host]['ansible_hostname'] }}
+        alias: {{ hostvars[host]['hostname'] }}
         role: storage
 {% endfor %}
 
@@ -115,12 +115,12 @@ scrape_configs:
 {% for host in groups.nodes %}
     - targets: ['{{ host }}:9125']
       labels: 
-        alias: {{ hostvars[host]['ansible_hostname'] }}
+        alias: {{ hostvars[host]['hostname'] }}
         role: compute
 {% endfor %}
 {% for host in groups.masters %}
     - targets: ['{{ host }}:9125']
       labels: 
-        alias: {{ hostvars[host]['ansible_hostname'] }}
+        alias: {{ hostvars[host]['hostname'] }}
         role: master
 {% endfor %}
