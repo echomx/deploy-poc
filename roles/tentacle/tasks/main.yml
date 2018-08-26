@@ -1,0 +1,26 @@
+- name: install the required dependencies for tentacle
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-flask 
+    - python-gunicorn 
+    - python2-ruamel-yaml
+
+- name: mkdir /opt/tentacle
+  file:
+    path: /opt/tentacle
+    state: directory
+    mode: 0755
+
+- name: copy the tentacle.py to /opt/tentacle
+  copy:
+    src: tentacle.py
+    dest: /opt/tentacle/tentacle.py
+    mode: 0755
+
+- name: start the tentacle
+  shell: cd /opt/tentacle && nohup gunicorn --bind 0.0.0.0:9696 -w4 tentacle:app &
+
+- name: open the port on iptables
+  shell: iptables -I INPUT -p tcp -m tcp --dport 9696 -j ACCEPT

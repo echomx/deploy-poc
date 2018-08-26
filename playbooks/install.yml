@@ -17,17 +17,18 @@
   hosts: storage 
   roles:
     - nfs
+    - dnsmasqinstall
+    - dnsconfigure
     - ldap 
     - docker-compose
     - harbor
-    - dnsmasqinstall
-    - dnsconfigure
     - installmysql
 
 - name: prepare for the openshift node
   hosts: masters,nodes 
   roles:
     - os_node_initial
+    - tentacle
     
 - hosts: "{{ groups.masters[0] }}"
   tasks:

@@ -18,6 +18,37 @@ SET FOREIGN_KEY_CHECKS=0
 DROP DATABASE IF EXISTS `hcpaas`;
 CREATE DATABASE `hcpaas`;
 USE `hcpaas`;
+
+-- ----------------------------
+-- Table structure for unshelved_node
+-- ----------------------------
+DROP TABLE IF EXISTS `unshelved_node`;
+CREATE TABLE `unshelved_node` (
+  `unshelved_id` int(11) NOT NULL AUTO_INCREMENT,
+  `hostname` varchar(200) DEFAULT NULL,
+  `status` varchar(200) DEFAULT NULL,
+  `cluster` int(8) DEFAULT NULL,
+  `node_ip` varchar(200) DEFAULT NULL,
+  `unshelved_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`unshelved_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for net_manager
+-- ----------------------------
+DROP TABLE IF EXISTS `net_manager`;
+CREATE TABLE `net_manager` (
+  `net_manager_id` int(11) NOT NULL AUTO_INCREMENT,
+  `net_id` int(11) DEFAULT NULL,
+  `namespaces` mediumtext,
+  `location` int(11) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`net_manager_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+
 -- ----------------------------
 -- Table structure for app_config_map
 -- ----------------------------
