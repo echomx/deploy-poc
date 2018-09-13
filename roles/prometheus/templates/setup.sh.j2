@@ -20,5 +20,5 @@ oc create -f volumes.yml
 sleep 5
 oc create -f pods.yml
 
-scp config/alert.rules {{ groups.storage[0] }}:/nfs/prometheusrule/
+scp config/alert.rules {{ groups.storage[0] }}:/nfs/prometheusrule/|echo yes
 

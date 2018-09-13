@@ -8,9 +8,7 @@
 #    src: /opt/installers/os39.tar
 #    dest: /opt/
 - name: create yum repo | system
-  shell:  nohup python -m SimpleHTTPServer 38888 &
-  args:
-    chdir: "/opt/cent{{ os_version }}"
+  shell:  "(cd /opt/installers/{{ os_version }} &&  python -m SimpleHTTPServer 38888 > /dev/null 2>&1  &)"
 #- name: create yum repo | Opeshift
 #  shell: netstat -tlnp|grep 38888 || cd /opt/os39 && python -m SimpleHTTPServer 38889 &
 - name: open port on iptables| 38888 

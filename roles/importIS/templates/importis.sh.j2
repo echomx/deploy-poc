@@ -1,12 +1,4 @@
 #!/bin/bash
-docker login -uadmin -pCaas12345 http://{{ harbor_url | default('harbor.' + os_subdomain) }}
-docker load --input /opt/installers/is_images.tar.gz
-for i in `docker images|grep ^openshift|awk '{print $1":"$2}'`;
-do
-  docker tag $i {{ harbor_url | default('harbor.' + os_subdomain) }}/$i;
-  docker push {{ harbor_url | default('harbor.' + os_subdomain) }}/$i
-done
-
 oc login --username=admin --password={{ os_admin_password }} --insecure-skip-tls-verify=true
 oc project openshift
 oc delete istag --all

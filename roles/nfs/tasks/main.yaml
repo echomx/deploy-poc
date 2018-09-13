@@ -10,6 +10,7 @@
     - gcc-c++
     - python-devel
     - unzip
+    - iptables
     
   - name: copy the nfs installer
     copy: 
@@ -63,6 +64,7 @@
     shell: source /opt/nfsenv/bin/activate &&  python setup.py install
     args:
       chdir: /opt/convert2nfs
+
   - name: start the interface
     shell: source /opt/nfsenv/bin/activate && cd /opt/convert2nfs && uwsgi -d /var/log/convert2nfs.log --http-socket :8080 --venv /opt/nfsenv --pecan config.py
   - name: Wait 300 seconds for port 8080 to becomoe open on the host, don't start checking for 10 seconds
@@ -103,3 +105,5 @@
     shell: for i in `rpcinfo -p|grep tcp|awk '{print $4}'|sort|uniq`; do iptables -I INPUT -p tcp --dport ${i} -j ACCEPT; done
   - name: open the udp port for nfs
     shell:  for i in `rpcinfo -p|grep udp|awk '{print $4}'|sort|uniq`; do iptables -I INPUT -p udp --dport ${i} -j ACCEPT; done
+  - name: save the itpables rule
+    shell: service iptables save

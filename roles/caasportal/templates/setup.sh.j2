@@ -36,7 +36,7 @@ oc create -f caasdeploy_pods.yml
 #modify the environment variables of muddle
 
 
-scp -r web-pic {{ groups.storage[0] }}:/nfs/hcenter-images/
+scp -r web-pic {{ groups.storage[0] }}:/nfs/hcenter-images/|echo yes
 
 
 

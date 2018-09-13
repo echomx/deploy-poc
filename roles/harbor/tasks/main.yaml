@@ -22,25 +22,30 @@
       fstype: xfs
       state: mounted
 
-  - name: copy the offline clair db
-    copy:
-      src: /opt/installers/clair-db-fetched.gz
-      dest: "{{ store_path }}/"
+  # - name: copy the offline clair db
+  #   copy:
+  #     src: /opt/installers/clair-db-fetched.gz
+  #     dest: "{{ store_path }}/"
 
-  - name: copy the harbor installer
+  # - name: copy the harbor installer
+  #   copy: 
+  #     src: /opt/installers/harbor-offline-installer-stage.tgz 
+  #     dest: "{{ store_path }}/harbor-offline-installer-stage.tgz"
+
+  # - name: unarchive the offline clair db
+  #   unarchive:
+  #     src: "{{ store_path }}/clair-db-fetched.gz"
+  #     dest: "{{ store_path }}/"
+  #     remote_src: yes
+  - name: copy the harborall.tar.gz to the server
     copy: 
-      src: /opt/installers/harbor-offline-installer-stage.tgz 
-      dest: "{{ store_path }}/harbor-offline-installer-stage.tgz"
-
-  - name: unarchive the offline clair db
-    unarchive:
-      src: "{{ store_path }}/clair-db-fetched.gz"
-      dest: "{{ store_path }}/"
-      remote_src: yes
+      src: /opt/installers/harborall.tar.gz
+      dest: {{ store_path }}/
+      mode: 0644
 
   - name: unarchive the harbor installer
     unarchive: 
-      src: "{{ store_path }}/harbor-offline-installer-stage.tgz"
+      src: "{{ store_path }}/harborall.tar.gz"
       dest: "{{ store_path }}/"
       remote_src: yes
 
