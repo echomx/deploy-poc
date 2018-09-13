@@ -1,5 +1,0 @@
-- name: improt the is iamges and appstore iamges. It will take a long time,please be patient... 
-  hosts: "{{ groups.masters[0] }}" 
-  roles:
-    - importIS 
-    - images4appstore

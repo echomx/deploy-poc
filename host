@@ -1,3 +1,13 @@
+
+[cluster:children]
+masters
+nodes
+storage
+
+[cluster:vars]
+ansible_ssh_user=root
+ansible_ssh_port=22
+
 [masters]
 10.74.248.219 hostname=master-01-01
 
