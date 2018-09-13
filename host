@@ -7,13 +7,13 @@ storage
 [cluster:vars]
 ansible_ssh_user=root
 ansible_ssh_port=22
-
+ansible_ssh_pass='qwer,1234'
 [masters]
-10.74.248.219 hostname=master-01-01
+10.70.39.192 hostname=master-01
 
 [nodes]
-10.74.248.220 hostname=node-01-01
-10.74.248.221 hostname=node-01-02
+10.70.39.193 hostname=node-01
+10.70.39.194 hostname=node-02
 
 [storage]
-10.74.248.222 hostname=storage
+10.70.39.195 hostname=storage

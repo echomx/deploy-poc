@@ -1,7 +1,7 @@
 ---
 # Variables listed here are applicable to all host groups
 #CentOS info
-os_version: 7.2
+os_version: cent7.2
 
 #####public#####
 # docker info
