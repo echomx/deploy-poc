@@ -11,6 +11,7 @@
     - python-devel
     - unzip
     - iptables
+    - iptables-services
     
   - name: copy the nfs installer
     copy: 

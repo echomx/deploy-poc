@@ -3,7 +3,7 @@
 # NOTICE: images for appstore, platform and s2i not imported in this playbook
 # Before deploy OpenShift
 - name: create repo on master01 and create id_rsa file
-  hosts: "{{ groups.master[0] }}"
+  hosts: "{{ groups.masters[0] }}"
   roles:
     - createrepo
     - createauthorizedkeys

@@ -40,7 +40,7 @@
   - name: copy the harborall.tar.gz to the server
     copy: 
       src: /opt/installers/harborall.tar.gz
-      dest: {{ store_path }}/
+      dest: "{{ store_path }}/"
       mode: 0644
 
   - name: unarchive the harbor installer
