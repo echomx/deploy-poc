@@ -1,0 +1,9 @@
+- name: push the pub keys to all the server
+  authorized_key:
+    user: root
+    key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+# - name: copy the pub keys to all the servers
+#   copy:
+#     src: /root/.ssh/id_rsa.pub
+#     dest: /root/.ssh/authorized_keys
+#     mode: 0600
