@@ -49,6 +49,10 @@
             value: http://caas-haproxy:8888
           - name: JAVA_DEBIAN_VERSION
             value: 8u111-b14-2~bpo8+1
+          - name: spirit_allNetCard
+            value: {{ net_card_name }}
+          - name: spirit_businessNetCard
+            value: {{ net_card_name }}
           image: {{ harbor_url | default('harbor.' + os_subdomain) }}/caasportal/omp:{{ omp_tag }}
           imagePullPolicy: Always
           name: caas-omp

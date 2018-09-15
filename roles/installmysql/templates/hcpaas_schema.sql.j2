@@ -890,3 +890,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 INSERT INTO `os_loc_info` VALUES ('1', '1', 'North data center', '北方数据中心', '1', 'https://{{ groups.masters[0] }}:8443', 'admin', '{{ os_admin_password|b64encode }}', 'Region1', '.{{ os_subdomain }}', 'ws://{{ portalapi_url | default('portalapi.' + os_subdomain) }}', '{{ groups.storage[0] }}', '389', 'cn=admin,dc={{ ldap_second }},dc={{ ldap_top }}', '{{ ldap_admin_password|b64encode }}', 'dc={{ ldap_second }},dc={{ ldap_top }}', 'ou=users', '{{ ldap_second }}', 'person', '{{ harbor_url | default('harbor.' + os_subdomain) }}','tcp://{{ harbor_url | default('harbor.' + os_subdomain) }}:4789','http://{{ groups.storage[0] }}:8080', '{{ groups.storage[0] }}', 'http://prometheus.{{ os_subdomain }}', 'https://es.{{ os_subdomain }}', NULL, 'http://{{ harbor_url | default('harbor.' + os_subdomain) }}', 1,1,1,NULL,NULL,NULL,NULL,NULL);
+
+
+
+CREATE 
+ALGORITHM=UNDEFINED 
+DEFINER=`root`@`%` 
+SQL SECURITY DEFINER 
+VIEW `view_system_module`AS 
+(select `m`.`module_id` AS `module_id`,`m`.`module_pid` AS `module_pid`,`m`.`module_url` AS `module_url` from `hcpaas_bmp`.`system_module` `m` where (`m`.`has_deleted` = 0)) ;
+SET FOREIGN_KEY_CHECKS=1;

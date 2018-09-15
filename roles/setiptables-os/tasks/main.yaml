@@ -7,5 +7,7 @@
   shell: iptables -nL|grep 9125 || iptables -I INPUT -p tcp --dport 9125 -j ACCEPT
 - name: open port on iptables| 4789 for docker api
   shell: iptables -nL|grep 4789 || iptables -I INPUT -p tcp --dport 4789 -j ACCEPT  
-- name: save the iptables rules
-  shell: service iptables save
+- name: opensfhit port on iptables | 9696 for tencale 
+  shell: iptabeles -nL |grep 9696 || iptables -I INPUT -p tcp --dport 9696 -j ACCEPT
+- name: ssh port on iptalbes | "{{ ansible_ssh_pport }}" for ssh
+  shell: iptables -nL|grep "{{ ansible_ssh_port }}" || iptables -I INPUT -p tcp --dport "{{ ansible_ssh_port }}" -j ACCEPT

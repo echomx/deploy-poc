@@ -16,7 +16,7 @@
     - docker1.13.1 
     - sethostname 
     - expoter_install
-    - process-monitor
+
 
 
 - name: install LDAP NFS harbor on storage server
@@ -34,7 +34,8 @@
   hosts: masters,nodes 
   roles:
     - os_node_initial
-    - tentacle
+    - dnsconfigure
+
     
 - hosts: "{{ groups.masters[0] }}"
   tasks:
@@ -51,15 +52,23 @@
 #    - images4portal
     - os_inventory
     - os_deploy
-    - dnsconfigure
     - caasportal
     - prometheus
     - addStorage2Logging
     - importIS
 
 
-- name: set the iptables for nodes
-  hosts: nodes
+
+- name: deploy the tencale and processmonitor, set iptables for masters and nodes
+  hosts: masters,nodes
   roles:
     - setiptables-os
-    - dnsconfigure
+    - process-monitor
+    - tentacle
+
+
+- name: save the iptables on all servers
+  hosts: all
+  tasks:
+    - name: save the iptables
+      shell: service iptables save

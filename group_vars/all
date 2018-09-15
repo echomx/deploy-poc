@@ -4,6 +4,10 @@
 os_version: cent7.2
 
 #####public#####
+# net_card_name: 
+# run command ip a|grep -E "^[0-9]{1,2}"|awk '{print $2}'|tr -d ":"|grep -Ev "lo|docker|ovs.*|br.*|tun.*|v.*"
+
+net_card_name: eno16780032
 # docker info
 mirror_url: https://registry.docker-cn.com
 docker_vg: docker-vg
@@ -52,12 +56,12 @@ caas_project: caasportal
 license_key: askdlfaklsd
 # image tag
 mysql_tag: 5.5utf8
-muddle_tag: v3.68 
-hcenter_tag: v3.24
-muddle_ha_tag: v2.5
+muddle_tag: v3.124 
+hcenter_tag: v3.47
+muddle_ha_tag: v3.4
 hcenter_ha_tag: v3.3
 redis_tag: 3.2
-omp_tag: v3.37
+omp_tag: v3.83
 
 #prometheus
 grafana_password: Hello_grafana_20180608
