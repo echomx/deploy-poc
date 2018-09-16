@@ -13,6 +13,7 @@
   roles:
     - push_authorizedkeys
     - repoconfigure
+    - ntpdate_local
     - docker1.13.1 
     - sethostname 
     - expoter_install

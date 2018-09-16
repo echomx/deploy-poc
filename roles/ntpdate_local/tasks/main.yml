@@ -1,0 +1,6 @@
+- name: install ntpdate
+  yum:
+    name: ntpdate
+    state: present
+- name: update time
+  shell: ntpdate 10.2.43.16

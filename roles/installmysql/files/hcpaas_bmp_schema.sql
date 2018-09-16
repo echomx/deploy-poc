@@ -515,3 +515,14 @@ INSERT INTO `t_user_quotas` VALUES ('9', '23', '10000', '1024000', '1024000', '7
 INSERT INTO `t_user_quotas` VALUES ('11', '29', '333', '340992', '340992', '333', '340992', '340992');
 INSERT INTO `t_user_quotas` VALUES ('13', '35', '50', '51200', '51200', null, null, null);
 INSERT INTO `t_user_quotas` VALUES ('15', '45', '50', '51200', '51200', null, null, null);
+
+
+
+
+CREATE 
+ALGORITHM=UNDEFINED 
+DEFINER=`root`@`%` 
+SQL SECURITY DEFINER 
+VIEW `view_system_module`AS 
+(select `m`.`module_id` AS `module_id`,`m`.`module_pid` AS `module_pid`,`m`.`module_url` AS `module_url` from `hcpaas_bmp`.`system_module` `m` where (`m`.`has_deleted` = 0)) ;
+SET FOREIGN_KEY_CHECKS=1;
