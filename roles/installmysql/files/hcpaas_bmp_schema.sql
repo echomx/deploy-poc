@@ -37,6 +37,7 @@ CREATE TABLE `relation_module_permission` (
 -- Records of relation_module_permission
 -- ----------------------------
 INSERT INTO `relation_module_permission` VALUES ('1', '1');
+INSERT INTO `relation_module_permission` VALUES ('1', '2');
 INSERT INTO `relation_module_permission` VALUES ('2', '2');
 INSERT INTO `relation_module_permission` VALUES ('3', '2');
 INSERT INTO `relation_module_permission` VALUES ('4', '2');
@@ -45,6 +46,8 @@ INSERT INTO `relation_module_permission` VALUES ('6', '2');
 INSERT INTO `relation_module_permission` VALUES ('7', '2');
 INSERT INTO `relation_module_permission` VALUES ('11', '2');
 INSERT INTO `relation_module_permission` VALUES ('14', '2');
+INSERT INTO `relation_module_permission` VALUES ('1', '3');
+INSERT INTO `relation_module_permission` VALUES ('2', '3');
 INSERT INTO `relation_module_permission` VALUES ('3', '3');
 INSERT INTO `relation_module_permission` VALUES ('4', '3');
 INSERT INTO `relation_module_permission` VALUES ('5', '3');
@@ -244,13 +247,13 @@ INSERT INTO `system_module` VALUES ('3', null, '用户查询', '/omapi/sysmgr/us
 INSERT INTO `system_module` VALUES ('4', null, '用户编辑', '/omapi/auth/register,/omapi/sysmgr/user/update_user,/omapi/sysmgr/user/delete_user,/omapi/sysmgr/user/lock_user,/omapi/sysmgr/user/release_lock_user,/omapi/sysmgr/user/modify_password', '1', '2', null, '0');
 INSERT INTO `system_module` VALUES ('5', null, 'BMP通用', '/omapi/auth/getLoginUser,/omapi/sysmgr/user/modify_password', '1', '2', null, '0');
 INSERT INTO `system_module` VALUES ('6', null, '项目查询', '/omapi/business/projectsBmp/query_page,/omapi/business/projectsBmp/query_by_id,/omapi/business/projectsItems/query_page,/omapi/business/projectsItems/query,/omapi/business/projectsItems/query_by_id,/omapi/business/projectsBmp/updateCreator', '1', '2', null, '0');
-INSERT INTO `system_module` VALUES ('7', null, '项目编辑', '/omapi/business/projectsBmp/save,/omapi/business/projectsBmp/delete,/omapi/business/projectsItems/save,/omapi/business/projectsItems/delete', '1', '2', null, '0');
+INSERT INTO `system_module` VALUES ('7', null, '项目编辑', '/omapi/business/projectsBmp/save,/omapi/business/projectsBmp/delete,/omapi/business/projectsItems/save,/omapi/business/projectsItems/delete,/omapi/business/projectsItems/getMaxPN', '1', '2', null, '0');
 INSERT INTO `system_module` VALUES ('9', null, '消息管理', '/omapi/business/messages', '1', '2', null, '0');
 INSERT INTO `system_module` VALUES ('10', null, '平台管理', '/omapi/business/appShop,/omapi/business/images/,/omapi/business/s2iEnvs/', '1', '2', null, '0');
 INSERT INTO `system_module` VALUES ('11', null, '集群管理CM,SM', '/omapi/business/routes,/omapi/business/resourceReport,/omapi/business/apps/query,/omapi/business/apps/findOne', '1', '2', null, '0');
 INSERT INTO `system_module` VALUES ('12', null, '仪表盘', '/omapi/business/dashboard', '1', '2', null, '0');
-INSERT INTO `system_module` VALUES ('13', null, 'SM私有', '/omapi/sys/admin/,/omapi/auth/findAllLdapUsers,/omapi/business/os,/omapi/business/projects/createBuilder,/omapi/business/projects/createPlatform,/omapi/business/clusterMonitor,/wapi/cluster,/omapi/business/clusterWarning,/omapi/business/clusterWarningConfig', '1', '2', null, '0');
-INSERT INTO `system_module` VALUES ('14', null, 'CM私有', '/omapi/project/admin/,/omapi/business/dashboard/cm,/omapi/auth/findAllLdapUsers,/wapi/overviews/containerLogs', '1', '2', null, '0');
+INSERT INTO `system_module` VALUES ('13', null, 'SM私有', '/omapi/sys/admin/,/omapi/auth/findAllLdapUsers,/omapi/business/os,/omapi/business/projects/createBuilder,/omapi/business/projects/createPlatform,/omapi/business/clusterMonitor,/wapi/cluster,/omapi/business/clusterWarning,/omapi/business/clusterWarningConfig,/omapi/business/nodeMonitor,/omapi/business/projectsItems/getMaxPN', '1', '2', null, '0');
+INSERT INTO `system_module` VALUES ('14', null, 'CM私有', '/omapi/project/admin/,/omapi/business/dashboard/cm,/omapi/auth/findAllLdapUsers,/wapi/overviews/containerLogs,/omapi/business/os/query_os', '1', '2', null, '0');
 
 -- ----------------------------
 -- Table structure for system_permission
