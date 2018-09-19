@@ -7,7 +7,7 @@
     - nfs-utils
     - rpcbind
     - lvm2
-    - gcc-c++
+#    - gcc-c++
     - python-devel
     - unzip
     - iptables

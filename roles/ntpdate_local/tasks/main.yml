@@ -3,4 +3,4 @@
     name: ntpdate
     state: present
 - name: update time
-  shell: ntpdate 10.2.43.16
+  shell: ntpdate "{{ ntp_server }}"

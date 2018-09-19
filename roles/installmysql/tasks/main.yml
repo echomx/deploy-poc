@@ -1,21 +1,44 @@
 - name: uninstall conflict mariadb-libs
   yum: name=mariadb-libs state=absent
+
 - name: install depended package
   yum: name=MySQL-python state=installed
+
+- name: install mysql-server
+  yum: name=mysql-community-server state=installed
+  when: ansible_distribution=="Kylin"
+
+
 - name: install mysql-server
   yum: name=MySQL-server state=installed
+  when: ansible_distribution=="CentOS"
+
+
 - name: install mysql-client
   yum: name=mysql state=installed
+  when: ansible_distribution=="CentOS"
+
 - name: mkdir mysql data dir
   file: path=/data/mysql_data/ state=directory
+
 - name: config mysql data dir
   shell: mysql_install_db --user=mysql --datadir=/data/mysql_data/
+
 - name: add iptable for mysql
   shell: iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+
 - name: copy mysql conf
   copy: src=my01.cnf  dest=/etc/my.cnf
+
 - name: start mysql
-  service: name=mysql state=started enabled=false
+  service: name=mysql state=started enabled=yes
+  when: ansible_distribution=="CentOS"
+
+
+- name: start mysql
+  service: name=mysqld state=started enabled=yes
+  when: ansible_distribution=="Kylin"
+
 - name: MySQL | set root password
   mysql_user:
     name: "root"
@@ -29,10 +52,12 @@
   template:
     src: hcpaas_schema.sql.j2
     dest: /tmp/hcpaas_schema.sql
+
 - name: copy sql - hcappas_bmp_schema.sql
   copy:
     src: hcpaas_bmp_schema.sql 
     dest: /tmp/hcpaas_bmp_schema.sql
+
 - name: MySQL | init mysql db
   command: "
     mysql -uroot -padminpwd -e
@@ -41,7 +66,9 @@
     SOURCE /tmp/hcpaas_bmp_schema.sql;
     \"
     "
+
 - name: copy user clean script 
   copy: src=user_clear.sh dest=/data/mysql_data/ mode=0755
+
 - name: clear useless user 
   shell: /data/mysql_data/user_clear.sh
