@@ -25,13 +25,15 @@
     dest: /tmp/caasportal/setup.sh
     mode: 0744
 
+
+- name: excute the shell to create pv pvc dc svc route
+  shell: /tmp/caasportal/setup.sh
+
+
+
 - name: copy the images for appstore and platform images
   copy:
     src: web-pic
     dest: /tmp/caasportal/
     mode:  0755
-
-- name: excute the shell to create pv pvc dc svc route
-  shell: /tmp/caasportal/setup.sh
-
 
